@@ -1,0 +1,150 @@
+<Window x:Class="Easy_ROI_3D.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Easy 3D ROI - Box Region" Height="600" Width="900"
+        Background="#1E1E1E">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 3D Viewport -->
+        <Border Grid.Column="0" Background="Black" Margin="10">
+            <Viewport3D x:Name="viewport3D">
+                <!-- Camera -->
+                <Viewport3D.Camera>
+                    <PerspectiveCamera x:Name="camera"
+                                     Position="5,5,10"
+                                     LookDirection="-5,-5,-10"
+                                     UpDirection="0,1,0"
+                                     FieldOfView="60"/>
+                </Viewport3D.Camera>
+
+                <!-- Lights -->
+                <ModelVisual3D>
+                    <ModelVisual3D.Content>
+                        <Model3DGroup>
+                            <AmbientLight Color="#404040"/>
+                            <DirectionalLight Color="#FFFFFF" Direction="-1,-1,-3"/>
+                            <DirectionalLight Color="#808080" Direction="1,1,3"/>
+                        </Model3DGroup>
+                    </ModelVisual3D.Content>
+                </ModelVisual3D>
+
+                <!-- Grid Helper -->
+                <ModelVisual3D x:Name="gridModel"/>
+
+                <!-- ROI Box -->
+                <ModelVisual3D x:Name="roiModel"/>
+
+            </Viewport3D>
+        </Border>
+
+        <!-- Control Panel -->
+        <Border Grid.Column="1" Background="#2D2D30" Margin="10" CornerRadius="5">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="15">
+                    <TextBlock Text="3D ROI CONTROLS"
+                             Foreground="White"
+                             FontSize="16"
+                             FontWeight="Bold"
+                             Margin="0,0,0,20"/>
+
+                    <!-- Position Controls -->
+                    <TextBlock Text="POSITION" Foreground="#4EC9B0" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="X Position:" Foreground="White" Margin="0,5,0,2"/>
+                    <DockPanel>
+                        <TextBlock x:Name="txtPosX" Text="0.0" Foreground="White" Width="40" DockPanel.Dock="Right" TextAlignment="Right"/>
+                        <Slider x:Name="sliderPosX" Minimum="-5" Maximum="5" Value="0"
+                                ValueChanged="Position_Changed" TickFrequency="0.5"/>
+                    </DockPanel>
+
+                    <TextBlock Text="Y Position:" Foreground="White" Margin="0,10,0,2"/>
+                    <DockPanel>
+                        <TextBlock x:Name="txtPosY" Text="0.0" Foreground="White" Width="40" DockPanel.Dock="Right" TextAlignment="Right"/>
+                        <Slider x:Name="sliderPosY" Minimum="-5" Maximum="5" Value="0"
+                                ValueChanged="Position_Changed" TickFrequency="0.5"/>
+                    </DockPanel>
+
+                    <TextBlock Text="Z Position:" Foreground="White" Margin="0,10,0,2"/>
+                    <DockPanel>
+                        <TextBlock x:Name="txtPosZ" Text="0.0" Foreground="White" Width="40" DockPanel.Dock="Right" TextAlignment="Right"/>
+                        <Slider x:Name="sliderPosZ" Minimum="-5" Maximum="5" Value="0"
+                                ValueChanged="Position_Changed" TickFrequency="0.5"/>
+                    </DockPanel>
+
+                    <!-- Size Controls -->
+                    <TextBlock Text="SIZE" Foreground="#4EC9B0" FontWeight="Bold" Margin="0,20,0,10"/>
+
+                    <TextBlock Text="Width (X):" Foreground="White" Margin="0,5,0,2"/>
+                    <DockPanel>
+                        <TextBlock x:Name="txtWidth" Text="2.0" Foreground="White" Width="40" DockPanel.Dock="Right" TextAlignment="Right"/>
+                        <Slider x:Name="sliderWidth" Minimum="0.5" Maximum="5" Value="2"
+                                ValueChanged="Size_Changed" TickFrequency="0.5"/>
+                    </DockPanel>
+
+                    <TextBlock Text="Height (Y):" Foreground="White" Margin="0,10,0,2"/>
+                    <DockPanel>
+                        <TextBlock x:Name="txtHeight" Text="2.0" Foreground="White" Width="40" DockPanel.Dock="Right" TextAlignment="Right"/>
+                        <Slider x:Name="sliderHeight" Minimum="0.5" Maximum="5" Value="2"
+                                ValueChanged="Size_Changed" TickFrequency="0.5"/>
+                    </DockPanel>
+
+                    <TextBlock Text="Depth (Z):" Foreground="White" Margin="0,10,0,2"/>
+                    <DockPanel>
+                        <TextBlock x:Name="txtDepth" Text="2.0" Foreground="White" Width="40" DockPanel.Dock="Right" TextAlignment="Right"/>
+                        <Slider x:Name="sliderDepth" Minimum="0.5" Maximum="5" Value="2"
+                                ValueChanged="Size_Changed" TickFrequency="0.5"/>
+                    </DockPanel>
+
+                    <!-- Camera Controls -->
+                    <TextBlock Text="CAMERA" Foreground="#4EC9B0" FontWeight="Bold" Margin="0,20,0,10"/>
+
+                    <TextBlock Text="Camera Angle:" Foreground="White" Margin="0,5,0,2"/>
+                    <DockPanel>
+                        <TextBlock x:Name="txtCameraAngle" Text="0°" Foreground="White" Width="40" DockPanel.Dock="Right" TextAlignment="Right"/>
+                        <Slider x:Name="sliderCameraAngle" Minimum="0" Maximum="360" Value="0"
+                                ValueChanged="CameraAngle_Changed" TickFrequency="10"/>
+                    </DockPanel>
+
+                    <TextBlock Text="Camera Height:" Foreground="White" Margin="0,10,0,2"/>
+                    <DockPanel>
+                        <TextBlock x:Name="txtCameraHeight" Text="5.0" Foreground="White" Width="40" DockPanel.Dock="Right" TextAlignment="Right"/>
+                        <Slider x:Name="sliderCameraHeight" Minimum="1" Maximum="15" Value="5"
+                                ValueChanged="CameraHeight_Changed" TickFrequency="1"/>
+                    </DockPanel>
+
+                    <!-- Color Control -->
+                    <TextBlock Text="APPEARANCE" Foreground="#4EC9B0" FontWeight="Bold" Margin="0,20,0,10"/>
+
+                    <TextBlock Text="ROI Color:" Foreground="White" Margin="0,5,0,5"/>
+                    <ComboBox x:Name="colorCombo" SelectionChanged="Color_Changed" SelectedIndex="0">
+                        <ComboBoxItem Content="Red" Tag="#80FF0000"/>
+                        <ComboBoxItem Content="Green" Tag="#8000FF00"/>
+                        <ComboBoxItem Content="Blue" Tag="#800000FF"/>
+                        <ComboBoxItem Content="Yellow" Tag="#80FFFF00"/>
+                        <ComboBoxItem Content="Cyan" Tag="#8000FFFF"/>
+                        <ComboBoxItem Content="Magenta" Tag="#80FF00FF"/>
+                    </ComboBox>
+
+                    <Button Content="Reset All"
+                            Click="Reset_Click"
+                            Margin="0,30,0,0"
+                            Padding="10"
+                            Background="#007ACC"
+                            Foreground="White"
+                            BorderThickness="0"
+                            FontWeight="Bold"/>
+
+                    <TextBlock Text="Easy Version"
+                             Foreground="#666"
+                             FontSize="10"
+                             Margin="0,20,0,0"
+                             HorizontalAlignment="Center"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</Window>
