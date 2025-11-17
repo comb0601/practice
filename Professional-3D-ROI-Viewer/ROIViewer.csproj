@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <AssemblyName>Professional3DROIViewer</AssemblyName>
+    <Product>Professional 3D ROI Viewer</Product>
+    <Version>1.0.0</Version>
+    <Authors>WPF 3D Masterclass</Authors>
+    <Description>Professional-grade 3D Region of Interest Viewer and Editor</Description>
+  </PropertyGroup>
+
+</Project>
