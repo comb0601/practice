@@ -12,7 +12,7 @@ Before starting, ensure you have:
 
 ### Required
 - [x] **Windows 10/11** (WPF is Windows-only)
-- [x] **.NET 6.0 SDK or later** - [Download here](https://dotnet.microsoft.com/download)
+- [x] **.NET 9.0 SDK or later** - [Download here](https://dotnet.microsoft.com/download)
 - [x] **Visual Studio 2022** (Community Edition is free) - [Download here](https://visualstudio.microsoft.com/)
   - OR **Visual Studio Code** with C# extension
 - [x] **Basic C# knowledge** - Variables, loops, functions, classes
@@ -22,7 +22,7 @@ Before starting, ensure you have:
 ```bash
 # Check .NET version
 dotnet --version
-# Should show 6.0.xxx or higher
+# Should show 9.0.xxx or higher
 
 # Check if project builds
 cd "Week1-2-Fundamentals/Lesson01_Hello3DWorld/Solution"

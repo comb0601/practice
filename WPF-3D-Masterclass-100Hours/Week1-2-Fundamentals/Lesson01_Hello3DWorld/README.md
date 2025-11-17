@@ -245,7 +245,7 @@ Create a **3D pyramid** (4 triangles forming a pyramid).
   ```
 
 ### Application won't run
-- **Check .NET version** - Should be 6.0 or later
+- **Check .NET version** - Should be 9.0 or later
 - **Run `dotnet build`** - Check for errors
 - **Check namespace** - Make sure XAML and C# match
 

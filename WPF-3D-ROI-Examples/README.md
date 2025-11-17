@@ -71,7 +71,7 @@ Advanced, production-ready 3D ROI editor with professional features.
 
 ### Prerequisites
 - **Windows** operating system
-- **.NET 6.0 SDK** or later ([Download here](https://dotnet.microsoft.com/download))
+- **.NET 9.0 SDK** or later ([Download here](https://dotnet.microsoft.com/download))
 - Any IDE (Visual Studio, VS Code, Rider) or just command line
 
 ### Running Each Application
@@ -307,11 +307,11 @@ Use these techniques to visualize:
 
 ### Application won't start
 ```bash
-# Check if .NET 6 is installed
+# Check if .NET 9 is installed
 dotnet --version
 
 # If not installed, download from:
-# https://dotnet.microsoft.com/download/dotnet/6.0
+# https://dotnet.microsoft.com/download/dotnet/9.0
 ```
 
 ### Build errors

@@ -9,7 +9,7 @@ Open PowerShell or Command Prompt and run:
 dotnet --version
 ```
 
-If you see a version number (like `6.0.xxx` or `7.0.xxx`), you're good!
+If you see a version number (like `9.0.xxx`), you're good!
 
 If not, download .NET from: https://dotnet.microsoft.com/download
 

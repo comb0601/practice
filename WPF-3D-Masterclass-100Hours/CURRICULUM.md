@@ -387,7 +387,7 @@ LessonXX_TopicName/
 ## 🛠️ Tools Required
 
 - **Visual Studio 2022** (Community Edition free)
-- **.NET 6.0 SDK** or later
+- **.NET 9.0 SDK** or later
 - **Windows 10/11** (WPF is Windows-only)
 - **Git** (for version control)
 - **Optional:** Visual Studio Code

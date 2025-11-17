@@ -10,7 +10,7 @@ A comprehensive, hands-on course with 50 progressive lessons, complete working c
 
 ```bash
 # 1. Verify prerequisites
-dotnet --version  # Should be 6.0 or higher
+dotnet --version  # Should be 9.0 or higher
 
 # 2. Start with Lesson 01
 cd Week1-2-Fundamentals/Lesson01_Hello3DWorld
@@ -141,7 +141,7 @@ WPF-3D-Masterclass-100Hours/
 - **C# Basics** - Variables, loops, classes
 - **OOP Concepts** - Inheritance, interfaces
 - **Windows** - Course requires Windows OS
-- **.NET 6.0+** - Free SDK from Microsoft
+- **.NET 9.0+** - Free SDK from Microsoft
 
 ### 📈 Skill Levels Covered:
 ```
@@ -346,7 +346,7 @@ Steady progress at your pace
 
 ### Essential
 - **Windows 10/11** - WPF requires Windows
-- **.NET 6.0 SDK** - [Download](https://dotnet.microsoft.com/download)
+- **.NET 9.0 SDK** - [Download](https://dotnet.microsoft.com/download)
 - **Visual Studio 2022** - Community is free
   - OR **VS Code** with C# extension
 
