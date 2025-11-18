@@ -1,0 +1,120 @@
+<Window x:Class="VisualTreeOptimization.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Visual Tree Optimization - Panel Performance Comparison"
+        Height="800" Width="1200"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Control Panel -->
+        <GroupBox Grid.Row="0" Header="Visual Tree Optimization Controls">
+            <StackPanel>
+                <WrapPanel>
+                    <Button x:Name="BtnSimpleTree" Content="Simple Tree" Click="BtnSimpleTree_Click"/>
+                    <Button x:Name="BtnComplexTree" Content="Complex Tree" Click="BtnComplexTree_Click"/>
+                    <Button x:Name="BtnOptimizedTree" Content="Optimized Tree" Click="BtnOptimizedTree_Click"/>
+                    <Button x:Name="BtnCompareCanvasGrid" Content="Canvas vs Grid" Click="BtnCompareCanvasGrid_Click"/>
+                    <Button x:Name="BtnCompareStackPanel" Content="StackPanel Performance" Click="BtnCompareStackPanel_Click"/>
+                    <Button x:Name="BtnAnalyzeTree" Content="Analyze Visual Tree" Click="BtnAnalyzeTree_Click"/>
+                    <Button x:Name="BtnClearDemo" Content="Clear" Click="BtnClearDemo_Click"/>
+                </WrapPanel>
+                <TextBlock x:Name="TxtInstructions" TextWrapping="Wrap" FontWeight="Bold" Foreground="DarkBlue">
+                    Click buttons to demonstrate visual tree optimization techniques and panel performance comparisons.
+                </TextBlock>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Demo Area -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Panel: Visualization -->
+            <GroupBox Grid.Column="0" Header="Visualization Area">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Border x:Name="VisualizationContainer"
+                            BorderBrush="LightGray"
+                            BorderThickness="1"
+                            Background="White"
+                            MinHeight="400">
+                    </Border>
+                </ScrollViewer>
+            </GroupBox>
+
+            <!-- Right Panel: Analysis -->
+            <GroupBox Grid.Column="1" Header="Visual Tree Analysis">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <TextBlock x:Name="TxtAnalysis"
+                                   TextWrapping="Wrap"
+                                   FontFamily="Consolas"
+                                   Background="WhiteSmoke"
+                                   Padding="10"/>
+
+                        <GroupBox Header="Performance Metrics" Margin="5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Visual Children:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TxtVisualChildren" Text="0" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Logical Children:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" x:Name="TxtLogicalChildren" Text="0" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Tree Depth:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" x:Name="TxtTreeDepth" Text="0" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Render Time:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="3" Grid.Column="1" x:Name="TxtRenderTime" Text="0 ms" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Layout Time:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="4" Grid.Column="1" x:Name="TxtLayoutTime" Text="0 ms" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="5" Grid.Column="0" Text="Memory Impact:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="5" Grid.Column="1" x:Name="TxtMemoryImpact" Text="0 KB" Margin="10,0,0,0"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Optimization Tips" Margin="5">
+                            <TextBlock x:Name="TxtOptimizationTips" TextWrapping="Wrap" Padding="5">
+                                • Minimize visual tree depth
+                                • Use appropriate panels for layout
+                                • Avoid nested panels when possible
+                                • Choose Canvas for absolute positioning
+                                • Use Grid for flexible layouts
+                                • StackPanel is simple but can be slow for many items
+                                • VirtualizingStackPanel for large lists
+                                • Reduce element count where possible
+                            </TextBlock>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </GroupBox>
+        </Grid>
+
+        <!-- Status Bar -->
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock x:Name="TxtStatus" Text="Ready - Select a demonstration to begin"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

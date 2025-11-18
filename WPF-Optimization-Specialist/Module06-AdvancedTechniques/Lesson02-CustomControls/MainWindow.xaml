@@ -1,0 +1,386 @@
+<Window x:Class="CustomControlsApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:CustomControlsApp.Controls"
+        Title="High-Performance Custom Controls - Module 6 Lesson 2"
+        Height="900" Width="1400"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2C3E50" Padding="15">
+            <StackPanel>
+                <TextBlock Text="High-Performance Custom Controls"
+                          FontSize="24" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="OnRender optimization, custom drawing, and visual performance"
+                          FontSize="14" Foreground="#ECF0F1" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <TabControl Grid.Row="1" Margin="5">
+
+            <!-- Tab 1: Chart Controls -->
+            <TabItem Header="High-Performance Chart">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Controls -->
+                    <GroupBox Grid.Row="0" Header="Chart Configuration">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Data Points:" FontWeight="Bold"/>
+                                <Slider x:Name="DataPointsSlider" Minimum="2" Maximum="8" Value="4"
+                                       TickFrequency="1" IsSnapToTickEnabled="True"/>
+                                <TextBlock>
+                                    <Run Text="Points: "/>
+                                    <Run x:Name="DataPointsText" Text="10,000" FontWeight="Bold"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Update Frequency:" FontWeight="Bold"/>
+                                <Slider x:Name="UpdateFrequencySlider" Minimum="1" Maximum="60" Value="30"
+                                       TickFrequency="5"/>
+                                <TextBlock>
+                                    <Run Text="FPS: "/>
+                                    <Run x:Name="UpdateFrequencyText" Text="30" FontWeight="Bold"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                <Button x:Name="StartChartBtn" Content="Start Animation" Click="StartChartBtn_Click"/>
+                                <Button x:Name="StopChartBtn" Content="Stop Animation" Click="StopChartBtn_Click" IsEnabled="False"/>
+                                <Button x:Name="RegenerateDataBtn" Content="New Random Data" Click="RegenerateDataBtn_Click"/>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+
+                    <!-- Chart Display -->
+                    <Border Grid.Row="1" BorderBrush="#CCCCCC" BorderThickness="1" Margin="10" Background="White">
+                        <local:HighPerformanceChart x:Name="PerformanceChart" />
+                    </Border>
+
+                    <!-- Statistics -->
+                    <GroupBox Grid.Row="2" Header="Performance Statistics">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" x:Name="ChartFpsText" FontFamily="Consolas" FontSize="14"/>
+                            <TextBlock Grid.Column="1" x:Name="ChartRenderTimeText" FontFamily="Consolas" FontSize="14"/>
+                            <TextBlock Grid.Column="2" x:Name="ChartMemoryText" FontFamily="Consolas" FontSize="14"/>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+
+            <!-- Tab 2: Custom Gauge -->
+            <TabItem Header="Custom Gauge Control">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Grid.Row="0" Header="Gauge Controls">
+                        <UniformGrid Rows="1" Columns="4">
+                            <StackPanel>
+                                <TextBlock Text="Target Value:" FontWeight="Bold"/>
+                                <Slider x:Name="GaugeValueSlider" Minimum="0" Maximum="100" Value="65"
+                                       TickFrequency="5"/>
+                                <TextBlock>
+                                    <Run Text="Value: "/>
+                                    <Run x:Name="GaugeValueText" Text="65" FontWeight="Bold"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel>
+                                <TextBlock Text="Animation Speed:" FontWeight="Bold"/>
+                                <Slider x:Name="GaugeSpeedSlider" Minimum="1" Maximum="20" Value="5"
+                                       TickFrequency="1" IsSnapToTickEnabled="True"/>
+                                <TextBlock>
+                                    <Run Text="Speed: "/>
+                                    <Run x:Name="GaugeSpeedText" Text="5" FontWeight="Bold"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel>
+                                <Button Content="Animate to Value" Click="AnimateGaugeBtn_Click" Margin="5,20,5,5"/>
+                                <Button Content="Random Value" Click="RandomGaugeBtn_Click"/>
+                            </StackPanel>
+
+                            <StackPanel>
+                                <CheckBox x:Name="ShowGaugeLabelsCheck" Content="Show Labels" IsChecked="True"
+                                         Margin="5,20,5,5"/>
+                                <CheckBox x:Name="ShowGaugeTicksCheck" Content="Show Ticks" IsChecked="True"/>
+                                <CheckBox x:Name="GaugeGradientCheck" Content="Color Gradient" IsChecked="True"/>
+                            </StackPanel>
+                        </UniformGrid>
+                    </GroupBox>
+
+                    <Border Grid.Row="1" Margin="10">
+                        <Viewbox>
+                            <local:CustomGauge x:Name="CustomGaugeControl"
+                                             Width="400" Height="400"
+                                             Minimum="0" Maximum="100" Value="65"/>
+                        </Viewbox>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- Tab 3: Particle System -->
+            <TabItem Header="Particle System">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Grid.Row="0" Header="Particle Controls">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Particle Count:" FontWeight="Bold"/>
+                                <Slider x:Name="ParticleCountSlider" Minimum="2" Maximum="6" Value="4"
+                                       TickFrequency="1" IsSnapToTickEnabled="True"/>
+                                <TextBlock>
+                                    <Run Text="Count: "/>
+                                    <Run x:Name="ParticleCountText" Text="10,000" FontWeight="Bold"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Particle Size:" FontWeight="Bold"/>
+                                <Slider x:Name="ParticleSizeSlider" Minimum="1" Maximum="10" Value="3"
+                                       TickFrequency="1" IsSnapToTickEnabled="True"/>
+                                <TextBlock>
+                                    <Run Text="Size: "/>
+                                    <Run x:Name="ParticleSizeText" Text="3" FontWeight="Bold"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Speed Multiplier:" FontWeight="Bold"/>
+                                <Slider x:Name="ParticleSpeedSlider" Minimum="0.1" Maximum="5" Value="1"
+                                       TickFrequency="0.5"/>
+                                <TextBlock>
+                                    <Run Text="Speed: "/>
+                                    <Run x:Name="ParticleSpeedText" Text="1.0x" FontWeight="Bold"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="3" VerticalAlignment="Center">
+                                <Button x:Name="StartParticlesBtn" Content="Start Simulation" Click="StartParticlesBtn_Click"/>
+                                <Button x:Name="StopParticlesBtn" Content="Stop Simulation" Click="StopParticlesBtn_Click" IsEnabled="False"/>
+                                <Button Content="Reset Particles" Click="ResetParticlesBtn_Click"/>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+
+                    <Border Grid.Row="1" BorderBrush="#CCCCCC" BorderThickness="1" Margin="10" Background="Black">
+                        <local:ParticleSystem x:Name="ParticleSystemControl" />
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- Tab 4: Custom Grid -->
+            <TabItem Header="Optimized Data Grid">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Grid.Row="0" Header="Grid Configuration">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Rows:" FontWeight="Bold"/>
+                                <Slider x:Name="GridRowsSlider" Minimum="10" Maximum="1000" Value="100"
+                                       TickFrequency="50"/>
+                                <TextBlock>
+                                    <Run Text="Count: "/>
+                                    <Run x:Name="GridRowsText" Text="100" FontWeight="Bold"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Columns:" FontWeight="Bold"/>
+                                <Slider x:Name="GridColumnsSlider" Minimum="3" Maximum="20" Value="8"
+                                       TickFrequency="1" IsSnapToTickEnabled="True"/>
+                                <TextBlock>
+                                    <Run Text="Count: "/>
+                                    <Run x:Name="GridColumnsText" Text="8" FontWeight="Bold"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                <Button Content="Generate Grid" Click="GenerateGridBtn_Click"/>
+                                <Button Content="Update Random Cells" Click="UpdateCellsBtn_Click"/>
+                                <CheckBox x:Name="GridAlternateRowsCheck" Content="Alternate Row Colors" IsChecked="True" Margin="5"/>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+
+                    <Border Grid.Row="1" BorderBrush="#CCCCCC" BorderThickness="1" Margin="10" Background="White">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <local:HighPerformanceGrid x:Name="CustomDataGrid" />
+                        </ScrollViewer>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- Tab 5: Performance Comparison -->
+            <TabItem Header="Performance Analysis">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <GroupBox Header="OnRender vs Visual Tree Performance">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" Margin="5">
+                                    This tab compares performance characteristics of different rendering approaches in WPF.
+                                </TextBlock>
+
+                                <Border Background="#E3F2FD" Padding="15" Margin="5" BorderBrush="#2196F3" BorderThickness="2">
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" FontSize="16" Margin="0,0,0,10">
+                                            OnRender Method Benefits:
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            • Direct drawing context access - minimal overhead
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            • No visual tree overhead - single DrawingContext
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            • Efficient for thousands of primitives (lines, ellipses, text)
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            • Cached rendering - only redraws when InvalidateVisual() called
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            • Hardware accelerated - uses GPU when available
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Background="#FFF3E0" Padding="15" Margin="5" BorderBrush="#FF9800" BorderThickness="2">
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" FontSize="16" Margin="0,0,0,10">
+                                            Visual Tree Approach:
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            • Each element creates Visual objects
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            • Memory overhead per element
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            • Layout and measure passes required
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            • Good for interactive elements with hit testing
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            • Suitable for moderate element counts (&lt; 1000)
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Background="#F1F8E9" Padding="15" Margin="5" BorderBrush="#8BC34A" BorderThickness="2">
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" FontSize="16" Margin="0,0,0,10">
+                                            Performance Metrics from This Application:
+                                        </TextBlock>
+                                        <TextBlock x:Name="PerformanceMetricsText" FontFamily="Consolas"
+                                                  TextWrapping="Wrap" FontSize="12"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Background="#FCE4EC" Padding="15" Margin="5" BorderBrush="#E91E63" BorderThickness="2">
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" FontSize="16" Margin="0,0,0,10">
+                                            Best Practices:
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            1. Use OnRender for custom visualizations with many primitives
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            2. Cache Pen and Brush objects - don't create in OnRender
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            3. Use frozen resources (Freeze()) for immutable objects
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            4. Minimize InvalidateVisual() calls - batch updates
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            5. Consider DrawingVisual for complex static content
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            6. Use GuidelineSet for pixel-perfect rendering at standard DPI
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            7. Avoid allocations in OnRender - prepare data beforehand
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+        </TabControl>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" Background="#34495E" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="StatusText" Grid.Column="0" Foreground="White" VerticalAlignment="Center"
+                          Text="Ready. Explore high-performance custom controls using OnRender optimization."/>
+                <TextBlock Grid.Column="1" Foreground="#ECF0F1" VerticalAlignment="Center" Margin="0,0,20,0">
+                    <Run Text="Render FPS: "/>
+                    <Run x:Name="RenderFpsText" Text="0" FontWeight="Bold"/>
+                </TextBlock>
+                <TextBlock Grid.Column="2" Foreground="#ECF0F1" VerticalAlignment="Center">
+                    <Run Text="Memory: "/>
+                    <Run x:Name="MemoryText" Text="0 MB" FontWeight="Bold"/>
+                </TextBlock>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,433 @@
+<Window x:Class="BackgroundWorkers.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Background Workers &amp; Threading - UI Thread Optimization"
+        Height="850" Width="1100"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#4CAF50" Padding="15" CornerRadius="5">
+            <StackPanel>
+                <TextBlock Text="Background Workers &amp; Threading"
+                          FontSize="24" FontWeight="Bold"
+                          Foreground="White"/>
+                <TextBlock Text="Master threading patterns and Dispatcher optimization for responsive WPF applications"
+                          FontSize="14" Foreground="White" Opacity="0.9"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <TabControl Grid.Row="1" Margin="0,10,0,0">
+
+            <!-- Tab 1: BackgroundWorker -->
+            <TabItem Header="BackgroundWorker">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="1. BackgroundWorker Component"
+                                  FontSize="18" FontWeight="Bold" Foreground="#4CAF50"/>
+                        <TextBlock Text="Classic .NET pattern for background operations with progress reporting"
+                                  TextWrapping="Wrap" Foreground="#666"/>
+
+                        <Separator Margin="0,10"/>
+
+                        <GroupBox Header="Basic BackgroundWorker">
+                            <StackPanel>
+                                <TextBlock Text="Run long operations on background thread with progress updates:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Start Work"
+                                           Click="OnStartBackgroundWorker"
+                                           x:Name="StartBgWorkerButton"/>
+                                    <Button Content="Cancel"
+                                           Click="OnCancelBackgroundWorker"
+                                           x:Name="CancelBgWorkerButton"
+                                           IsEnabled="False"
+                                           Background="#F44336"/>
+                                </StackPanel>
+
+                                <ProgressBar x:Name="BgWorkerProgress"
+                                           Minimum="0" Maximum="100"/>
+
+                                <TextBlock x:Name="BgWorkerStatus"
+                                          Text="Ready to start"
+                                          FontWeight="Bold"
+                                          Foreground="#4CAF50"/>
+
+                                <TextBox x:Name="BgWorkerLog"
+                                        Height="100"
+                                        TextWrapping="Wrap"
+                                        VerticalScrollBarVisibility="Auto"
+                                        IsReadOnly="True"
+                                        FontFamily="Consolas"
+                                        FontSize="12"
+                                        Margin="5,10,5,5"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Data Processing Example">
+                            <StackPanel>
+                                <TextBlock Text="Process large dataset in background with real-time progress:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Items to process:"
+                                              VerticalAlignment="Center" Margin="5"/>
+                                    <Slider Grid.Column="1" x:Name="ItemCountSlider"
+                                           Minimum="1000" Maximum="100000"
+                                           Value="10000"
+                                           TickFrequency="10000"
+                                           IsSnapToTickEnabled="True"/>
+                                </Grid>
+
+                                <TextBlock>
+                                    <Run Text="Count: "/>
+                                    <Run Text="{Binding ElementName=ItemCountSlider, Path=Value}"
+                                         FontWeight="Bold"/>
+                                </TextBlock>
+
+                                <Button Content="Process Data"
+                                       Click="OnProcessData"
+                                       x:Name="ProcessDataButton"/>
+
+                                <ProgressBar x:Name="ProcessProgress"
+                                           Minimum="0" Maximum="100"/>
+
+                                <TextBlock x:Name="ProcessStatus"/>
+
+                                <TextBlock x:Name="ProcessResults"
+                                          FontFamily="Consolas"
+                                          FontSize="12"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Tab 2: Thread & ThreadPool -->
+            <TabItem Header="Thread &amp; ThreadPool">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="2. Thread and ThreadPool"
+                                  FontSize="18" FontWeight="Bold" Foreground="#4CAF50"/>
+                        <TextBlock Text="Manual thread management and thread pool optimization"
+                                  TextWrapping="Wrap" Foreground="#666"/>
+
+                        <Separator Margin="0,10"/>
+
+                        <GroupBox Header="Thread Creation Comparison">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                                    <Run Text="Compare performance: "/>
+                                    <Run Text="new Thread()" FontWeight="Bold"/>
+                                    <Run Text=" vs "/>
+                                    <Run Text="ThreadPool.QueueUserWorkItem()" FontWeight="Bold"/>
+                                </TextBlock>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Use new Thread()"
+                                           Click="OnUseNewThread"/>
+                                    <Button Content="Use ThreadPool"
+                                           Click="OnUseThreadPool"/>
+                                    <Button Content="Compare (10 tasks)"
+                                           Click="OnCompareThreading"/>
+                                </StackPanel>
+
+                                <TextBox x:Name="ThreadLog"
+                                        Height="150"
+                                        TextWrapping="Wrap"
+                                        VerticalScrollBarVisibility="Auto"
+                                        IsReadOnly="True"
+                                        FontFamily="Consolas"
+                                        FontSize="12"
+                                        Margin="5,10"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Thread Pool Statistics">
+                            <StackPanel>
+                                <Button Content="Get ThreadPool Info"
+                                       Click="OnGetThreadPoolInfo"/>
+
+                                <Grid Margin="5,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Available Worker Threads:"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="1" x:Name="WorkerThreadsText" FontWeight="Bold"/>
+
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Available I/O Threads:"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" x:Name="IOThreadsText" FontWeight="Bold"/>
+
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Max Worker Threads:"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" x:Name="MaxWorkerThreadsText" FontWeight="Bold"/>
+
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Max I/O Threads:"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="1" x:Name="MaxIOThreadsText" FontWeight="Bold"/>
+
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Processor Count:"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="1" x:Name="ProcessorCountText" FontWeight="Bold"/>
+                                </Grid>
+
+                                <Button Content="Simulate ThreadPool Saturation"
+                                       Click="OnSimulateThreadPoolSaturation"
+                                       Background="#FF9800"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Tab 3: Dispatcher Optimization -->
+            <TabItem Header="Dispatcher">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="3. Dispatcher Optimization"
+                                  FontSize="18" FontWeight="Bold" Foreground="#4CAF50"/>
+                        <TextBlock Text="Efficient UI updates from background threads"
+                                  TextWrapping="Wrap" Foreground="#666"/>
+
+                        <Separator Margin="0,10"/>
+
+                        <GroupBox Header="Dispatcher Priority">
+                            <StackPanel>
+                                <TextBlock Text="Test different Dispatcher priority levels:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <ComboBox x:Name="DispatcherPriorityCombo"
+                                         SelectedIndex="0"
+                                         Margin="5">
+                                    <ComboBoxItem Content="Background (Lowest)"/>
+                                    <ComboBoxItem Content="Input"/>
+                                    <ComboBoxItem Content="Normal"/>
+                                    <ComboBoxItem Content="Send (Highest)"/>
+                                </ComboBox>
+
+                                <Button Content="Queue 100 Updates"
+                                       Click="OnQueueDispatcherUpdates"/>
+
+                                <ProgressBar x:Name="DispatcherProgress"
+                                           Minimum="0" Maximum="100"/>
+
+                                <TextBlock x:Name="DispatcherStatus"/>
+
+                                <TextBlock x:Name="DispatcherPerformance"
+                                          FontFamily="Consolas"
+                                          FontSize="12"
+                                          Foreground="#FF9800"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Batched UI Updates">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                                    <Run Text="Compare: "/>
+                                    <Run Text="Individual updates" FontWeight="Bold"/>
+                                    <Run Text=" vs "/>
+                                    <Run Text="Batched updates" FontWeight="Bold"/>
+                                </TextBlock>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Individual Updates (Slow)"
+                                           Click="OnIndividualUpdates"/>
+                                    <Button Content="Batched Updates (Fast)"
+                                           Click="OnBatchedUpdates"/>
+                                </StackPanel>
+
+                                <ListBox x:Name="UpdatesListBox"
+                                        Height="150"
+                                        Margin="5,10"/>
+
+                                <TextBlock x:Name="BatchingResults"
+                                          FontWeight="Bold"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Dispatcher Timer">
+                            <StackPanel>
+                                <TextBlock Text="UI updates using DispatcherTimer:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Update Interval (ms):"
+                                              VerticalAlignment="Center"/>
+                                    <Slider Grid.Column="1" x:Name="TimerIntervalSlider"
+                                           Minimum="10" Maximum="1000"
+                                           Value="100"
+                                           TickFrequency="50"/>
+                                </Grid>
+
+                                <TextBlock>
+                                    <Run Text="Interval: "/>
+                                    <Run Text="{Binding ElementName=TimerIntervalSlider, Path=Value, StringFormat='{}{0:F0}'}"
+                                         FontWeight="Bold"/>
+                                    <Run Text="ms"/>
+                                </TextBlock>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Start Timer"
+                                           Click="OnStartTimer"
+                                           x:Name="StartTimerButton"/>
+                                    <Button Content="Stop Timer"
+                                           Click="OnStopTimer"
+                                           x:Name="StopTimerButton"
+                                           IsEnabled="False"/>
+                                </StackPanel>
+
+                                <TextBlock x:Name="TimerUpdateCount"
+                                          FontSize="24"
+                                          FontWeight="Bold"
+                                          HorizontalAlignment="Center"
+                                          Margin="10"/>
+
+                                <ProgressBar x:Name="TimerProgress"
+                                           IsIndeterminate="False"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Tab 4: Advanced Threading -->
+            <TabItem Header="Advanced">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="4. Advanced Threading Patterns"
+                                  FontSize="18" FontWeight="Bold" Foreground="#4CAF50"/>
+                        <TextBlock Text="Thread synchronization and coordination"
+                                  TextWrapping="Wrap" Foreground="#666"/>
+
+                        <Separator Margin="0,10"/>
+
+                        <GroupBox Header="Producer-Consumer Pattern">
+                            <StackPanel>
+                                <TextBlock Text="Demonstrate thread-safe queue with multiple producers and consumers:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Producers:" FontWeight="Bold"/>
+                                        <Slider x:Name="ProducerCountSlider"
+                                               Minimum="1" Maximum="5"
+                                               Value="2"
+                                               TickFrequency="1"
+                                               IsSnapToTickEnabled="True"/>
+                                        <TextBlock Text="{Binding ElementName=ProducerCountSlider, Path=Value, StringFormat='Count: {0}'}"
+                                                  HorizontalAlignment="Center"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="Consumers:" FontWeight="Bold"/>
+                                        <Slider x:Name="ConsumerCountSlider"
+                                               Minimum="1" Maximum="5"
+                                               Value="3"
+                                               TickFrequency="1"
+                                               IsSnapToTickEnabled="True"/>
+                                        <TextBlock Text="{Binding ElementName=ConsumerCountSlider, Path=Value, StringFormat='Count: {0}'}"
+                                                  HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <Button Content="Start Producer-Consumer"
+                                       Click="OnStartProducerConsumer"
+                                       x:Name="StartPCButton"/>
+
+                                <Button Content="Stop"
+                                       Click="OnStopProducerConsumer"
+                                       x:Name="StopPCButton"
+                                       IsEnabled="False"
+                                       Background="#F44336"/>
+
+                                <TextBox x:Name="ProducerConsumerLog"
+                                        Height="150"
+                                        TextWrapping="Wrap"
+                                        VerticalScrollBarVisibility="Auto"
+                                        IsReadOnly="True"
+                                        FontFamily="Consolas"
+                                        FontSize="11"
+                                        Margin="5,10"/>
+
+                                <TextBlock x:Name="PCStats"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Thread Synchronization">
+                            <StackPanel>
+                                <TextBlock Text="Race condition demonstration with and without locks:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Without Lock (Unsafe)"
+                                           Click="OnRaceConditionUnsafe"
+                                           Background="#F44336"/>
+                                    <Button Content="With Lock (Safe)"
+                                           Click="OnRaceConditionSafe"
+                                           Background="#4CAF50"/>
+                                    <Button Content="With Interlocked"
+                                           Click="OnRaceConditionInterlocked"
+                                           Background="#2196F3"/>
+                                </StackPanel>
+
+                                <TextBlock x:Name="RaceConditionResult"
+                                          FontSize="16"
+                                          FontWeight="Bold"
+                                          Margin="10"
+                                          HorizontalAlignment="Center"/>
+
+                                <TextBlock x:Name="RaceConditionDetails"
+                                          FontFamily="Consolas"
+                                          FontSize="12"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Thread-Safe Collections">
+                            <StackPanel>
+                                <TextBlock Text="Concurrent collections performance test:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <Button Content="Run Concurrent Collection Test"
+                                       Click="OnConcurrentCollectionTest"/>
+
+                                <DataGrid x:Name="CollectionTestGrid"
+                                         Height="150"
+                                         Margin="5,10"
+                                         AutoGenerateColumns="True"
+                                         IsReadOnly="True"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</Window>

@@ -1,0 +1,154 @@
+<Window x:Class="RenderingPipeline.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WPF Rendering Pipeline - Internals and DirectX Integration"
+        Height="900" Width="1400"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Control Panel -->
+        <GroupBox Grid.Row="0" Header="Rendering Pipeline Demonstrations">
+            <StackPanel>
+                <WrapPanel>
+                    <Button x:Name="BtnShowPipeline" Content="Pipeline Overview" Click="BtnShowPipeline_Click"/>
+                    <Button x:Name="BtnRenderTiers" Content="Render Tiers" Click="BtnRenderTiers_Click"/>
+                    <Button x:Name="BtnMeasureArrange" Content="Measure/Arrange" Click="BtnMeasureArrange_Click"/>
+                    <Button x:Name="BtnRenderingEvents" Content="Rendering Events" Click="BtnRenderingEvents_Click"/>
+                    <Button x:Name="BtnDirtyRegions" Content="Dirty Regions" Click="BtnDirtyRegions_Click"/>
+                    <Button x:Name="BtnCompositionTarget" Content="CompositionTarget" Click="BtnCompositionTarget_Click"/>
+                    <Button x:Name="BtnDirectXInfo" Content="DirectX Info" Click="BtnDirectXInfo_Click"/>
+                    <Button x:Name="BtnClearDemo" Content="Clear" Click="BtnClearDemo_Click"/>
+                </WrapPanel>
+                <TextBlock x:Name="TxtInstructions" TextWrapping="Wrap" FontWeight="Bold" Foreground="DarkBlue">
+                    Explore WPF's rendering pipeline, from layout to DirectX rendering. Learn how WPF processes and renders visual content.
+                </TextBlock>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Demo Area -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Panel: Visualization -->
+            <GroupBox Grid.Column="0" Header="Pipeline Visualization">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Border x:Name="VisualizationContainer"
+                            BorderBrush="LightGray"
+                            BorderThickness="1"
+                            Background="White"
+                            MinHeight="600">
+                    </Border>
+                </ScrollViewer>
+            </GroupBox>
+
+            <!-- Right Panel: Information -->
+            <GroupBox Grid.Column="1" Header="Pipeline Information">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <GroupBox Header="System Information">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Render Tier:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TxtRenderTier" Text="-" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Graphics Mode:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" x:Name="TxtGraphicsMode" Text="-" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="DirectX Version:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" x:Name="TxtDirectXVersion" Text="-" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Refresh Rate:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="3" Grid.Column="1" x:Name="TxtRefreshRate" Text="-" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Max Texture Size:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="4" Grid.Column="1" x:Name="TxtMaxTextureSize" Text="-" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="5" Grid.Column="0" Text="DPI Scale:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="5" Grid.Column="1" x:Name="TxtDpiScale" Text="-" Margin="10,0,0,0"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Rendering Statistics">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Frame Count:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TxtFrameCount" Text="0" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="FPS:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" x:Name="TxtFPS" Text="0" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Render Time:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" x:Name="TxtRenderTime" Text="0 ms" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Layout Passes:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="3" Grid.Column="1" x:Name="TxtLayoutPasses" Text="0" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Events Fired:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="4" Grid.Column="1" x:Name="TxtEventsFired" Text="0" Margin="10,0,0,0"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Pipeline Details">
+                            <TextBlock x:Name="TxtPipelineDetails"
+                                       TextWrapping="Wrap"
+                                       FontFamily="Consolas"
+                                       FontSize="11"
+                                       Background="WhiteSmoke"
+                                       Padding="10"/>
+                        </GroupBox>
+
+                        <GroupBox Header="Event Log">
+                            <ScrollViewer MaxHeight="200" VerticalScrollBarVisibility="Auto">
+                                <TextBlock x:Name="TxtEventLog"
+                                           TextWrapping="Wrap"
+                                           FontFamily="Consolas"
+                                           FontSize="10"
+                                           Background="Black"
+                                           Foreground="LightGreen"
+                                           Padding="5"/>
+                            </ScrollViewer>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </GroupBox>
+        </Grid>
+
+        <!-- Status Bar -->
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock x:Name="TxtStatus" Text="Ready - Select a demonstration to explore WPF rendering pipeline"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

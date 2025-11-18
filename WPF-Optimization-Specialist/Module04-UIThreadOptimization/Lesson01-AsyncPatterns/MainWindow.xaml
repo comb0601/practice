@@ -1,0 +1,327 @@
+<Window x:Class="AsyncPatterns.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Async Patterns in WPF - UI Thread Optimization"
+        Height="800" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#1976D2" Padding="15" CornerRadius="5">
+            <StackPanel>
+                <TextBlock Text="Async Patterns in WPF"
+                          FontSize="24" FontWeight="Bold"
+                          Foreground="White"/>
+                <TextBlock Text="Interactive demonstrations of async/await patterns and ConfigureAwait"
+                          FontSize="14" Foreground="White" Opacity="0.9"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <TabControl Grid.Row="1" Margin="0,10,0,0">
+
+            <!-- Tab 1: Basic Async/Await -->
+            <TabItem Header="Basic Async/Await">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="1. Basic Async/Await Pattern"
+                                  FontSize="18" FontWeight="Bold" Foreground="#1976D2"/>
+                        <TextBlock Text="Demonstrates proper async/await usage to keep UI responsive"
+                                  TextWrapping="Wrap" Foreground="#666"/>
+
+                        <Separator Margin="0,10"/>
+
+                        <GroupBox Header="Synchronous vs Asynchronous Operations" Padding="10">
+                            <StackPanel>
+                                <TextBlock Text="Click buttons to see the difference in UI responsiveness:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Blocking (Bad)"
+                                           Click="OnBlockingOperation"
+                                           Background="#D32F2F"/>
+                                    <Button Content="Async (Good)"
+                                           Click="OnAsyncOperation"
+                                           Background="#388E3C"/>
+                                    <Button Content="Cancel"
+                                           Click="OnCancelAsync"
+                                           x:Name="CancelButton"
+                                           IsEnabled="False"/>
+                                </StackPanel>
+
+                                <ProgressBar x:Name="AsyncProgress"
+                                           IsIndeterminate="False"
+                                           Margin="5,10"/>
+
+                                <TextBlock x:Name="AsyncStatus"
+                                          Text="Ready"
+                                          Foreground="#1976D2"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Data Loading Examples" Padding="10" Margin="0,10,0,0">
+                            <StackPanel>
+                                <TextBlock Text="Load data asynchronously from different sources:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Load File" Click="OnLoadFileAsync"/>
+                                    <Button Content="Fetch Web Data" Click="OnFetchWebDataAsync"/>
+                                    <Button Content="Database Query" Click="OnDatabaseQueryAsync"/>
+                                </StackPanel>
+
+                                <TextBox x:Name="DataResultBox"
+                                        Height="150"
+                                        TextWrapping="Wrap"
+                                        VerticalScrollBarVisibility="Auto"
+                                        IsReadOnly="True"
+                                        FontFamily="Consolas"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="UI Interaction Test" Padding="10" Margin="0,10,0,0">
+                            <StackPanel>
+                                <TextBlock Text="Try interacting with these controls while async operations run:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <Slider x:Name="TestSlider"
+                                       Minimum="0" Maximum="100"
+                                       ValueChanged="OnSliderChanged"/>
+
+                                <TextBlock>
+                                    <Run Text="Slider Value: "/>
+                                    <Run x:Name="SliderValueText" Text="0" FontWeight="Bold"/>
+                                </TextBlock>
+
+                                <Button Content="Start Long Running Task"
+                                       Click="OnStartLongTaskAsync"
+                                       Margin="5,10,5,5"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Tab 2: ConfigureAwait -->
+            <TabItem Header="ConfigureAwait">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="2. ConfigureAwait Patterns"
+                                  FontSize="18" FontWeight="Bold" Foreground="#1976D2"/>
+                        <TextBlock Text="Understanding ConfigureAwait(false) vs ConfigureAwait(true)"
+                                  TextWrapping="Wrap" Foreground="#666"/>
+
+                        <Separator Margin="0,10"/>
+
+                        <GroupBox Header="ConfigureAwait Demonstration" Padding="10">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                                    <Run Text="ConfigureAwait(false)" FontWeight="Bold"/>
+                                    <Run Text=" = Don't capture context (better performance, use in library code)"/>
+                                    <LineBreak/>
+                                    <Run Text="ConfigureAwait(true)" FontWeight="Bold"/>
+                                    <Run Text=" = Capture context (default, needed when updating UI)"/>
+                                </TextBlock>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="With ConfigureAwait(false)"
+                                           Click="OnConfigureAwaitFalse"/>
+                                    <Button Content="With ConfigureAwait(true)"
+                                           Click="OnConfigureAwaitTrue"/>
+                                    <Button Content="Without ConfigureAwait"
+                                           Click="OnWithoutConfigureAwait"/>
+                                </StackPanel>
+
+                                <TextBox x:Name="ConfigureAwaitLog"
+                                        Height="200"
+                                        TextWrapping="Wrap"
+                                        VerticalScrollBarVisibility="Auto"
+                                        IsReadOnly="True"
+                                        FontFamily="Consolas"
+                                        Margin="5,10"/>
+
+                                <Button Content="Clear Log"
+                                       Click="OnClearConfigureAwaitLog"
+                                       HorizontalAlignment="Left"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Context Switching Analysis" Padding="10" Margin="0,10,0,0">
+                            <StackPanel>
+                                <TextBlock Text="Analyze thread context switching with different patterns:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <Button Content="Run Context Analysis"
+                                       Click="OnRunContextAnalysis"/>
+
+                                <DataGrid x:Name="ContextAnalysisGrid"
+                                         Height="200"
+                                         Margin="5,10"
+                                         AutoGenerateColumns="True"
+                                         IsReadOnly="True"
+                                         HeadersVisibility="Column"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Tab 3: Error Handling -->
+            <TabItem Header="Error Handling">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="3. Async Error Handling"
+                                  FontSize="18" FontWeight="Bold" Foreground="#1976D2"/>
+                        <TextBlock Text="Proper exception handling in async operations"
+                                  TextWrapping="Wrap" Foreground="#666"/>
+
+                        <Separator Margin="0,10"/>
+
+                        <GroupBox Header="Exception Scenarios" Padding="10">
+                            <StackPanel>
+                                <TextBlock Text="Test different exception handling scenarios:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Try/Catch Pattern"
+                                           Click="OnTryCatchAsync"/>
+                                    <Button Content="AggregateException"
+                                           Click="OnAggregateExceptionAsync"/>
+                                    <Button Content="Timeout Handling"
+                                           Click="OnTimeoutAsync"/>
+                                </StackPanel>
+
+                                <TextBox x:Name="ErrorHandlingLog"
+                                        Height="150"
+                                        TextWrapping="Wrap"
+                                        VerticalScrollBarVisibility="Auto"
+                                        IsReadOnly="True"
+                                        FontFamily="Consolas"
+                                        Margin="5,10"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Cancellation Patterns" Padding="10" Margin="0,10,0,0">
+                            <StackPanel>
+                                <TextBlock Text="Demonstrate proper cancellation handling:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Start Cancellable Task"
+                                           Click="OnStartCancellableTask"
+                                           x:Name="StartCancellableButton"/>
+                                    <Button Content="Cancel Task"
+                                           Click="OnCancelTask"
+                                           x:Name="CancelTaskButton"
+                                           IsEnabled="False"
+                                           Background="#D32F2F"/>
+                                </StackPanel>
+
+                                <ProgressBar x:Name="CancellableProgress"
+                                           Minimum="0" Maximum="100"
+                                           Margin="5,10"/>
+
+                                <TextBlock x:Name="CancellableStatus"
+                                          Text="Ready"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Tab 4: Advanced Patterns -->
+            <TabItem Header="Advanced Patterns">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="4. Advanced Async Patterns"
+                                  FontSize="18" FontWeight="Bold" Foreground="#1976D2"/>
+                        <TextBlock Text="Parallel async operations, throttling, and coordination"
+                                  TextWrapping="Wrap" Foreground="#666"/>
+
+                        <Separator Margin="0,10"/>
+
+                        <GroupBox Header="Parallel Async Operations" Padding="10">
+                            <StackPanel>
+                                <TextBlock Text="Execute multiple async operations in parallel:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Sequential Execution"
+                                           Click="OnSequentialAsync"/>
+                                    <Button Content="Parallel Execution"
+                                           Click="OnParallelAsync"/>
+                                    <Button Content="WhenAll Pattern"
+                                           Click="OnWhenAllAsync"/>
+                                    <Button Content="WhenAny Pattern"
+                                           Click="OnWhenAnyAsync"/>
+                                </StackPanel>
+
+                                <TextBlock x:Name="ParallelStatus"
+                                          Margin="5,10"
+                                          FontWeight="Bold"/>
+
+                                <ItemsControl x:Name="ParallelTasks">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="#E0E0E0"
+                                                   BorderThickness="1"
+                                                   Margin="5"
+                                                   Padding="10"
+                                                   CornerRadius="3">
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Name}"
+                                                              FontWeight="Bold"/>
+                                                    <ProgressBar Value="{Binding Progress}"
+                                                               Height="15"
+                                                               Margin="0,5"/>
+                                                    <TextBlock Text="{Binding Status}"
+                                                              FontSize="12"
+                                                              Foreground="#666"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Async Throttling" Padding="10" Margin="0,10,0,0">
+                            <StackPanel>
+                                <TextBlock Text="Limit concurrent async operations with SemaphoreSlim:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0"
+                                              Text="Max Concurrent:"
+                                              VerticalAlignment="Center"/>
+                                    <Slider Grid.Column="1"
+                                           x:Name="ThrottleSlider"
+                                           Minimum="1" Maximum="10"
+                                           Value="3"
+                                           TickFrequency="1"
+                                           IsSnapToTickEnabled="True"/>
+                                </Grid>
+
+                                <Button Content="Start Throttled Operations"
+                                       Click="OnThrottledOperations"/>
+
+                                <TextBlock x:Name="ThrottleStatus"
+                                          Margin="5,10"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</Window>

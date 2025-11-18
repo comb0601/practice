@@ -1,0 +1,336 @@
+<Window x:Class="WeakReferences.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Weak References and Event Patterns" Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="MinWidth" Value="120"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#E91E63" Padding="15">
+            <StackPanel>
+                <TextBlock Text="Weak References and Event Patterns"
+                          FontSize="24" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="Master WeakReference patterns, weak event managers, and memory-efficient event handling"
+                          FontSize="14" Foreground="#FCE4EC" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <TabControl Grid.Row="1" Margin="10">
+            <TabItem Header="WeakReference Basics">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="WeakReference and WeakReference<T>" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            Weak references allow you to reference objects without preventing garbage collection.
+                            Perfect for caches, event handlers, and optional object tracking.
+                        </TextBlock>
+
+                        <GroupBox Header="Weak Reference Demonstration">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Button Content="Create Strong References" Click="CreateStrongReferences_Click"/>
+                                    <Button Content="Create Weak References" Click="CreateWeakReferences_Click"/>
+                                    <Button Content="Force GC" Click="ForceGC_Click"/>
+                                    <Button Content="Check Status" Click="CheckReferences_Click"/>
+                                </WrapPanel>
+
+                                <Grid Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" Background="#FFEBEE" Padding="10" Margin="5" BorderBrush="#F44336" BorderThickness="2">
+                                        <StackPanel>
+                                            <TextBlock Text="Strong References" FontWeight="Bold" Foreground="#C62828"/>
+                                            <TextBlock x:Name="StrongRefCount" Text="Created: 0" Margin="0,5,0,0"/>
+                                            <TextBlock x:Name="StrongRefAlive" Text="Alive: 0"/>
+                                            <TextBlock Text="Prevents garbage collection" FontStyle="Italic" Foreground="#666"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Grid.Column="1" Background="#E8F5E9" Padding="10" Margin="5" BorderBrush="#4CAF50" BorderThickness="2">
+                                        <StackPanel>
+                                            <TextBlock Text="Weak References" FontWeight="Bold" Foreground="#2E7D32"/>
+                                            <TextBlock x:Name="WeakRefCount" Text="Created: 0" Margin="0,5,0,0"/>
+                                            <TextBlock x:Name="WeakRefAlive" Text="Alive: 0"/>
+                                            <TextBlock Text="Allows garbage collection" FontStyle="Italic" Foreground="#666"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <Border Background="#E1F5FE" Padding="10" Margin="0,10,0,0" BorderBrush="#0277BD" BorderThickness="1">
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Run FontWeight="Bold">Key Concept:</Run> Weak references don't prevent objects from being collected.
+                                        Use WeakReference&lt;T&gt; (generic) for better performance in .NET 4.5+.
+                                    </TextBlock>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Weak Event Pattern">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Weak Event Pattern" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            The weak event pattern prevents memory leaks from event subscriptions by using
+                            weak references to subscribers.
+                        </TextBlock>
+
+                        <GroupBox Header="Pattern Comparison">
+                            <StackPanel>
+                                <TextBlock Text="Standard Events vs Weak Events:" FontWeight="Bold"/>
+
+                                <WrapPanel Margin="0,10,0,0">
+                                    <Button Content="Subscribe Standard (Leaky)" Click="SubscribeStandard_Click"/>
+                                    <Button Content="Subscribe Weak (Safe)" Click="SubscribeWeak_Click"/>
+                                    <Button Content="Trigger Events" Click="TriggerEvents_Click"/>
+                                    <Button Content="Clear Subscribers" Click="ClearSubscribers_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock Text="Subscriber Status:" FontWeight="Bold" Margin="0,10,0,0"/>
+                                <TextBlock x:Name="StandardSubscribers" Text="Standard: 0 subscribers"/>
+                                <TextBlock x:Name="WeakSubscribers" Text="Weak: 0 subscribers" Margin="0,5,0,0"/>
+
+                                <Border Background="#FFF3E0" Padding="10" Margin="0,10,0,0" BorderBrush="#FF6F00" BorderThickness="1">
+                                    <StackPanel>
+                                        <TextBlock Text="Standard Event Problem:" FontWeight="Bold"/>
+                                        <TextBlock TextWrapping="Wrap" Margin="0,5,0,0">
+                                            Publisher holds strong reference to subscribers → Memory leak if not unsubscribed
+                                        </TextBlock>
+                                        <TextBlock Text="Weak Event Solution:" FontWeight="Bold" Margin="0,10,0,0"/>
+                                        <TextBlock TextWrapping="Wrap" Margin="0,5,0,0">
+                                            Publisher holds weak reference to subscribers → Automatic cleanup when collected
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="WeakEventManager">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="WPF WeakEventManager" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            WPF provides WeakEventManager for built-in weak event patterns, particularly
+                            useful for PropertyChanged and CollectionChanged events.
+                        </TextBlock>
+
+                        <GroupBox Header="PropertyChangedEventManager">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Button Content="Subscribe with WeakEventManager" Click="SubscribePropertyChanged_Click"/>
+                                    <Button Content="Update Property" Click="UpdateProperty_Click"/>
+                                    <Button Content="Remove Listener" Click="RemoveListener_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock x:Name="PropertyChangedStatus" Text="No subscriptions" Margin="0,10,0,0" FontWeight="Bold"/>
+
+                                <Border Background="#E8F5E9" Padding="10" Margin="0,10,0,0" BorderBrush="#4CAF50" BorderThickness="1">
+                                    <StackPanel>
+                                        <TextBlock Text="PropertyChangedEventManager Example:" FontWeight="Bold"/>
+                                        <TextBlock Text="PropertyChangedEventManager.AddHandler(source, OnPropertyChanged, &quot;PropertyName&quot;);" FontFamily="Consolas" Margin="0,5,0,0"/>
+                                        <TextBlock TextWrapping="Wrap" Margin="0,5,0,0">
+                                            No need to manually unsubscribe - GC handles cleanup automatically!
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="CollectionChangedEventManager">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Button Content="Subscribe to Collection" Click="SubscribeCollection_Click"/>
+                                    <Button Content="Modify Collection" Click="ModifyCollection_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock x:Name="CollectionStatus" Text="No collection subscriptions" Margin="0,10,0,0"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Conditional Weak Table">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="ConditionalWeakTable<TKey, TValue>" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            ConditionalWeakTable allows you to attach metadata to objects without preventing
+                            their garbage collection. Perfect for extending objects you don't control.
+                        </TextBlock>
+
+                        <GroupBox Header="Metadata Attachment">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap">
+                                    Attach custom data to objects without modifying them:
+                                </TextBlock>
+
+                                <WrapPanel Margin="0,10,0,0">
+                                    <Button Content="Create Objects" Click="CreateCWTObjects_Click"/>
+                                    <Button Content="Attach Metadata" Click="AttachMetadata_Click"/>
+                                    <Button Content="Retrieve Metadata" Click="RetrieveMetadata_Click"/>
+                                    <Button Content="Clear Objects" Click="ClearCWTObjects_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock x:Name="CWTStatus" Text="No objects created" Margin="0,10,0,0" TextWrapping="Wrap"/>
+
+                                <Border Background="#E1F5FE" Padding="10" Margin="0,10,0,0" BorderBrush="#0277BD" BorderThickness="1">
+                                    <StackPanel>
+                                        <TextBlock Text="Use Cases:" FontWeight="Bold"/>
+                                        <TextBlock TextWrapping="Wrap" Margin="0,5,0,0">
+                                            • Attaching UI state to ViewModels
+                                            <LineBreak/>
+                                            • Caching computed values per object
+                                            <LineBreak/>
+                                            • Tracking object metadata
+                                            <LineBreak/>
+                                            • Extending sealed classes
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Custom Weak Event Manager">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Custom Weak Event Manager" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            Build your own weak event manager for custom events and scenarios.
+                        </TextBlock>
+
+                        <GroupBox Header="Custom Implementation">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Button Content="Add Weak Handler" Click="AddWeakHandler_Click"/>
+                                    <Button Content="Raise Custom Event" Click="RaiseCustomEvent_Click"/>
+                                    <Button Content="Show Active Handlers" Click="ShowActiveHandlers_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock x:Name="CustomEventStatus" Text="No handlers registered" Margin="0,10,0,0" TextWrapping="Wrap"/>
+
+                                <Border Background="#FFF3E0" Padding="10" Margin="0,10,0,0" BorderBrush="#FF6F00" BorderThickness="1">
+                                    <StackPanel>
+                                        <TextBlock Text="Implementation Pattern:" FontWeight="Bold"/>
+                                        <TextBlock TextWrapping="Wrap" Margin="0,5,0,0">
+                                            1. Store WeakReference to handler target
+                                            <LineBreak/>
+                                            2. Check if target is alive before invoking
+                                            <LineBreak/>
+                                            3. Remove dead references during cleanup
+                                            <LineBreak/>
+                                            4. Provide Add/Remove methods
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Caching Patterns">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Weak Reference Caching" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            Use weak references for caching to allow memory to be reclaimed under pressure.
+                        </TextBlock>
+
+                        <GroupBox Header="Cache Comparison">
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" Background="#FFEBEE" Padding="10" Margin="5" BorderBrush="#F44336" BorderThickness="2">
+                                        <StackPanel>
+                                            <TextBlock Text="Strong Cache" FontWeight="Bold" Foreground="#C62828"/>
+                                            <Button Content="Add to Strong Cache" Click="AddToStrongCache_Click" Margin="0,10,0,0"/>
+                                            <TextBlock x:Name="StrongCacheStats" Text="Items: 0" Margin="0,10,0,0"/>
+                                            <TextBlock Text="Never releases memory" FontStyle="Italic" Foreground="#666"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Grid.Column="1" Background="#E8F5E9" Padding="10" Margin="5" BorderBrush="#4CAF50" BorderThickness="2">
+                                        <StackPanel>
+                                            <TextBlock Text="Weak Cache" FontWeight="Bold" Foreground="#2E7D32"/>
+                                            <Button Content="Add to Weak Cache" Click="AddToWeakCache_Click" Margin="0,10,0,0"/>
+                                            <TextBlock x:Name="WeakCacheStats" Text="Items: 0, Alive: 0" Margin="0,10,0,0"/>
+                                            <TextBlock Text="Releases under memory pressure" FontStyle="Italic" Foreground="#666"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <WrapPanel Margin="0,10,0,0">
+                                    <Button Content="Access Strong Cache" Click="AccessStrongCache_Click"/>
+                                    <Button Content="Access Weak Cache" Click="AccessWeakCache_Click"/>
+                                    <Button Content="Clear Both" Click="ClearCaches_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock x:Name="CacheAccessResult" Text="" Margin="0,10,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+
+        <Border Grid.Row="2" Background="#880E4F" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <TextBlock Text="Memory: " Foreground="White" FontWeight="Bold"/>
+                    <TextBlock x:Name="MemoryUsage" Text="0 MB" Foreground="#F48FB1" FontWeight="Bold" Margin="5,0"/>
+                    <TextBlock Text="| GC Collections - Gen0: " Foreground="White" Margin="10,0,0,0"/>
+                    <TextBlock x:Name="Gen0Collections" Text="0" Foreground="#81C784"/>
+                    <TextBlock Text=" Gen1: " Foreground="White" Margin="5,0,0,0"/>
+                    <TextBlock x:Name="Gen1Collections" Text="0" Foreground="#FFB74D"/>
+                    <TextBlock Text=" Gen2: " Foreground="White" Margin="5,0,0,0"/>
+                    <TextBlock x:Name="Gen2Collections" Text="0" Foreground="#E57373"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Content="Force GC" Click="ForceGC_Click" Background="#C2185B" Foreground="White"/>
+                    <Button Content="Update Stats" Click="UpdateStats_Click" Background="#AD1457" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

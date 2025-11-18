@@ -1,0 +1,416 @@
+<Window x:Class="MemoryLeaks.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Memory Leaks Detection and Resolution" Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="MinWidth" Value="120"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2C3E50" Padding="15">
+            <StackPanel>
+                <TextBlock Text="Memory Leaks Detection and Resolution"
+                          FontSize="24" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="Interactive demonstration of 10 common memory leak scenarios in WPF applications"
+                          FontSize="14" Foreground="#ECF0F1" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <TabControl Grid.Row="1" Margin="10">
+            <!-- Scenario 1: Event Handler Leaks -->
+            <TabItem Header="1. Event Handlers">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Event Handler Memory Leaks" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            This scenario demonstrates memory leaks caused by not unsubscribing from events.
+                            When an object subscribes to an event on a longer-lived object, the publisher
+                            holds a reference to the subscriber, preventing garbage collection.
+                        </TextBlock>
+
+                        <GroupBox Header="Demonstration">
+                            <StackPanel>
+                                <TextBlock Text="Create windows that subscribe to static events:" FontWeight="Bold"/>
+                                <WrapPanel>
+                                    <Button Content="Create Leaky Window" Click="CreateLeakyEventWindow_Click"/>
+                                    <Button Content="Create Fixed Window" Click="CreateFixedEventWindow_Click"/>
+                                    <Button Content="Close All Windows" Click="CloseAllChildWindows_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock Text="Instance Count:" FontWeight="Bold" Margin="0,10,0,0"/>
+                                <TextBlock x:Name="EventLeakInstanceCount" Text="Leaky: 0, Fixed: 0"/>
+
+                                <Border Background="#FFF3CD" Padding="10" Margin="0,10,0,0" BorderBrush="#FFC107" BorderThickness="1">
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Run FontWeight="Bold">Problem:</Run> The leaky window subscribes to a static event but never unsubscribes.
+                                        <LineBreak/>
+                                        <Run FontWeight="Bold">Solution:</Run> The fixed window unsubscribes in the Closed event handler.
+                                    </TextBlock>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Scenario 2: Static References -->
+            <TabItem Header="2. Static References">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Static Reference Memory Leaks" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            Static fields live for the entire application lifetime. Objects referenced by static
+                            fields cannot be garbage collected, even when no longer needed.
+                        </TextBlock>
+
+                        <GroupBox Header="Demonstration">
+                            <StackPanel>
+                                <TextBlock Text="Add objects to static collections:" FontWeight="Bold"/>
+                                <WrapPanel>
+                                    <Button Content="Add to Static List" Click="AddToStaticList_Click"/>
+                                    <Button Content="Clear Static List" Click="ClearStaticList_Click"/>
+                                    <Button Content="Add with WeakReference" Click="AddWeakReference_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock Text="Static List Count:" FontWeight="Bold" Margin="0,10,0,0"/>
+                                <TextBlock x:Name="StaticListCount" Text="Strong: 0, Weak: 0"/>
+
+                                <Border Background="#FFF3CD" Padding="10" Margin="0,10,0,0" BorderBrush="#FFC107" BorderThickness="1">
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Run FontWeight="Bold">Problem:</Run> Static collections keep strong references to objects.
+                                        <LineBreak/>
+                                        <Run FontWeight="Bold">Solution:</Run> Use WeakReference or clear collections when done.
+                                    </TextBlock>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Scenario 3: Timer Leaks -->
+            <TabItem Header="3. Timers">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Timer Memory Leaks" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            DispatcherTimers and System.Timers.Timer can cause memory leaks if not properly
+                            stopped and disposed. The timer keeps the object alive through its Tick event handler.
+                        </TextBlock>
+
+                        <GroupBox Header="Demonstration">
+                            <StackPanel>
+                                <TextBlock Text="Create windows with timers:" FontWeight="Bold"/>
+                                <WrapPanel>
+                                    <Button Content="Leaky Timer Window" Click="CreateLeakyTimerWindow_Click"/>
+                                    <Button Content="Fixed Timer Window" Click="CreateFixedTimerWindow_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock Text="Timer Window Count:" FontWeight="Bold" Margin="0,10,0,0"/>
+                                <TextBlock x:Name="TimerWindowCount" Text="Leaky: 0, Fixed: 0"/>
+
+                                <Border Background="#FFF3CD" Padding="10" Margin="0,10,0,0" BorderBrush="#FFC107" BorderThickness="1">
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Run FontWeight="Bold">Problem:</Run> Timer continues running and holding reference to closed window.
+                                        <LineBreak/>
+                                        <Run FontWeight="Bold">Solution:</Run> Stop and dispose timers in the Closed event handler.
+                                    </TextBlock>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Scenario 4: Dependency Property Callbacks -->
+            <TabItem Header="4. DP Callbacks">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Dependency Property Callback Leaks" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            Dependency property changed callbacks can cause leaks when they capture the
+                            instance in a closure or hold references longer than necessary.
+                        </TextBlock>
+
+                        <GroupBox Header="Demonstration">
+                            <StackPanel>
+                                <TextBlock Text="Create controls with dependency property callbacks:" FontWeight="Bold"/>
+                                <WrapPanel>
+                                    <Button Content="Create Leaky Controls" Click="CreateLeakyDPControls_Click"/>
+                                    <Button Content="Create Fixed Controls" Click="CreateFixedDPControls_Click"/>
+                                    <Button Content="Clear Panel" Click="ClearDPPanel_Click"/>
+                                </WrapPanel>
+
+                                <Border Background="#E3F2FD" Padding="10" Margin="0,10,0,0" BorderBrush="#2196F3" BorderThickness="1">
+                                    <StackPanel x:Name="DPControlsPanel" MinHeight="100"/>
+                                </Border>
+
+                                <Border Background="#FFF3CD" Padding="10" Margin="0,10,0,0" BorderBrush="#FFC107" BorderThickness="1">
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Run FontWeight="Bold">Problem:</Run> DP callbacks capture 'this' in closures, preventing GC.
+                                        <LineBreak/>
+                                        <Run FontWeight="Bold">Solution:</Run> Use static callbacks or WeakReference patterns.
+                                    </TextBlock>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Scenario 5: Collection Change Notifications -->
+            <TabItem Header="5. Collections">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Collection Change Notification Leaks" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            ObservableCollection and INotifyCollectionChanged can leak memory when subscribers
+                            don't unsubscribe from CollectionChanged events.
+                        </TextBlock>
+
+                        <GroupBox Header="Demonstration">
+                            <StackPanel>
+                                <TextBlock Text="Create subscribers to observable collections:" FontWeight="Bold"/>
+                                <WrapPanel>
+                                    <Button Content="Add Leaky Subscriber" Click="AddLeakyCollectionSubscriber_Click"/>
+                                    <Button Content="Add Fixed Subscriber" Click="AddFixedCollectionSubscriber_Click"/>
+                                    <Button Content="Modify Collection" Click="ModifyCollection_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock Text="Active Subscribers:" FontWeight="Bold" Margin="0,10,0,0"/>
+                                <TextBlock x:Name="CollectionSubscriberCount" Text="Leaky: 0, Fixed: 0"/>
+
+                                <Border Background="#FFF3CD" Padding="10" Margin="0,10,0,0" BorderBrush="#FFC107" BorderThickness="1">
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Run FontWeight="Bold">Problem:</Run> Subscribers remain in memory even after disposal.
+                                        <LineBreak/>
+                                        <Run FontWeight="Bold">Solution:</Run> Implement IDisposable and unsubscribe in Dispose.
+                                    </TextBlock>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Scenario 6: Routed Events -->
+            <TabItem Header="6. Routed Events">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Routed Event Memory Leaks" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            WPF routed events can cause memory leaks when handlers are attached but never removed,
+                            especially with Preview events and tunneling/bubbling scenarios.
+                        </TextBlock>
+
+                        <GroupBox Header="Demonstration">
+                            <StackPanel>
+                                <TextBlock Text="Create elements with routed event handlers:" FontWeight="Bold"/>
+                                <WrapPanel>
+                                    <Button Content="Add Leaky Handlers" Click="AddLeakyRoutedHandlers_Click"/>
+                                    <Button Content="Add Fixed Handlers" Click="AddFixedRoutedHandlers_Click"/>
+                                    <Button Content="Clear Handlers" Click="ClearRoutedHandlers_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock Text="Handler Count:" FontWeight="Bold" Margin="0,10,0,0"/>
+                                <TextBlock x:Name="RoutedEventHandlerCount" Text="Attached: 0"/>
+
+                                <Border Background="#FFF3CD" Padding="10" Margin="0,10,0,0" BorderBrush="#FFC107" BorderThickness="1">
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Run FontWeight="Bold">Problem:</Run> Routed event handlers not removed when element is disposed.
+                                        <LineBreak/>
+                                        <Run FontWeight="Bold">Solution:</Run> Remove handlers with RemoveHandler or use weak event patterns.
+                                    </TextBlock>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Scenario 7: Command Bindings -->
+            <TabItem Header="7. Commands">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Command Binding Memory Leaks" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            ICommand implementations can cause memory leaks through CanExecuteChanged events
+                            and when commands hold references to ViewModels or other objects.
+                        </TextBlock>
+
+                        <GroupBox Header="Demonstration">
+                            <StackPanel>
+                                <TextBlock Text="Create command bindings:" FontWeight="Bold"/>
+                                <WrapPanel>
+                                    <Button Content="Leaky Command Binding" Click="CreateLeakyCommandBinding_Click"/>
+                                    <Button Content="Fixed Command Binding" Click="CreateFixedCommandBinding_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock Text="Command Instances:" FontWeight="Bold" Margin="0,10,0,0"/>
+                                <TextBlock x:Name="CommandInstanceCount" Text="Leaky: 0, Fixed: 0"/>
+
+                                <Border Background="#FFF3CD" Padding="10" Margin="0,10,0,0" BorderBrush="#FFC107" BorderThickness="1">
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Run FontWeight="Bold">Problem:</Run> CommandManager or custom command holds references.
+                                        <LineBreak/>
+                                        <Run FontWeight="Bold">Solution:</Run> Use weak event pattern for CanExecuteChanged.
+                                    </TextBlock>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Scenario 8: Resource Dictionaries -->
+            <TabItem Header="8. Resources">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Resource Dictionary Memory Leaks" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            Merged resource dictionaries and dynamic resources can leak memory when not properly
+                            managed, especially with large images or custom objects.
+                        </TextBlock>
+
+                        <GroupBox Header="Demonstration">
+                            <StackPanel>
+                                <TextBlock Text="Load and unload resource dictionaries:" FontWeight="Bold"/>
+                                <WrapPanel>
+                                    <Button Content="Load Heavy Resources" Click="LoadHeavyResources_Click"/>
+                                    <Button Content="Unload Resources" Click="UnloadResources_Click"/>
+                                    <Button Content="Use Freezable Resources" Click="UseFreezableResources_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock Text="Resource Dictionary Count:" FontWeight="Bold" Margin="0,10,0,0"/>
+                                <TextBlock x:Name="ResourceDictionaryCount" Text="Merged: 0"/>
+
+                                <Border Background="#FFF3CD" Padding="10" Margin="0,10,0,0" BorderBrush="#FFC107" BorderThickness="1">
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Run FontWeight="Bold">Problem:</Run> Resource dictionaries remain in memory after use.
+                                        <LineBreak/>
+                                        <Run FontWeight="Bold">Solution:</Run> Clear merged dictionaries and use Freezable for shared resources.
+                                    </TextBlock>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Scenario 9: Visual Tree References -->
+            <TabItem Header="9. Visual Tree">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Visual Tree Reference Leaks" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            Holding references to visual elements outside the visual tree prevents the entire
+                            tree from being garbage collected.
+                        </TextBlock>
+
+                        <GroupBox Header="Demonstration">
+                            <StackPanel>
+                                <TextBlock Text="Create and remove visual elements:" FontWeight="Bold"/>
+                                <WrapPanel>
+                                    <Button Content="Create with Leak" Click="CreateVisualTreeLeak_Click"/>
+                                    <Button Content="Create Properly" Click="CreateVisualTreeFixed_Click"/>
+                                    <Button Content="Clear References" Click="ClearVisualReferences_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock Text="Visual Element Count:" FontWeight="Bold" Margin="0,10,0,0"/>
+                                <TextBlock x:Name="VisualElementCount" Text="Leaked: 0, Proper: 0"/>
+
+                                <Border Background="#FFF3CD" Padding="10" Margin="0,10,0,0" BorderBrush="#FFC107" BorderThickness="1">
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Run FontWeight="Bold">Problem:</Run> External references to removed visual elements.
+                                        <LineBreak/>
+                                        <Run FontWeight="Bold">Solution:</Run> Avoid storing references or use WeakReference.
+                                    </TextBlock>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Scenario 10: Data Context Leaks -->
+            <TabItem Header="10. DataContext">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="DataContext Memory Leaks" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            ViewModels set as DataContext can leak when the view is closed but the ViewModel
+                            is still referenced elsewhere, or when the ViewModel holds references to the view.
+                        </TextBlock>
+
+                        <GroupBox Header="Demonstration">
+                            <StackPanel>
+                                <TextBlock Text="Create views with ViewModels:" FontWeight="Bold"/>
+                                <WrapPanel>
+                                    <Button Content="Leaky ViewModel" Click="CreateLeakyViewModelWindow_Click"/>
+                                    <Button Content="Fixed ViewModel" Click="CreateFixedViewModelWindow_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock Text="ViewModel Instances:" FontWeight="Bold" Margin="0,10,0,0"/>
+                                <TextBlock x:Name="ViewModelInstanceCount" Text="Leaky: 0, Fixed: 0"/>
+
+                                <Border Background="#FFF3CD" Padding="10" Margin="0,10,0,0" BorderBrush="#FFC107" BorderThickness="1">
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Run FontWeight="Bold">Problem:</Run> ViewModel holds view reference or isn't properly disposed.
+                                        <LineBreak/>
+                                        <Run FontWeight="Bold">Solution:</Run> Implement IDisposable in ViewModel and clean up in view's Closed event.
+                                    </TextBlock>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+
+        <!-- Footer with Memory Statistics -->
+        <Border Grid.Row="2" Background="#34495E" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <TextBlock Text="Memory Usage: " Foreground="White" FontWeight="Bold"/>
+                    <TextBlock x:Name="MemoryUsageText" Text="0 MB" Foreground="#3498DB" FontWeight="Bold" Margin="5,0"/>
+                    <TextBlock Text="| Gen0: " Foreground="White" Margin="10,0,0,0"/>
+                    <TextBlock x:Name="Gen0Count" Text="0" Foreground="#2ECC71"/>
+                    <TextBlock Text="| Gen1: " Foreground="White" Margin="10,0,0,0"/>
+                    <TextBlock x:Name="Gen1Count" Text="0" Foreground="#F39C12"/>
+                    <TextBlock Text="| Gen2: " Foreground="White" Margin="10,0,0,0"/>
+                    <TextBlock x:Name="Gen2Count" Text="0" Foreground="#E74C3C"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Content="Force GC" Click="ForceGC_Click" Background="#27AE60" Foreground="White"/>
+                    <Button Content="Update Stats" Click="UpdateStats_Click" Background="#2980B9" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

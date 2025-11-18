@@ -1,0 +1,142 @@
+<Window x:Class="BitmapCaching.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Bitmap Caching - CacheMode and Optimization Strategies"
+        Height="900" Width="1400"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Control Panel -->
+        <GroupBox Grid.Row="0" Header="Bitmap Caching Demonstrations">
+            <StackPanel>
+                <WrapPanel>
+                    <Button x:Name="BtnCacheModeBasics" Content="CacheMode Basics" Click="BtnCacheModeBasics_Click"/>
+                    <Button x:Name="BtnCacheComparison" Content="Cached vs Uncached" Click="BtnCacheComparison_Click"/>
+                    <Button x:Name="BtnRenderScale" Content="Render Scale" Click="BtnRenderScale_Click"/>
+                    <Button x:Name="BtnSnapsToPixels" Content="Snaps To Pixels" Click="BtnSnapsToPixels_Click"/>
+                    <Button x:Name="BtnComplexContent" Content="Complex Content" Click="BtnComplexContent_Click"/>
+                    <Button x:Name="BtnAnimationCache" Content="Animation Cache" Click="BtnAnimationCache_Click"/>
+                    <Button x:Name="BtnBestPractices" Content="Best Practices" Click="BtnBestPractices_Click"/>
+                    <Button x:Name="BtnClearDemo" Content="Clear" Click="BtnClearDemo_Click"/>
+                </WrapPanel>
+                <TextBlock x:Name="TxtInstructions" TextWrapping="Wrap" FontWeight="Bold" Foreground="DarkBlue">
+                    Learn bitmap caching strategies to optimize rendering performance for complex and animated content.
+                </TextBlock>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Demo Area -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Panel: Visualization -->
+            <GroupBox Grid.Column="0" Header="Caching Visualization">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Border x:Name="VisualizationContainer"
+                            BorderBrush="LightGray"
+                            BorderThickness="1"
+                            Background="White"
+                            MinHeight="600">
+                    </Border>
+                </ScrollViewer>
+            </GroupBox>
+
+            <!-- Right Panel: Information -->
+            <GroupBox Grid.Column="1" Header="Cache Information & Metrics">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <GroupBox Header="Performance Metrics">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="FPS:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TxtFPS" Text="0" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Frame Time:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" x:Name="TxtFrameTime" Text="0 ms" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Cache Enabled:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" x:Name="TxtCacheEnabled" Text="No" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Cache Size:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="3" Grid.Column="1" x:Name="TxtCacheSize" Text="0 KB" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Render Scale:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="4" Grid.Column="1" x:Name="TxtRenderScale" Text="1.0" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="5" Grid.Column="0" Text="Performance:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="5" Grid.Column="1" x:Name="TxtPerformance" Text="-" Margin="10,0,0,0"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Cache Details">
+                            <TextBlock x:Name="TxtCacheDetails"
+                                       TextWrapping="Wrap"
+                                       FontFamily="Consolas"
+                                       FontSize="11"
+                                       Background="WhiteSmoke"
+                                       Padding="10"/>
+                        </GroupBox>
+
+                        <GroupBox Header="When to Use Caching">
+                            <TextBlock TextWrapping="Wrap" Padding="5">
+                                <Bold>Use BitmapCache when:</Bold><LineBreak/>
+                                • Content rarely changes<LineBreak/>
+                                • Complex visual tree<LineBreak/>
+                                • Many vector graphics<LineBreak/>
+                                • Applying transforms/opacity<LineBreak/>
+                                • Animated positioning<LineBreak/>
+                                • Effects applied<LineBreak/><LineBreak/>
+                                <Bold>Avoid BitmapCache when:</Bold><LineBreak/>
+                                • Content changes frequently<LineBreak/>
+                                • Simple visuals<LineBreak/>
+                                • Large elements (memory)<LineBreak/>
+                                • Scaling significantly<LineBreak/>
+                                • Text that needs to be crisp
+                            </TextBlock>
+                        </GroupBox>
+
+                        <GroupBox Header="Optimization Tips">
+                            <TextBlock TextWrapping="Wrap" Padding="5">
+                                • Cache complex, static content<LineBreak/>
+                                • Use RenderAtScale for quality<LineBreak/>
+                                • Enable SnapsToDevicePixels<LineBreak/>
+                                • Monitor cache memory usage<LineBreak/>
+                                • Clear cache when not needed<LineBreak/>
+                                • Test performance impact<LineBreak/>
+                                • Consider trade-offs<LineBreak/>
+                                • Profile before/after
+                            </TextBlock>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </GroupBox>
+        </Grid>
+
+        <!-- Status Bar -->
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock x:Name="TxtStatus" Text="Ready - Select a demonstration to explore bitmap caching strategies"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
