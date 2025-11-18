@@ -1,0 +1,48 @@
+// Microsoft Visual C++ generated resource script.
+#include "Resource.h"
+#define APSTUDIO_READONLY_SYMBOLS
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#include "afxres.h"
+#undef APSTUDIO_READONLY_SYMBOLS
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+IDD_ADO_DIALOG DIALOGEX 0, 0, 320, 240
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "MFC ADO Database - Lesson 69"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,205,219,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,260,219,50,14
+    PUSHBUTTON      "Test",IDC_BUTTON_TEST,20,20,100,30
+    EDITTEXT        IDC_EDIT_OUTPUT,20,70,280,120,ES_MULTILINE | ES_READONLY | WS_VSCROLL
+    GROUPBOX        "Demo",IDC_STATIC,10,5,300,205
+END
+
+IDR_MAINFRAME ICON "res\\ADO.ico"
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "FileDescription", "ADO Database"
+            VALUE "FileVersion", "1.0.0.1"
+        END
+    END
+END
+
+#endif
+#ifndef APSTUDIO_INVOKED
+#define _AFX_NO_SPLITTER_RESOURCES
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#include "afxres.rc"
+#endif
+#endif

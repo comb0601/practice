@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.15)
+
+add_subdirectory(Lesson81_AdvancedShaders)
+add_subdirectory(Lesson82_ProceduralTextures)
+add_subdirectory(Lesson83_WaterRendering)
+add_subdirectory(Lesson84_TerrainRendering)
+add_subdirectory(Lesson85_Vegetation)

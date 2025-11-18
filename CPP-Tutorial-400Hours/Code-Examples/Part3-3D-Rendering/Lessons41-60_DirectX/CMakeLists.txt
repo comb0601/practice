@@ -1,0 +1,17 @@
+cmake_minimum_required(VERSION 3.15)
+
+if(NOT WIN32)
+    message(STATUS "DirectX lessons only available on Windows")
+    return()
+endif()
+
+add_subdirectory(Lesson41_DirectXIntro)
+add_subdirectory(Lesson42_D3D11Setup)
+add_subdirectory(Lesson43_SwapChain)
+add_subdirectory(Lesson44_DeviceContext)
+add_subdirectory(Lesson45_VertexBuffers)
+add_subdirectory(Lesson46_IndexBuffers)
+add_subdirectory(Lesson47_HLSLShaders)
+add_subdirectory(Lesson48_ConstantBuffers)
+add_subdirectory(Lesson49_InputLayouts)
+add_subdirectory(Lesson50_TexturesDX)
