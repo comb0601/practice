@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/example04_namespace.dir/example04_namespace.cpp.o -o bin/example04_namespace 

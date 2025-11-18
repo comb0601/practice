@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/solution04.dir/solution04.cpp.o -o bin/solution04 

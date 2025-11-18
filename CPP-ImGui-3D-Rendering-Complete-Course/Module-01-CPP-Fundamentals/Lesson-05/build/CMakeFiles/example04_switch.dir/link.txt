@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/example04_switch.dir/example04_switch.cpp.o -o example04_switch 

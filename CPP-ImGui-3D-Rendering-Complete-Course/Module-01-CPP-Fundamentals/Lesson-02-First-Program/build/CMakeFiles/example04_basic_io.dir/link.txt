@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/example04_basic_io.dir/example04_basic_io.cpp.o -o bin/example04_basic_io 

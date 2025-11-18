@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/example05.dir/example05_strings.cpp.o -o example05 

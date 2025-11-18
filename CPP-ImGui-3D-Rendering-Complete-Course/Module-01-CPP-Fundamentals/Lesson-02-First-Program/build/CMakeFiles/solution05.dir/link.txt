@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/solution05.dir/solution05.cpp.o -o bin/solution05 

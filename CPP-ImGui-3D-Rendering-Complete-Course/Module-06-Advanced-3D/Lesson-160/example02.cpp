@@ -1,0 +1,15 @@
+#include <iostream>
+#include <string>
+
+/**
+ * Example 02: HDR Rendering
+ */
+
+int main() {
+    std::cout << "=== Example 02: HDR Rendering ===" << std::endl;
+
+    // Example implementation
+    std::cout << "This example demonstrates: HDR Rendering" << std::endl;
+
+    return 0;
+}

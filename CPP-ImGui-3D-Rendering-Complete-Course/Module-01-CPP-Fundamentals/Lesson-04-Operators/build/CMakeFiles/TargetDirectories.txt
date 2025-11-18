@@ -1,0 +1,6 @@
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-04-Operators/build/CMakeFiles/main.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-04-Operators/build/CMakeFiles/example01_arithmetic.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-04-Operators/build/CMakeFiles/exercise01.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-04-Operators/build/CMakeFiles/solution01.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-04-Operators/build/CMakeFiles/edit_cache.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-04-Operators/build/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,14 @@
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-10/build/CMakeFiles/main.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-10/build/CMakeFiles/example01.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-10/build/CMakeFiles/example02.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-10/build/CMakeFiles/example03.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-10/build/CMakeFiles/example04.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-10/build/CMakeFiles/example05.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-10/build/CMakeFiles/exercise01.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-10/build/CMakeFiles/exercise02.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-10/build/CMakeFiles/exercise03.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-10/build/CMakeFiles/solution01.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-10/build/CMakeFiles/solution02.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-10/build/CMakeFiles/solution03.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-10/build/CMakeFiles/edit_cache.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-10/build/CMakeFiles/rebuild_cache.dir
