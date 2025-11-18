@@ -1,0 +1,548 @@
+<Window x:Class="RealWorldProjectsApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:RealWorldProjectsApp.CaseStudies"
+        Title="Real-World Optimization Case Studies - Module 6 Lesson 3"
+        Height="900" Width="1500"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2C3E50" Padding="15">
+            <StackPanel>
+                <TextBlock Text="Real-World WPF Optimization Case Studies"
+                          FontSize="24" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="Before and After: Three practical scenarios demonstrating optimization techniques"
+                          FontSize="14" Foreground="#ECF0F1" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <TabControl Grid.Row="1">
+
+            <!-- Case Study 1: Large Data Grid -->
+            <TabItem Header="Case Study 1: Large Data Grid">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <!-- Description -->
+                        <GroupBox Header="Scenario Description" Background="#E3F2FD">
+                            <StackPanel>
+                                <TextBlock FontWeight="Bold" FontSize="15" Margin="0,0,0,10">
+                                    Problem: Slow DataGrid with 10,000+ rows
+                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                    A financial application displays real-time stock data in a DataGrid.
+                                    With 10,000+ rows updating every second, the UI becomes unresponsive.
+                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Margin="5,2" FontWeight="SemiBold">
+                                    Issues: Visual tree overhead, inefficient updates, no virtualization
+                                </TextBlock>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!-- Controls -->
+                        <GroupBox Header="Test Configuration">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Number of Rows:" FontWeight="Bold"/>
+                                    <Slider x:Name="Case1RowsSlider" Minimum="100" Maximum="10000" Value="1000"
+                                           TickFrequency="500"/>
+                                    <TextBlock>
+                                        <Run Text="Rows: "/>
+                                        <Run x:Name="Case1RowsText" Text="1,000" FontWeight="Bold"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Update Frequency:" FontWeight="Bold"/>
+                                    <Slider x:Name="Case1UpdateSlider" Minimum="1" Maximum="10" Value="2"
+                                           TickFrequency="1" IsSnapToTickEnabled="True"/>
+                                    <TextBlock>
+                                        <Run Text="Updates/sec: "/>
+                                        <Run x:Name="Case1UpdateText" Text="2" FontWeight="Bold"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                    <Button Content="Load Data" Click="Case1LoadBtn_Click"/>
+                                    <Button x:Name="Case1StartUpdatesBtn" Content="Start Updates" Click="Case1StartUpdatesBtn_Click"/>
+                                    <Button x:Name="Case1StopUpdatesBtn" Content="Stop Updates" Click="Case1StopUpdatesBtn_Click" IsEnabled="False"/>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- Before/After Comparison -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Before -->
+                            <GroupBox Grid.Column="0" Header="❌ BEFORE: Standard DataGrid">
+                                <StackPanel>
+                                    <Border Background="#FFEBEE" Padding="10" Margin="5" BorderBrush="#F44336" BorderThickness="2">
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Bold">Issues:</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• No virtualization</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Full visual tree per row</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Updates entire grid</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• High memory usage</TextBlock>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Height="300" BorderBrush="#CCCCCC" BorderThickness="1" Margin="5">
+                                        <local:Case1Before x:Name="Case1BeforeControl"/>
+                                    </Border>
+
+                                    <Border Background="#FFF3E0" Padding="10" Margin="5">
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Bold">Performance:</TextBlock>
+                                            <TextBlock x:Name="Case1BeforeStats" FontFamily="Consolas" FontSize="12"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </GroupBox>
+
+                            <!-- After -->
+                            <GroupBox Grid.Column="1" Header="✅ AFTER: Virtualized with ObservableCollection Optimization">
+                                <StackPanel>
+                                    <Border Background="#E8F5E9" Padding="10" Margin="5" BorderBrush="#4CAF50" BorderThickness="2">
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Bold">Improvements:</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• UI virtualization enabled</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Deferred scrolling</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Selective property updates</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Optimized bindings</TextBlock>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Height="300" BorderBrush="#CCCCCC" BorderThickness="1" Margin="5">
+                                        <local:Case1After x:Name="Case1AfterControl"/>
+                                    </Border>
+
+                                    <Border Background="#E3F2FD" Padding="10" Margin="5">
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Bold">Performance:</TextBlock>
+                                            <TextBlock x:Name="Case1AfterStats" FontFamily="Consolas" FontSize="12"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </GroupBox>
+                        </Grid>
+
+                        <!-- Key Learnings -->
+                        <GroupBox Header="Key Optimization Techniques">
+                            <Border Background="#F5F5F5" Padding="15">
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Margin="0,0,0,10">Implemented Solutions:</TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        1. <Bold>VirtualizingStackPanel.IsVirtualizing="True"</Bold> - Only renders visible rows
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        2. <Bold>ScrollViewer.CanContentScroll="True"</Bold> - Enables smooth scrolling
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        3. <Bold>INotifyPropertyChanged</Bold> - Only updates changed properties
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        4. <Bold>Batch Updates</Bold> - Use SuspendNotifications pattern
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        5. <Bold>Optimized Bindings</Bold> - OneWay where possible, reduced path depth
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Case Study 2: Image Gallery -->
+            <TabItem Header="Case Study 2: Image Gallery">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <!-- Description -->
+                        <GroupBox Header="Scenario Description" Background="#E3F2FD">
+                            <StackPanel>
+                                <TextBlock FontWeight="Bold" FontSize="15" Margin="0,0,0,10">
+                                    Problem: Slow loading image gallery with memory leaks
+                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                    A photo management application displays thumbnails of thousands of images.
+                                    Loading is slow, scrolling is janky, and memory usage grows continuously.
+                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Margin="5,2" FontWeight="SemiBold">
+                                    Issues: Large image loading, no caching, memory leaks, inefficient decoding
+                                </TextBlock>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!-- Controls -->
+                        <GroupBox Header="Test Configuration">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Number of Images:" FontWeight="Bold"/>
+                                    <Slider x:Name="Case2ImageCountSlider" Minimum="10" Maximum="500" Value="100"
+                                           TickFrequency="50"/>
+                                    <TextBlock>
+                                        <Run Text="Images: "/>
+                                        <Run x:Name="Case2ImageCountText" Text="100" FontWeight="Bold"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Thumbnail Size:" FontWeight="Bold"/>
+                                    <Slider x:Name="Case2ThumbnailSizeSlider" Minimum="64" Maximum="256" Value="128"
+                                           TickFrequency="32" IsSnapToTickEnabled="True"/>
+                                    <TextBlock>
+                                        <Run Text="Size: "/>
+                                        <Run x:Name="Case2ThumbnailSizeText" Text="128" FontWeight="Bold"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                    <Button Content="Load Gallery" Click="Case2LoadBtn_Click"/>
+                                    <Button Content="Clear Memory" Click="Case2ClearBtn_Click"/>
+                                    <Button Content="Force GC" Click="Case2GCBtn_Click"/>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- Before/After Comparison -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Before -->
+                            <GroupBox Grid.Column="0" Header="❌ BEFORE: Direct Image Loading">
+                                <StackPanel>
+                                    <Border Background="#FFEBEE" Padding="10" Margin="5" BorderBrush="#F44336" BorderThickness="2">
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Bold">Issues:</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Loads full-size images</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• No image caching</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Blocks UI thread</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Memory leaks</TextBlock>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Height="300" BorderBrush="#CCCCCC" BorderThickness="1" Margin="5">
+                                        <local:Case2Before x:Name="Case2BeforeControl"/>
+                                    </Border>
+
+                                    <Border Background="#FFF3E0" Padding="10" Margin="5">
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Bold">Performance:</TextBlock>
+                                            <TextBlock x:Name="Case2BeforeStats" FontFamily="Consolas" FontSize="12"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </GroupBox>
+
+                            <!-- After -->
+                            <GroupBox Grid.Column="1" Header="✅ AFTER: Optimized Image Pipeline">
+                                <StackPanel>
+                                    <Border Background="#E8F5E9" Padding="10" Margin="5" BorderBrush="#4CAF50" BorderThickness="2">
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Bold">Improvements:</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• DecodePixelWidth optimization</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Bitmap caching enabled</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Async image loading</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Proper disposal</TextBlock>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Height="300" BorderBrush="#CCCCCC" BorderThickness="1" Margin="5">
+                                        <local:Case2After x:Name="Case2AfterControl"/>
+                                    </Border>
+
+                                    <Border Background="#E3F2FD" Padding="10" Margin="5">
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Bold">Performance:</TextBlock>
+                                            <TextBlock x:Name="Case2AfterStats" FontFamily="Consolas" FontSize="12"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </GroupBox>
+                        </Grid>
+
+                        <!-- Key Learnings -->
+                        <GroupBox Header="Key Optimization Techniques">
+                            <Border Background="#F5F5F5" Padding="15">
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Margin="0,0,0,10">Implemented Solutions:</TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        1. <Bold>DecodePixelWidth</Bold> - Decode images at display resolution
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        2. <Bold>BitmapCacheOption.OnLoad</Bold> - Cache decoded bitmaps
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        3. <Bold>Async Loading</Bold> - Load images on background thread
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        4. <Bold>Freeze BitmapImage</Bold> - Make images thread-safe and faster
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        5. <Bold>Virtualization</Bold> - Only load visible thumbnails
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Case Study 3: Complex Tree View -->
+            <TabItem Header="Case Study 3: Large Tree Structure">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <!-- Description -->
+                        <GroupBox Header="Scenario Description" Background="#E3F2FD">
+                            <StackPanel>
+                                <TextBlock FontWeight="Bold" FontSize="15" Margin="0,0,0,10">
+                                    Problem: Slow TreeView with thousands of hierarchical nodes
+                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                    A file explorer application displays a hierarchical tree structure with 10,000+ nodes.
+                                    Expanding nodes is slow, and the UI freezes during operations.
+                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Margin="5,2" FontWeight="SemiBold">
+                                    Issues: Eager loading, no virtualization, inefficient templates, slow expansion
+                                </TextBlock>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!-- Controls -->
+                        <GroupBox Header="Test Configuration">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Tree Depth:" FontWeight="Bold"/>
+                                    <Slider x:Name="Case3DepthSlider" Minimum="3" Maximum="8" Value="5"
+                                           TickFrequency="1" IsSnapToTickEnabled="True"/>
+                                    <TextBlock>
+                                        <Run Text="Depth: "/>
+                                        <Run x:Name="Case3DepthText" Text="5" FontWeight="Bold"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Children Per Node:" FontWeight="Bold"/>
+                                    <Slider x:Name="Case3ChildrenSlider" Minimum="2" Maximum="10" Value="5"
+                                           TickFrequency="1" IsSnapToTickEnabled="True"/>
+                                    <TextBlock>
+                                        <Run Text="Children: "/>
+                                        <Run x:Name="Case3ChildrenText" Text="5" FontWeight="Bold"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                    <Button Content="Build Tree" Click="Case3BuildBtn_Click"/>
+                                    <Button Content="Expand All" Click="Case3ExpandBtn_Click"/>
+                                    <Button Content="Collapse All" Click="Case3CollapseBtn_Click"/>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- Before/After Comparison -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Before -->
+                            <GroupBox Grid.Column="0" Header="❌ BEFORE: Eager Loading TreeView">
+                                <StackPanel>
+                                    <Border Background="#FFEBEE" Padding="10" Margin="5" BorderBrush="#F44336" BorderThickness="2">
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Bold">Issues:</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Loads entire tree upfront</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• No virtualization</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Complex templates</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Slow expansion</TextBlock>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Height="300" BorderBrush="#CCCCCC" BorderThickness="1" Margin="5">
+                                        <local:Case3Before x:Name="Case3BeforeControl"/>
+                                    </Border>
+
+                                    <Border Background="#FFF3E0" Padding="10" Margin="5">
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Bold">Performance:</TextBlock>
+                                            <TextBlock x:Name="Case3BeforeStats" FontFamily="Consolas" FontSize="12"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </GroupBox>
+
+                            <!-- After -->
+                            <GroupBox Grid.Column="1" Header="✅ AFTER: Lazy Loading with Virtualization">
+                                <StackPanel>
+                                    <Border Background="#E8F5E9" Padding="10" Margin="5" BorderBrush="#4CAF50" BorderThickness="2">
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Bold">Improvements:</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Lazy loading on expand</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• TreeView virtualization</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Simplified templates</TextBlock>
+                                            <TextBlock TextWrapping="Wrap">• Fast rendering</TextBlock>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Height="300" BorderBrush="#CCCCCC" BorderThickness="1" Margin="5">
+                                        <local:Case3After x:Name="Case3AfterControl"/>
+                                    </Border>
+
+                                    <Border Background="#E3F2FD" Padding="10" Margin="5">
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Bold">Performance:</TextBlock>
+                                            <TextBlock x:Name="Case3AfterStats" FontFamily="Consolas" FontSize="12"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </GroupBox>
+                        </Grid>
+
+                        <!-- Key Learnings -->
+                        <GroupBox Header="Key Optimization Techniques">
+                            <Border Background="#F5F5F5" Padding="15">
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Margin="0,0,0,10">Implemented Solutions:</TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        1. <Bold>Lazy Loading</Bold> - Load children only when parent expands
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        2. <Bold>VirtualizingStackPanel</Bold> - Virtualize TreeViewItems
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        3. <Bold>Dummy Child Pattern</Bold> - Show expand arrow before loading
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        4. <Bold>Simplified Templates</Bold> - Reduce visual tree complexity
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        5. <Bold>Deferred Expansion</Bold> - Async loading for large branches
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Summary -->
+            <TabItem Header="Summary & Comparison">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="20">
+                        <TextBlock Text="Performance Comparison Summary" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+
+                        <GroupBox Header="Case Study 1: Large Data Grid" Background="#F5F5F5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock FontWeight="Bold" Margin="0,0,0,10">Before Optimization:</TextBlock>
+                                    <TextBlock x:Name="Summary1Before" FontFamily="Consolas" FontSize="12"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock FontWeight="Bold" Margin="0,0,0,10">After Optimization:</TextBlock>
+                                    <TextBlock x:Name="Summary1After" FontFamily="Consolas" FontSize="12"/>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Case Study 2: Image Gallery" Background="#F5F5F5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock FontWeight="Bold" Margin="0,0,0,10">Before Optimization:</TextBlock>
+                                    <TextBlock x:Name="Summary2Before" FontFamily="Consolas" FontSize="12"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock FontWeight="Bold" Margin="0,0,0,10">After Optimization:</TextBlock>
+                                    <TextBlock x:Name="Summary2After" FontFamily="Consolas" FontSize="12"/>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Case Study 3: Large Tree Structure" Background="#F5F5F5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock FontWeight="Bold" Margin="0,0,0,10">Before Optimization:</TextBlock>
+                                    <TextBlock x:Name="Summary3Before" FontFamily="Consolas" FontSize="12"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock FontWeight="Bold" Margin="0,0,0,10">After Optimization:</TextBlock>
+                                    <TextBlock x:Name="Summary3After" FontFamily="Consolas" FontSize="12"/>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Overall Performance Gains" Background="#E8F5E9">
+                            <TextBlock x:Name="OverallSummary" FontFamily="Consolas" FontSize="13" TextWrapping="Wrap"/>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+        </TabControl>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" Background="#34495E" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="StatusText" Grid.Column="0" Foreground="White" VerticalAlignment="Center"
+                          Text="Ready. Select a case study to explore real-world optimization scenarios."/>
+                <TextBlock Grid.Column="1" Foreground="#ECF0F1" VerticalAlignment="Center">
+                    <Run Text="Memory: "/>
+                    <Run x:Name="MemoryText" Text="0 MB" FontWeight="Bold"/>
+                </TextBlock>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

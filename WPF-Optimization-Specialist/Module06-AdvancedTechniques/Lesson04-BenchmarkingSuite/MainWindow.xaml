@@ -1,0 +1,357 @@
+<Window x:Class="BenchmarkingSuiteApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WPF Performance Benchmarking Suite - Module 6 Lesson 4"
+        Height="900" Width="1400"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2C3E50" Padding="15">
+            <StackPanel>
+                <TextBlock Text="WPF Performance Benchmarking Suite"
+                          FontSize="24" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="BenchmarkDotNet integration for precise WPF performance measurement"
+                          FontSize="14" Foreground="#ECF0F1" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <TabControl Grid.Row="1">
+
+            <!-- Tab 1: Quick Benchmarks -->
+            <TabItem Header="Quick Benchmarks">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <GroupBox Header="Overview" Background="#E3F2FD">
+                            <TextBlock TextWrapping="Wrap">
+                                Quick benchmarks for common WPF operations. These run in-process and provide instant feedback.
+                                For production-grade measurements, use the BenchmarkDotNet integration in other tabs.
+                            </TextBlock>
+                        </GroupBox>
+
+                        <!-- Binding Benchmarks -->
+                        <GroupBox Header="Data Binding Performance">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                                    Compare different binding scenarios: OneWay vs TwoWay, INotifyPropertyChanged vs DependencyProperty
+                                </TextBlock>
+
+                                <UniformGrid Rows="1" Columns="3">
+                                    <Button Content="OneWay vs TwoWay" Click="BenchmarkBindingMode_Click"/>
+                                    <Button Content="Property Change Notify" Click="BenchmarkPropertyNotify_Click"/>
+                                    <Button Content="Binding Path Depth" Click="BenchmarkBindingPath_Click"/>
+                                </UniformGrid>
+
+                                <Border Background="#F5F5F5" Padding="10" Margin="0,10,0,0">
+                                    <TextBlock x:Name="BindingBenchmarkResults" FontFamily="Consolas" FontSize="12"
+                                              TextWrapping="Wrap" Text="Run benchmarks to see results..."/>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!-- Collection Benchmarks -->
+                        <GroupBox Header="Collection Performance">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                                    Compare ObservableCollection vs List performance, virtualization impact
+                                </TextBlock>
+
+                                <UniformGrid Rows="1" Columns="3">
+                                    <Button Content="ObservableCollection Add" Click="BenchmarkObservableAdd_Click"/>
+                                    <Button Content="Collection Clear" Click="BenchmarkCollectionClear_Click"/>
+                                    <Button Content="Bulk Operations" Click="BenchmarkBulkOperations_Click"/>
+                                </UniformGrid>
+
+                                <Border Background="#F5F5F5" Padding="10" Margin="0,10,0,0">
+                                    <TextBlock x:Name="CollectionBenchmarkResults" FontFamily="Consolas" FontSize="12"
+                                              TextWrapping="Wrap" Text="Run benchmarks to see results..."/>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!-- Rendering Benchmarks -->
+                        <GroupBox Header="Rendering Performance">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                                    Compare rendering approaches: OnRender vs Visual Tree, frozen vs unfrozen resources
+                                </TextBlock>
+
+                                <UniformGrid Rows="1" Columns="3">
+                                    <Button Content="Frozen vs Unfrozen" Click="BenchmarkFrozenResources_Click"/>
+                                    <Button Content="DrawingContext Ops" Click="BenchmarkDrawingContext_Click"/>
+                                    <Button Content="Geometry Creation" Click="BenchmarkGeometry_Click"/>
+                                </UniformGrid>
+
+                                <Border Background="#F5F5F5" Padding="10" Margin="0,10,0,0">
+                                    <TextBlock x:Name="RenderingBenchmarkResults" FontFamily="Consolas" FontSize="12"
+                                              TextWrapping="Wrap" Text="Run benchmarks to see results..."/>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Tab 2: BenchmarkDotNet Integration -->
+            <TabItem Header="BenchmarkDotNet Suite">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <GroupBox Header="About BenchmarkDotNet" Background="#E8F5E9">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,0,10">
+                                    BenchmarkDotNet provides production-grade benchmarking with:
+                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Margin="10,2">
+                                    • Statistical analysis with multiple iterations
+                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Margin="10,2">
+                                    • JIT warm-up and garbage collection control
+                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Margin="10,2">
+                                    • Hardware counter diagnostics (CPU cycles, cache misses)
+                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Margin="10,2">
+                                    • Memory allocation tracking
+                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Margin="10,2">
+                                    • Comprehensive reporting (console, HTML, CSV)
+                                </TextBlock>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Available Benchmark Suites">
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <CheckBox x:Name="BenchDataBindingCheck" Content="Data Binding Benchmarks" IsChecked="True" Margin="5"/>
+                                        <CheckBox x:Name="BenchCollectionsCheck" Content="Collection Operations" IsChecked="True" Margin="5"/>
+                                        <CheckBox x:Name="BenchRenderingCheck" Content="Rendering Operations" IsChecked="True" Margin="5"/>
+                                        <CheckBox x:Name="BenchMemoryCheck" Content="Memory Operations" IsChecked="True" Margin="5"/>
+                                        <CheckBox x:Name="BenchUnsafeCheck" Content="Unsafe Code Performance" IsChecked="True" Margin="5"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <Button Content="Run Selected Benchmarks" Click="RunBenchmarkDotNet_Click"
+                                               Background="#4CAF50" Foreground="White" FontWeight="Bold"/>
+                                        <TextBlock Text="Note: This will run in a separate process" FontSize="11" Margin="5"
+                                                  TextAlignment="Center" Foreground="Gray"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <Border Background="#FFF3E0" Padding="10" Margin="5" BorderBrush="#FF9800" BorderThickness="2">
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold">Running BenchmarkDotNet:</TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                            Benchmarks will execute in a separate optimized process. Results will be saved to BenchmarkDotNet.Artifacts folder.
+                                            This may take several minutes depending on selected suites.
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Background="#F5F5F5" Padding="10" Margin="0,10,0,0">
+                                    <ScrollViewer MaxHeight="300" VerticalScrollBarVisibility="Auto">
+                                        <TextBlock x:Name="BenchmarkDotNetResults" FontFamily="Consolas" FontSize="11"
+                                                  TextWrapping="Wrap" Text="Click 'Run Selected Benchmarks' to start..."/>
+                                    </ScrollViewer>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Tab 3: Custom Benchmarks -->
+            <TabItem Header="Custom Benchmarks">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <GroupBox Header="Create Custom Benchmark">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                                    Define and run custom benchmarks for your specific scenarios.
+                                </TextBlock>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Benchmark Name:" VerticalAlignment="Center"/>
+                                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="CustomBenchmarkName" Margin="5"
+                                            Text="My Custom Benchmark"/>
+
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Iterations:" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                                        <Slider x:Name="CustomIterationsSlider" Minimum="1" Maximum="10000" Value="1000"
+                                               Width="200" VerticalAlignment="Center"/>
+                                        <TextBlock VerticalAlignment="Center" Margin="10,0">
+                                            <Run Text="Count: "/>
+                                            <Run x:Name="CustomIterationsText" Text="1000"/>
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Operation:" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                                    <ComboBox Grid.Row="2" Grid.Column="1" x:Name="CustomOperationCombo" Margin="5"
+                                             SelectedIndex="0">
+                                        <ComboBoxItem Content="String Concatenation"/>
+                                        <ComboBoxItem Content="Collection Add/Remove"/>
+                                        <ComboBoxItem Content="Property Setter"/>
+                                        <ComboBoxItem Content="Binding Update"/>
+                                        <ComboBoxItem Content="Visual Tree Creation"/>
+                                    </ComboBox>
+
+                                    <Button Grid.Row="3" Grid.Column="1" Content="Run Custom Benchmark"
+                                           Click="RunCustomBenchmark_Click" HorizontalAlignment="Left"/>
+                                </Grid>
+
+                                <Border Background="#F5F5F5" Padding="10" Margin="0,10,0,0">
+                                    <TextBlock x:Name="CustomBenchmarkResults" FontFamily="Consolas" FontSize="12"
+                                              TextWrapping="Wrap" Text="Configure and run custom benchmark..."/>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Benchmark Templates">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                                    Pre-configured benchmark templates for common scenarios:
+                                </TextBlock>
+
+                                <UniformGrid Rows="2" Columns="3">
+                                    <Button Content="Dispatcher Performance" Click="BenchmarkDispatcher_Click"/>
+                                    <Button Content="Dependency Property" Click="BenchmarkDependencyProperty_Click"/>
+                                    <Button Content="Routed Events" Click="BenchmarkRoutedEvents_Click"/>
+                                    <Button Content="Style Application" Click="BenchmarkStyles_Click"/>
+                                    <Button Content="Template Expansion" Click="BenchmarkTemplates_Click"/>
+                                    <Button Content="Animation Performance" Click="BenchmarkAnimation_Click"/>
+                                </UniformGrid>
+
+                                <Border Background="#F5F5F5" Padding="10" Margin="0,10,0,0">
+                                    <TextBlock x:Name="TemplateBenchmarkResults" FontFamily="Consolas" FontSize="12"
+                                              TextWrapping="Wrap" Text="Select a template to run..."/>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Tab 4: Results & Analysis -->
+            <TabItem Header="Results & Analysis">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <GroupBox Header="Benchmark Results Summary">
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Margin="0,0,10,0">
+                                        View and analyze benchmark results. Export to CSV, HTML, or JSON format.
+                                    </TextBlock>
+
+                                    <StackPanel Grid.Column="1">
+                                        <Button Content="Refresh Results" Click="RefreshResults_Click"/>
+                                        <Button Content="Export to CSV" Click="ExportCSV_Click"/>
+                                        <Button Content="Open Reports Folder" Click="OpenReportsFolder_Click"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <Border Background="#F5F5F5" Padding="10" Margin="0,10,0,0" Height="400">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <TextBlock x:Name="ResultsSummary" FontFamily="Consolas" FontSize="11"
+                                                  TextWrapping="Wrap" Text="Run benchmarks to see results here..."/>
+                                    </ScrollViewer>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Performance Insights">
+                            <Border Background="#E8F5E9" Padding="15">
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,10">
+                                        Key Performance Metrics to Watch:
+                                    </TextBlock>
+
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        • <Bold>Mean Time</Bold>: Average execution time across iterations
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        • <Bold>Allocated Memory</Bold>: Heap allocations per operation
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        • <Bold>Gen 0/1/2 Collections</Bold>: Garbage collection pressure
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        • <Bold>Standard Deviation</Bold>: Consistency of measurements
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        • <Bold>Ratio</Bold>: Comparison to baseline implementation
+                                    </TextBlock>
+
+                                    <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,15,0,5">
+                                        Optimization Goals:
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        • Reduce mean time by using optimized code paths
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        • Minimize allocations to reduce GC pressure
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        • Aim for low standard deviation (consistent performance)
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,2">
+                                        • Compare ratios to identify best performing approaches
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+        </TabControl>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" Background="#34495E" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="StatusText" Grid.Column="0" Foreground="White" VerticalAlignment="Center"
+                          Text="Ready. Select benchmarks to run precise performance measurements."/>
+                <TextBlock Grid.Column="1" Foreground="#ECF0F1" VerticalAlignment="Center" Margin="0,0,20,0">
+                    <Run Text="Benchmarks Run: "/>
+                    <Run x:Name="BenchmarkCountText" Text="0" FontWeight="Bold"/>
+                </TextBlock>
+                <TextBlock Grid.Column="2" Foreground="#ECF0F1" VerticalAlignment="Center">
+                    <Run Text="Memory: "/>
+                    <Run x:Name="MemoryText" Text="0 MB" FontWeight="Bold"/>
+                </TextBlock>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,422 @@
+<Window x:Class="BindingPerformance.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:BindingPerformance"
+        Title="Lesson 1: Binding Performance Optimization" Height="700" Width="1200"
+        Background="#F5F5F5">
+    <Window.Resources>
+        <Style x:Key="HeaderStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2196F3"/>
+            <Setter Property="Margin" Value="5,10,5,5"/>
+        </Style>
+        <Style x:Key="MetricStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2196F3" CornerRadius="5" Padding="15" Margin="0,0,0,10">
+            <StackPanel>
+                <TextBlock Text="Binding Performance Optimization"
+                          FontSize="24" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="Compare different binding modes and techniques for optimal performance"
+                          FontSize="14" Foreground="White" Opacity="0.9" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <TabControl Grid.Row="1" Margin="0,0,0,10">
+            <!-- Tab 1: Binding Mode Comparison -->
+            <TabItem Header="Binding Mode Comparison">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- OneWay vs TwoWay -->
+                    <GroupBox Grid.Column="0" Header="OneWay vs TwoWay Binding">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource HeaderStyle}" Text="Performance Impact of Binding Modes"/>
+
+                            <Border Background="White" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="OneWay Binding (Optimized):" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding OneWayValue, Mode=OneWay}"
+                                             FontSize="18" Foreground="Green" Margin="10,5"/>
+                                    <TextBlock Text="• Lower overhead" FontSize="12"/>
+                                    <TextBlock Text="• No reverse tracking" FontSize="12"/>
+                                    <TextBlock Text="• Recommended for read-only data" FontSize="12"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="TwoWay Binding (More Overhead):" FontWeight="Bold"/>
+                                    <TextBox Text="{Binding TwoWayValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                           FontSize="18" Margin="10,5"/>
+                                    <TextBlock Text="• Bidirectional tracking" FontSize="12"/>
+                                    <TextBlock Text="• Higher memory usage" FontSize="12"/>
+                                    <TextBlock Text="• Use only when needed" FontSize="12"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Button Content="Update Values" Click="UpdateValues_Click" Margin="5,10,5,5"/>
+
+                            <Border Background="#FFF3E0" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="Performance Metrics:" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding OneWayBindingTime}" Style="{StaticResource MetricStyle}"/>
+                                    <TextBlock Text="{Binding TwoWayBindingTime}" Style="{StaticResource MetricStyle}"/>
+                                    <TextBlock Text="{Binding PerformanceDifference}"
+                                             Foreground="Red" Style="{StaticResource MetricStyle}"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!-- OneTime Binding -->
+                    <GroupBox Grid.Column="1" Header="OneTime Binding Optimization">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource HeaderStyle}" Text="Static Data Binding"/>
+
+                            <Border Background="White" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="OneTime Binding (Most Efficient):" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding StaticValue, Mode=OneTime}"
+                                             FontSize="20" Foreground="Blue" Margin="10,5"/>
+                                    <TextBlock Text="• Zero overhead after initialization" FontSize="12"/>
+                                    <TextBlock Text="• No change tracking" FontSize="12"/>
+                                    <TextBlock Text="• Perfect for static data" FontSize="12"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="Binding Performance Hierarchy:" FontWeight="Bold" Margin="0,0,0,10"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="🟢" FontSize="20"/>
+                                        <TextBlock Text="OneTime (Best)" Foreground="Green" Margin="5,0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="🟡" FontSize="20"/>
+                                        <TextBlock Text="OneWay (Good)" Foreground="Orange" Margin="5,0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="🔴" FontSize="20"/>
+                                        <TextBlock Text="TwoWay (Higher Cost)" Foreground="Red" Margin="5,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="#E3F2FD" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="Best Practices:" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <TextBlock TextWrapping="Wrap" FontSize="12">
+                                        ✓ Use OneTime for labels and static content
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" FontSize="12">
+                                        ✓ Use OneWay for display-only dynamic data
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" FontSize="12">
+                                        ✓ Use TwoWay only for user input controls
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" FontSize="12">
+                                        ✓ Explicitly specify Mode to avoid defaults
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+
+            <!-- Tab 2: UpdateSourceTrigger -->
+            <TabItem Header="UpdateSourceTrigger">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Grid.Column="0" Header="Update Trigger Comparison">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource HeaderStyle}" Text="Different Update Triggers"/>
+
+                            <Border Background="White" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="PropertyChanged (High Frequency):" FontWeight="Bold"/>
+                                    <TextBox Text="{Binding PropertyChangedText, UpdateSourceTrigger=PropertyChanged}"
+                                           Margin="5"/>
+                                    <TextBlock Text="{Binding PropertyChangedCount, StringFormat='Updates: {0}'}"
+                                             Foreground="Red"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="LostFocus (Optimized):" FontWeight="Bold"/>
+                                    <TextBox Text="{Binding LostFocusText, UpdateSourceTrigger=LostFocus}"
+                                           Margin="5"/>
+                                    <TextBlock Text="{Binding LostFocusCount, StringFormat='Updates: {0}'}"
+                                             Foreground="Green"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="Explicit (Manual Control):" FontWeight="Bold"/>
+                                    <TextBox x:Name="ExplicitTextBox"
+                                           Text="{Binding ExplicitText, UpdateSourceTrigger=Explicit}"
+                                           Margin="5"/>
+                                    <Button Content="Update Source" Click="UpdateExplicitSource_Click" Margin="5,0"/>
+                                    <TextBlock Text="{Binding ExplicitCount, StringFormat='Updates: {0}'}"
+                                             Foreground="Blue"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Button Content="Reset Counters" Click="ResetCounters_Click" Margin="5,10,5,5"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Grid.Column="1" Header="Performance Analysis">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource HeaderStyle}" Text="Update Frequency Impact"/>
+
+                            <Border Background="#FFF3E0" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="PropertyChanged:" FontWeight="Bold"/>
+                                    <TextBlock Text="• Updates on every keystroke" FontSize="12"/>
+                                    <TextBlock Text="• High CPU usage for complex bindings" FontSize="12"/>
+                                    <TextBlock Text="• Use for real-time validation only" FontSize="12"/>
+                                    <ProgressBar Value="{Binding PropertyChangedCount}" Maximum="100"
+                                               Height="20" Margin="5" Foreground="Red"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="#E8F5E9" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="LostFocus:" FontWeight="Bold"/>
+                                    <TextBlock Text="• Updates when control loses focus" FontSize="12"/>
+                                    <TextBlock Text="• Balanced approach" FontSize="12"/>
+                                    <TextBlock Text="• Recommended for most scenarios" FontSize="12"/>
+                                    <ProgressBar Value="{Binding LostFocusCount}" Maximum="100"
+                                               Height="20" Margin="5" Foreground="Green"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="#E3F2FD" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="Explicit:" FontWeight="Bold"/>
+                                    <TextBlock Text="• Updates only on demand" FontSize="12"/>
+                                    <TextBlock Text="• Lowest overhead" FontSize="12"/>
+                                    <TextBlock Text="• Best for batch operations" FontSize="12"/>
+                                    <ProgressBar Value="{Binding ExplicitCount}" Maximum="100"
+                                               Height="20" Margin="5" Foreground="Blue"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="Performance Metrics:" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding UpdatePerformanceMetrics}"
+                                             TextWrapping="Wrap" FontSize="12" Margin="5"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+
+            <!-- Tab 3: Binding Path Optimization -->
+            <TabItem Header="Path Optimization">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Grid.Column="0" Header="Path Complexity">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource HeaderStyle}" Text="Simple vs Complex Paths"/>
+
+                            <Border Background="White" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="Direct Property (Fast):" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding DirectProperty}"
+                                             FontSize="18" Foreground="Green" Margin="5"/>
+                                    <TextBlock Text="Access time: ~0.001ms" FontSize="11" Foreground="Gray"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="Nested Property (Slower):" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding NestedObject.Level1.Level2.Value}"
+                                             FontSize="18" Foreground="Orange" Margin="5"/>
+                                    <TextBlock Text="Access time: ~0.004ms" FontSize="11" Foreground="Gray"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="Collection Indexer (Variable):" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Items[0].Name}"
+                                             FontSize="18" Foreground="Red" Margin="5"/>
+                                    <TextBlock Text="Access time: ~0.006ms" FontSize="11" Foreground="Gray"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Button Content="Benchmark Paths" Click="BenchmarkPaths_Click" Margin="5,10,5,5"/>
+
+                            <Border Background="#FFF3E0" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="Benchmark Results:" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding PathBenchmarkResults}"
+                                             TextWrapping="Wrap" FontSize="11" Margin="5"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Grid.Column="1" Header="Optimization Strategies">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource HeaderStyle}" Text="Best Practices"/>
+
+                            <Border Background="#E3F2FD" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="1. Flatten Deep Hierarchies" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <TextBlock TextWrapping="Wrap" FontSize="12">
+                                        Instead of: {Binding A.B.C.D.E}
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="Green">
+                                        Use: Computed property exposing E directly
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="#E8F5E9" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="2. Cache Complex Calculations" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <TextBlock TextWrapping="Wrap" FontSize="12">
+                                        Computed at binding time: {Binding CachedComplexValue}
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding CachedComplexValue}"
+                                             FontSize="14" Foreground="Green" Margin="5"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="#FFF3E0" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="3. Avoid Repeated Collection Access" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <TextBlock TextWrapping="Wrap" FontSize="12">
+                                        Bad: Multiple {Binding Items[0].Property}
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="Green">
+                                        Good: Single {Binding FirstItem} property
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="Performance Tips:" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <TextBlock TextWrapping="Wrap" FontSize="12">
+                                        ✓ Keep binding paths short and simple
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" FontSize="12">
+                                        ✓ Avoid collection indexers in bindings
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" FontSize="12">
+                                        ✓ Use RelativeSource sparingly
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" FontSize="12">
+                                        ✓ Cache expensive property calculations
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" FontSize="12">
+                                        ✓ Consider x:Bind for UWP/WinUI (compile-time)
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+
+            <!-- Tab 4: Virtual vs Real Bindings -->
+            <TabItem Header="Mass Binding Test">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Grid.Row="0" Header="Mass Binding Performance Test">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource HeaderStyle}" Text="Create and Test Many Bindings"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="5">
+                                <TextBlock Text="Number of Items:" VerticalAlignment="Center" Margin="5"/>
+                                <TextBox x:Name="ItemCountTextBox" Text="1000" Width="100" Margin="5"/>
+                                <Button Content="Create OneWay Bindings" Click="CreateOneWayBindings_Click"/>
+                                <Button Content="Create TwoWay Bindings" Click="CreateTwoWayBindings_Click"/>
+                                <Button Content="Clear" Click="ClearBindings_Click"/>
+                            </StackPanel>
+
+                            <Border Background="#FFF3E0" CornerRadius="5" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="Performance Results:" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding CreationTime}" Style="{StaticResource MetricStyle}"/>
+                                    <TextBlock Text="{Binding UpdateTime}" Style="{StaticResource MetricStyle}"/>
+                                    <TextBlock Text="{Binding MemoryUsage}" Style="{StaticResource MetricStyle}"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl x:Name="BindingTestItemsControl" Margin="5">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="White" BorderBrush="#E0E0E0" BorderThickness="1"
+                                          Margin="2" Padding="5">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Id, StringFormat='Item {0}:'}"
+                                                     Width="80" Margin="5"/>
+                                            <TextBlock Text="{Binding Value}" Width="200" Margin="5"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" Background="#424242" CornerRadius="5" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding StatusMessage}"
+                          Foreground="White" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Text="{Binding CurrentMemory, StringFormat='Memory: {0:N0} MB'}"
+                          Foreground="#4CAF50" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

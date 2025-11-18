@@ -1,0 +1,505 @@
+<Window x:Class="TaskParallelLibrary.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Task Parallel Library - UI Thread Optimization"
+        Height="850" Width="1100"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#FF6F00" Padding="15" CornerRadius="5">
+            <StackPanel>
+                <TextBlock Text="Task Parallel Library (TPL)"
+                          FontSize="24" FontWeight="Bold"
+                          Foreground="White"/>
+                <TextBlock Text="Master parallel programming with TPL, PLINQ, and TPL Dataflow"
+                          FontSize="14" Foreground="White" Opacity="0.9"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <TabControl Grid.Row="1" Margin="0,10,0,0">
+
+            <!-- Tab 1: Parallel.For/ForEach -->
+            <TabItem Header="Parallel Loops">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="1. Parallel.For and Parallel.ForEach"
+                                  FontSize="18" FontWeight="Bold" Foreground="#FF6F00"/>
+                        <TextBlock Text="CPU-intensive operations distributed across multiple cores"
+                                  TextWrapping="Wrap" Foreground="#666"/>
+
+                        <Separator Margin="0,10"/>
+
+                        <GroupBox Header="Parallel.For Performance">
+                            <StackPanel>
+                                <TextBlock Text="Compare sequential vs parallel loop performance:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Iterations:"
+                                              VerticalAlignment="Center"/>
+                                    <Slider Grid.Column="1" x:Name="IterationsSlider"
+                                           Minimum="100000" Maximum="10000000"
+                                           Value="1000000"
+                                           TickFrequency="1000000"/>
+                                </Grid>
+
+                                <TextBlock>
+                                    <Run Text="Count: "/>
+                                    <Run Text="{Binding ElementName=IterationsSlider, Path=Value, StringFormat='{}{0:N0}'}"
+                                         FontWeight="Bold"/>
+                                </TextBlock>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Sequential For"
+                                           Click="OnSequentialFor"/>
+                                    <Button Content="Parallel.For"
+                                           Click="OnParallelFor"
+                                           Style="{StaticResource SuccessButton}"/>
+                                    <Button Content="Compare Both"
+                                           Click="OnCompareForLoops"/>
+                                </StackPanel>
+
+                                <ProgressBar x:Name="ParallelForProgress"
+                                           Minimum="0" Maximum="100"/>
+
+                                <TextBox x:Name="ParallelForResults"
+                                        Height="120"
+                                        TextWrapping="Wrap"
+                                        VerticalScrollBarVisibility="Auto"
+                                        IsReadOnly="True"
+                                        FontFamily="Consolas"
+                                        FontSize="12"
+                                        Margin="5,10"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Parallel.ForEach with Data">
+                            <StackPanel>
+                                <TextBlock Text="Process collections in parallel:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <Button Content="Process Image Collection"
+                                       Click="OnParallelForEach"/>
+
+                                <ProgressBar x:Name="ForEachProgress"
+                                           Minimum="0" Maximum="100"/>
+
+                                <TextBlock x:Name="ForEachStatus"/>
+
+                                <DataGrid x:Name="ForEachResultsGrid"
+                                         Height="150"
+                                         Margin="5,10"
+                                         AutoGenerateColumns="True"
+                                         IsReadOnly="True"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Parallel Options &amp; Cancellation">
+                            <StackPanel>
+                                <TextBlock Text="Configure parallel execution:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Max Degree of Parallelism:"
+                                              VerticalAlignment="Center"/>
+                                    <Slider Grid.Column="1" x:Name="MaxDegreeSlider"
+                                           Minimum="1" Maximum="16"
+                                           Value="4"
+                                           TickFrequency="1"
+                                           IsSnapToTickEnabled="True"/>
+                                </Grid>
+
+                                <TextBlock>
+                                    <Run Text="Max Parallel Tasks: "/>
+                                    <Run Text="{Binding ElementName=MaxDegreeSlider, Path=Value}"
+                                         FontWeight="Bold"/>
+                                </TextBlock>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Start with Options"
+                                           Click="OnParallelWithOptions"
+                                           x:Name="StartParallelOptionsButton"/>
+                                    <Button Content="Cancel"
+                                           Click="OnCancelParallel"
+                                           x:Name="CancelParallelButton"
+                                           IsEnabled="False"
+                                           Background="#F44336"/>
+                                </StackPanel>
+
+                                <TextBlock x:Name="ParallelOptionsStatus"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Tab 2: PLINQ -->
+            <TabItem Header="PLINQ">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="2. Parallel LINQ (PLINQ)"
+                                  FontSize="18" FontWeight="Bold" Foreground="#FF6F00"/>
+                        <TextBlock Text="Declarative parallel data processing with LINQ"
+                                  TextWrapping="Wrap" Foreground="#666"/>
+
+                        <Separator Margin="0,10"/>
+
+                        <GroupBox Header="PLINQ Basics">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                                    <Run Text="Process data using "/>
+                                    <Run Text=".AsParallel()" FontWeight="Bold"/>
+                                    <Run Text=" for automatic parallelization"/>
+                                </TextBlock>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="LINQ (Sequential)"
+                                           Click="OnLinqSequential"/>
+                                    <Button Content="PLINQ (Parallel)"
+                                           Click="OnPLinq"
+                                           Style="{StaticResource SuccessButton}"/>
+                                    <Button Content="Compare Performance"
+                                           Click="OnComparePLinq"/>
+                                </StackPanel>
+
+                                <TextBox x:Name="PLinqResults"
+                                        Height="150"
+                                        TextWrapping="Wrap"
+                                        VerticalScrollBarVisibility="Auto"
+                                        IsReadOnly="True"
+                                        FontFamily="Consolas"
+                                        FontSize="12"
+                                        Margin="5,10"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="PLINQ Operations">
+                            <StackPanel>
+                                <TextBlock Text="Complex PLINQ query operations:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Filter &amp; Map"
+                                           Click="OnPLinqFilterMap"/>
+                                    <Button Content="Aggregation"
+                                           Click="OnPLinqAggregation"/>
+                                    <Button Content="Grouping"
+                                           Click="OnPLinqGrouping"/>
+                                </StackPanel>
+
+                                <DataGrid x:Name="PLinqDataGrid"
+                                         Height="200"
+                                         Margin="5,10"
+                                         AutoGenerateColumns="True"
+                                         IsReadOnly="True"/>
+
+                                <TextBlock x:Name="PLinqOperationStatus"
+                                          FontWeight="Bold"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="PLINQ Configuration">
+                            <StackPanel>
+                                <TextBlock Text="Fine-tune PLINQ behavior:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <CheckBox x:Name="PreserveOrderCheckBox"
+                                         Content="Preserve Order (AsOrdered)"
+                                         IsChecked="False"
+                                         Margin="5"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Degree of Parallelism:"
+                                              VerticalAlignment="Center"/>
+                                    <Slider Grid.Column="1" x:Name="PLinqDegreeSlider"
+                                           Minimum="1" Maximum="16"
+                                           Value="-1"
+                                           TickFrequency="1"/>
+                                </Grid>
+
+                                <TextBlock>
+                                    <Run Text="Degree: "/>
+                                    <Run Text="{Binding ElementName=PLinqDegreeSlider, Path=Value, StringFormat='{}{0:F0}'}"
+                                         FontWeight="Bold"/>
+                                    <Run Text=" (-1 = Auto)"/>
+                                </TextBlock>
+
+                                <Button Content="Run Configured PLINQ"
+                                       Click="OnPLinqConfigured"/>
+
+                                <TextBlock x:Name="PLinqConfigStatus"
+                                          Margin="5"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Tab 3: TPL Dataflow -->
+            <TabItem Header="TPL Dataflow">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="3. TPL Dataflow"
+                                  FontSize="18" FontWeight="Bold" Foreground="#FF6F00"/>
+                        <TextBlock Text="Build asynchronous data processing pipelines"
+                                  TextWrapping="Wrap" Foreground="#666"/>
+
+                        <Separator Margin="0,10"/>
+
+                        <GroupBox Header="Basic Dataflow Blocks">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                                    <Run Text="ActionBlock, TransformBlock, and BufferBlock"/>
+                                    <LineBreak/>
+                                    <Run Text="Process data through pipeline stages" Foreground="#666"/>
+                                </TextBlock>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="ActionBlock Demo"
+                                           Click="OnActionBlock"/>
+                                    <Button Content="TransformBlock Demo"
+                                           Click="OnTransformBlock"/>
+                                    <Button Content="BufferBlock Demo"
+                                           Click="OnBufferBlock"/>
+                                </StackPanel>
+
+                                <TextBox x:Name="DataflowLog"
+                                        Height="120"
+                                        TextWrapping="Wrap"
+                                        VerticalScrollBarVisibility="Auto"
+                                        IsReadOnly="True"
+                                        FontFamily="Consolas"
+                                        FontSize="11"
+                                        Margin="5,10"/>
+
+                                <Button Content="Clear Log"
+                                       Click="OnClearDataflowLog"
+                                       HorizontalAlignment="Left"
+                                       Background="#757575"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Data Processing Pipeline">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                                    <Run Text="Multi-stage pipeline: "/>
+                                    <Run Text="Download → Process → Transform → Save" FontWeight="Bold"/>
+                                </TextBlock>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Items to process:"
+                                              VerticalAlignment="Center"/>
+                                    <Slider Grid.Column="1" x:Name="PipelineItemsSlider"
+                                           Minimum="10" Maximum="100"
+                                           Value="50"
+                                           TickFrequency="10"/>
+                                </Grid>
+
+                                <TextBlock>
+                                    <Run Text="Count: "/>
+                                    <Run Text="{Binding ElementName=PipelineItemsSlider, Path=Value}"
+                                         FontWeight="Bold"/>
+                                </TextBlock>
+
+                                <Button Content="Start Pipeline"
+                                       Click="OnStartPipeline"
+                                       x:Name="StartPipelineButton"/>
+
+                                <StackPanel Margin="5,10">
+                                    <Grid Margin="0,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="50"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Download:"/>
+                                        <ProgressBar Grid.Column="1" x:Name="DownloadProgress" Height="20"/>
+                                        <TextBlock Grid.Column="2" x:Name="DownloadCount" Text="0" HorizontalAlignment="Center"/>
+                                    </Grid>
+
+                                    <Grid Margin="0,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="50"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Process:"/>
+                                        <ProgressBar Grid.Column="1" x:Name="ProcessPipelineProgress" Height="20"/>
+                                        <TextBlock Grid.Column="2" x:Name="ProcessCount" Text="0" HorizontalAlignment="Center"/>
+                                    </Grid>
+
+                                    <Grid Margin="0,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="50"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Transform:"/>
+                                        <ProgressBar Grid.Column="1" x:Name="TransformProgress" Height="20"/>
+                                        <TextBlock Grid.Column="2" x:Name="TransformCount" Text="0" HorizontalAlignment="Center"/>
+                                    </Grid>
+
+                                    <Grid Margin="0,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="50"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Save:"/>
+                                        <ProgressBar Grid.Column="1" x:Name="SaveProgress" Height="20"/>
+                                        <TextBlock Grid.Column="2" x:Name="SaveCount" Text="0" HorizontalAlignment="Center"/>
+                                    </Grid>
+                                </StackPanel>
+
+                                <TextBlock x:Name="PipelineStatus"
+                                          FontWeight="Bold"
+                                          Margin="5"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Advanced Dataflow">
+                            <StackPanel>
+                                <TextBlock Text="BroadcastBlock and BatchBlock patterns:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="BroadcastBlock"
+                                           Click="OnBroadcastBlock"/>
+                                    <Button Content="BatchBlock"
+                                           Click="OnBatchBlock"/>
+                                    <Button Content="JoinBlock"
+                                           Click="OnJoinBlock"/>
+                                </StackPanel>
+
+                                <TextBlock x:Name="AdvancedDataflowStatus"
+                                          Margin="5,10"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Tab 4: Task Coordination -->
+            <TabItem Header="Task Coordination">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="4. Advanced Task Coordination"
+                                  FontSize="18" FontWeight="Bold" Foreground="#FF6F00"/>
+                        <TextBlock Text="Combine and coordinate multiple tasks efficiently"
+                                  TextWrapping="Wrap" Foreground="#666"/>
+
+                        <Separator Margin="0,10"/>
+
+                        <GroupBox Header="Task Continuations">
+                            <StackPanel>
+                                <TextBlock Text="Chain tasks with ContinueWith:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Simple Continuation"
+                                           Click="OnSimpleContinuation"/>
+                                    <Button Content="Multiple Continuations"
+                                           Click="OnMultipleContinuations"/>
+                                    <Button Content="Conditional Continuation"
+                                           Click="OnConditionalContinuation"/>
+                                </StackPanel>
+
+                                <TextBox x:Name="ContinuationLog"
+                                        Height="120"
+                                        TextWrapping="Wrap"
+                                        VerticalScrollBarVisibility="Auto"
+                                        IsReadOnly="True"
+                                        FontFamily="Consolas"
+                                        FontSize="12"
+                                        Margin="5,10"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Task Barriers and Synchronization">
+                            <StackPanel>
+                                <TextBlock Text="Coordinate multiple tasks with Barrier:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <Button Content="Run Barrier Pattern"
+                                       Click="OnBarrierPattern"/>
+
+                                <TextBox x:Name="BarrierLog"
+                                        Height="100"
+                                        TextWrapping="Wrap"
+                                        VerticalScrollBarVisibility="Auto"
+                                        IsReadOnly="True"
+                                        FontFamily="Consolas"
+                                        FontSize="11"
+                                        Margin="5,10"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Task Factory">
+                            <StackPanel>
+                                <TextBlock Text="Create tasks with custom configuration:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="LongRunning Task"
+                                           Click="OnLongRunningTask"/>
+                                    <Button Content="AttachedToParent"
+                                           Click="OnAttachedToParent"/>
+                                    <Button Content="Custom Scheduler"
+                                           Click="OnCustomScheduler"/>
+                                </StackPanel>
+
+                                <TextBlock x:Name="TaskFactoryStatus"
+                                          Margin="5,10"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Performance Comparison">
+                            <StackPanel>
+                                <TextBlock Text="Compare different parallel patterns:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <Button Content="Run Full Comparison"
+                                       Click="OnFullComparison"
+                                       Style="{StaticResource WarningButton}"/>
+
+                                <DataGrid x:Name="ComparisonGrid"
+                                         Height="200"
+                                         Margin="5,10"
+                                         AutoGenerateColumns="True"
+                                         IsReadOnly="True"
+                                         HeadersVisibility="Column"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</Window>

@@ -1,0 +1,141 @@
+<Window x:Class="VirtualizationTechniques.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:VirtualizationTechniques"
+        Title="Virtualization Techniques - VirtualizingStackPanel and Custom Panels"
+        Height="900" Width="1400"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Control Panel -->
+        <GroupBox Grid.Row="0" Header="Virtualization Demonstrations">
+            <StackPanel>
+                <WrapPanel>
+                    <Button x:Name="BtnVirtualizationBasics" Content="Virtualization Basics" Click="BtnVirtualizationBasics_Click"/>
+                    <Button x:Name="BtnComparePerformance" Content="Compare Performance" Click="BtnComparePerformance_Click"/>
+                    <Button x:Name="BtnVirtualizingModes" Content="Virtualization Modes" Click="BtnVirtualizingModes_Click"/>
+                    <Button x:Name="BtnScrollUnit" Content="Scroll Units" Click="BtnScrollUnit_Click"/>
+                    <Button x:Name="BtnRecyclingMode" Content="Recycling Modes" Click="BtnRecyclingMode_Click"/>
+                    <Button x:Name="BtnCustomPanel" Content="Custom Panel" Click="BtnCustomPanel_Click"/>
+                    <Button x:Name="BtnBestPractices" Content="Best Practices" Click="BtnBestPractices_Click"/>
+                    <Button x:Name="BtnClearDemo" Content="Clear" Click="BtnClearDemo_Click"/>
+                </WrapPanel>
+                <TextBlock x:Name="TxtInstructions" TextWrapping="Wrap" FontWeight="Bold" Foreground="DarkBlue">
+                    Master UI virtualization to handle large data collections efficiently with VirtualizingStackPanel and custom techniques.
+                </TextBlock>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Demo Area -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Panel: Visualization -->
+            <GroupBox Grid.Column="0" Header="Virtualization Visualization">
+                <Border x:Name="VisualizationContainer"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        Background="White">
+                </Border>
+            </GroupBox>
+
+            <!-- Right Panel: Information -->
+            <GroupBox Grid.Column="1" Header="Virtualization Metrics">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <GroupBox Header="Performance Metrics">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Total Items:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TxtTotalItems" Text="0" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Realized Items:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" x:Name="TxtRealizedItems" Text="0" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Memory Saved:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" x:Name="TxtMemorySaved" Text="0 MB" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Load Time:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="3" Grid.Column="1" x:Name="TxtLoadTime" Text="0 ms" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Virtualization:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="4" Grid.Column="1" x:Name="TxtVirtualizationStatus" Text="Disabled" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="5" Grid.Column="0" Text="Scroll Unit:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="5" Grid.Column="1" x:Name="TxtScrollUnit" Text="-" Margin="10,0,0,0"/>
+
+                                <TextBlock Grid.Row="6" Grid.Column="0" Text="Recycling:" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="6" Grid.Column="1" x:Name="TxtRecyclingMode" Text="-" Margin="10,0,0,0"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Virtualization Details">
+                            <TextBlock x:Name="TxtVirtualizationDetails"
+                                       TextWrapping="Wrap"
+                                       FontFamily="Consolas"
+                                       FontSize="11"
+                                       Background="WhiteSmoke"
+                                       Padding="10"/>
+                        </GroupBox>
+
+                        <GroupBox Header="Key Concepts">
+                            <TextBlock TextWrapping="Wrap" Padding="5">
+                                <Bold>UI Virtualization:</Bold><LineBreak/>
+                                • Creates UI only for visible items<LineBreak/>
+                                • Dramatically reduces memory<LineBreak/>
+                                • Faster startup and scrolling<LineBreak/>
+                                • Essential for large lists<LineBreak/><LineBreak/>
+                                <Bold>Container Recycling:</Bold><LineBreak/>
+                                • Reuses containers<LineBreak/>
+                                • Lower memory allocation<LineBreak/>
+                                • Better GC performance<LineBreak/>
+                                • Smooth scrolling
+                            </TextBlock>
+                        </GroupBox>
+
+                        <GroupBox Header="Optimization Tips">
+                            <TextBlock TextWrapping="Wrap" Padding="5">
+                                • Always virtualize large lists<LineBreak/>
+                                • Use VirtualizingStackPanel<LineBreak/>
+                                • Enable container recycling<LineBreak/>
+                                • Choose appropriate scroll unit<LineBreak/>
+                                • Avoid GroupStyle (disables virtualization)<LineBreak/>
+                                • Simplify item templates<LineBreak/>
+                                • Monitor realized containers<LineBreak/>
+                                • Profile scroll performance
+                            </TextBlock>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </GroupBox>
+        </Grid>
+
+        <!-- Status Bar -->
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock x:Name="TxtStatus" Text="Ready - Select a demonstration to explore virtualization techniques"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

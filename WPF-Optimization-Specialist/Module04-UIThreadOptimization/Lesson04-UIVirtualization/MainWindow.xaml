@@ -1,0 +1,502 @@
+<Window x:Class="UIVirtualization.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:UIVirtualization"
+        Title="UI Virtualization &amp; Progressive Loading - UI Thread Optimization"
+        Height="850" Width="1200"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#9C27B0" Padding="15" CornerRadius="5">
+            <StackPanel>
+                <TextBlock Text="UI Virtualization &amp; Progressive Loading"
+                          FontSize="24" FontWeight="Bold"
+                          Foreground="White"/>
+                <TextBlock Text="Master virtualization techniques and progressive loading for ultra-responsive WPF applications"
+                          FontSize="14" Foreground="White" Opacity="0.9"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <TabControl Grid.Row="1" Margin="0,10,0,0">
+
+            <!-- Tab 1: VirtualizingStackPanel -->
+            <TabItem Header="Virtualization Basics">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Non-Virtualized -->
+                    <GroupBox Grid.Column="0" Header="Non-Virtualized ListBox (Slow)">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0">
+                                <TextBlock Text="No virtualization - all items rendered"
+                                          Foreground="#D32F2F" FontWeight="Bold"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Item Count:"
+                                              VerticalAlignment="Center"/>
+                                    <Slider Grid.Column="1" x:Name="NonVirtualItemsSlider"
+                                           Minimum="100" Maximum="10000"
+                                           Value="1000"
+                                           TickFrequency="1000"/>
+                                </Grid>
+
+                                <TextBlock>
+                                    <Run Text="Count: "/>
+                                    <Run Text="{Binding ElementName=NonVirtualItemsSlider, Path=Value, StringFormat='{}{0:N0}'}"
+                                         FontWeight="Bold"/>
+                                </TextBlock>
+
+                                <Button Content="Load Items (Watch Delay!)"
+                                       Click="OnLoadNonVirtualized"
+                                       Background="#D32F2F"/>
+
+                                <TextBlock x:Name="NonVirtualStatus" FontSize="12"/>
+                            </StackPanel>
+
+                            <ListBox Grid.Row="1" x:Name="NonVirtualListBox"
+                                    Margin="5"
+                                    ItemTemplate="{StaticResource ItemTemplate}"
+                                    VirtualizingPanel.IsVirtualizing="False"
+                                    ScrollViewer.CanContentScroll="False"/>
+
+                            <TextBlock Grid.Row="2" x:Name="NonVirtualMemory"
+                                      FontFamily="Consolas" FontSize="11"
+                                      Foreground="#D32F2F"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <!-- Virtualized -->
+                    <GroupBox Grid.Column="1" Header="Virtualized ListBox (Fast)">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0">
+                                <TextBlock Text="With virtualization - only visible items rendered"
+                                          Foreground="#388E3C" FontWeight="Bold"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Item Count:"
+                                              VerticalAlignment="Center"/>
+                                    <Slider Grid.Column="1" x:Name="VirtualItemsSlider"
+                                           Minimum="100" Maximum="100000"
+                                           Value="10000"
+                                           TickFrequency="10000"/>
+                                </Grid>
+
+                                <TextBlock>
+                                    <Run Text="Count: "/>
+                                    <Run Text="{Binding ElementName=VirtualItemsSlider, Path=Value, StringFormat='{}{0:N0}'}"
+                                         FontWeight="Bold"/>
+                                </TextBlock>
+
+                                <Button Content="Load Items (Instant!)"
+                                       Click="OnLoadVirtualized"
+                                       Background="#388E3C"/>
+
+                                <TextBlock x:Name="VirtualStatus" FontSize="12"/>
+                            </StackPanel>
+
+                            <ListBox Grid.Row="1" x:Name="VirtualListBox"
+                                    Margin="5"
+                                    ItemTemplate="{StaticResource ItemTemplate}"
+                                    VirtualizingPanel.IsVirtualizing="True"
+                                    VirtualizingPanel.VirtualizationMode="Recycling"
+                                    ScrollViewer.CanContentScroll="True"/>
+
+                            <TextBlock Grid.Row="2" x:Name="VirtualMemory"
+                                      FontFamily="Consolas" FontSize="11"
+                                      Foreground="#388E3C"/>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+
+            <!-- Tab 2: Progressive Loading -->
+            <TabItem Header="Progressive Loading">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="2. Progressive Loading Patterns"
+                                  FontSize="18" FontWeight="Bold" Foreground="#9C27B0"/>
+                        <TextBlock Text="Load data incrementally to keep UI responsive"
+                                  TextWrapping="Wrap" Foreground="#666"/>
+
+                        <Separator Margin="0,10"/>
+
+                        <GroupBox Header="Incremental Loading">
+                            <StackPanel>
+                                <TextBlock Text="Load data in chunks to avoid UI freezing:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Total Items:"
+                                              VerticalAlignment="Center"/>
+                                    <Slider Grid.Row="0" Grid.Column="1" x:Name="TotalItemsSlider"
+                                           Minimum="1000" Maximum="50000"
+                                           Value="10000"
+                                           TickFrequency="5000"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="2"
+                                              Text="{Binding ElementName=TotalItemsSlider, Path=Value, StringFormat='{}{0:N0}'}"
+                                              Width="60" TextAlignment="Right"/>
+
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Chunk Size:"
+                                              VerticalAlignment="Center"/>
+                                    <Slider Grid.Row="1" Grid.Column="1" x:Name="ChunkSizeSlider"
+                                           Minimum="100" Maximum="1000"
+                                           Value="500"
+                                           TickFrequency="100"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="2"
+                                              Text="{Binding ElementName=ChunkSizeSlider, Path=Value, StringFormat='{}{0:N0}'}"
+                                              Width="60" TextAlignment="Right"/>
+                                </Grid>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Load All at Once (Blocking)"
+                                           Click="OnLoadAllAtOnce"
+                                           Background="#D32F2F"/>
+                                    <Button Content="Progressive Load (Responsive)"
+                                           Click="OnProgressiveLoad"
+                                           Background="#388E3C"/>
+                                    <Button Content="Stop Loading"
+                                           Click="OnStopLoading"
+                                           x:Name="StopLoadingButton"
+                                           IsEnabled="False"/>
+                                </StackPanel>
+
+                                <ProgressBar x:Name="ProgressiveLoadProgress"
+                                           Minimum="0" Maximum="100"
+                                           Height="25" Margin="5,10"/>
+
+                                <TextBlock x:Name="ProgressiveLoadStatus"/>
+
+                                <ListBox x:Name="ProgressiveListBox"
+                                        Height="250"
+                                        Margin="5,10"
+                                        ItemTemplate="{StaticResource ItemTemplate}"
+                                        VirtualizingPanel.IsVirtualizing="True"
+                                        VirtualizingPanel.VirtualizationMode="Recycling"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Lazy Loading on Scroll">
+                            <StackPanel>
+                                <TextBlock Text="Load more items as user scrolls (infinite scroll pattern):"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <Button Content="Initialize Infinite Scroll"
+                                       Click="OnInitializeInfiniteScroll"
+                                       x:Name="InitInfiniteScrollButton"/>
+
+                                <TextBlock x:Name="InfiniteScrollStatus" Margin="5"/>
+
+                                <ListBox x:Name="InfiniteScrollListBox"
+                                        Height="300"
+                                        Margin="5,10"
+                                        ItemTemplate="{StaticResource ItemTemplate}"
+                                        VirtualizingPanel.IsVirtualizing="True"
+                                        ScrollViewer.ScrollChanged="OnInfiniteScrollChanged"/>
+
+                                <TextBlock x:Name="InfiniteScrollInfo"
+                                          FontFamily="Consolas" FontSize="11"
+                                          Foreground="#666"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Tab 3: Data Virtualization -->
+            <TabItem Header="Data Virtualization">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="3. Data Virtualization"
+                                  FontSize="18" FontWeight="Bold" Foreground="#9C27B0"/>
+                        <TextBlock Text="Load only the data needed for visible items"
+                                  TextWrapping="Wrap" Foreground="#666"/>
+
+                        <Separator Margin="0,10"/>
+
+                        <GroupBox Header="Virtual Collection">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                                    <Run Text="Simulate database with millions of records"/>
+                                    <LineBreak/>
+                                    <Run Text="Only fetch data for visible items" Foreground="#666"/>
+                                </TextBlock>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Virtual Items:"
+                                              VerticalAlignment="Center"/>
+                                    <Slider Grid.Column="1" x:Name="VirtualDataSizeSlider"
+                                           Minimum="10000" Maximum="1000000"
+                                           Value="100000"
+                                           TickFrequency="100000"/>
+                                </Grid>
+
+                                <TextBlock>
+                                    <Run Text="Total: "/>
+                                    <Run Text="{Binding ElementName=VirtualDataSizeSlider, Path=Value, StringFormat='{}{0:N0}'}"
+                                         FontWeight="Bold"/>
+                                    <Run Text=" items"/>
+                                </TextBlock>
+
+                                <Button Content="Create Virtual Collection"
+                                       Click="OnCreateVirtualCollection"/>
+
+                                <TextBlock x:Name="VirtualCollectionStatus"
+                                          Margin="5"/>
+
+                                <ListBox x:Name="VirtualDataListBox"
+                                        Height="300"
+                                        Margin="5,10"
+                                        VirtualizingPanel.IsVirtualizing="True"
+                                        VirtualizingPanel.VirtualizationMode="Recycling">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="#E0E0E0" BorderThickness="1"
+                                                   Margin="2" Padding="8" Background="White">
+                                                <StackPanel>
+                                                    <TextBlock>
+                                                        <Run Text="ID: " FontWeight="Bold"/>
+                                                        <Run Text="{Binding Id}"/>
+                                                    </TextBlock>
+                                                    <TextBlock Text="{Binding Data}"
+                                                              Foreground="#666" FontSize="12"/>
+                                                    <TextBlock>
+                                                        <Run Text="Loaded at: "/>
+                                                        <Run Text="{Binding LoadTime, StringFormat='{}{0:HH:mm:ss.fff}'}"
+                                                             FontSize="11" Foreground="#999"/>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+
+                                <TextBlock x:Name="VirtualDataStats"
+                                          FontFamily="Consolas"
+                                          FontSize="11"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Page-based Loading">
+                            <StackPanel>
+                                <TextBlock Text="Navigate through pages of data:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Page Size:" VerticalAlignment="Center"/>
+                                    <ComboBox x:Name="PageSizeCombo"
+                                             SelectedIndex="1"
+                                             Margin="5"
+                                             Width="100">
+                                        <ComboBoxItem Content="10"/>
+                                        <ComboBoxItem Content="25"/>
+                                        <ComboBoxItem Content="50"/>
+                                        <ComboBoxItem Content="100"/>
+                                    </ComboBox>
+
+                                    <Button Content="Load Page Data"
+                                           Click="OnLoadPageData"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <Button Content="First"
+                                           Click="OnFirstPage"
+                                           x:Name="FirstPageButton"/>
+                                    <Button Content="Previous"
+                                           Click="OnPreviousPage"
+                                           x:Name="PreviousPageButton"/>
+                                    <TextBlock x:Name="PageInfoText"
+                                              VerticalAlignment="Center"
+                                              Margin="10,0"
+                                              FontWeight="Bold"/>
+                                    <Button Content="Next"
+                                           Click="OnNextPage"
+                                           x:Name="NextPageButton"/>
+                                    <Button Content="Last"
+                                           Click="OnLastPage"
+                                           x:Name="LastPageButton"/>
+                                </StackPanel>
+
+                                <DataGrid x:Name="PagedDataGrid"
+                                         Height="250"
+                                         Margin="5,10"
+                                         AutoGenerateColumns="True"
+                                         IsReadOnly="True"
+                                         VirtualizingPanel.IsVirtualizing="True"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Tab 4: Performance Optimization -->
+            <TabItem Header="Performance Optimization">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="4. Performance Optimization Techniques"
+                                  FontSize="18" FontWeight="Bold" Foreground="#9C27B0"/>
+                        <TextBlock Text="Advanced techniques for maximum UI responsiveness"
+                                  TextWrapping="Wrap" Foreground="#666"/>
+
+                        <Separator Margin="0,10"/>
+
+                        <GroupBox Header="Container Recycling">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                                    <Run Text="Compare virtualization modes:"/>
+                                    <LineBreak/>
+                                    <Run Text="Standard" FontWeight="Bold"/>
+                                    <Run Text=" - Creates new containers"/>
+                                    <LineBreak/>
+                                    <Run Text="Recycling" FontWeight="Bold"/>
+                                    <Run Text=" - Reuses containers (faster, less memory)"/>
+                                </TextBlock>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Standard Mode"
+                                           Click="OnStandardMode"/>
+                                    <Button Content="Recycling Mode"
+                                           Click="OnRecyclingMode"
+                                           Background="#388E3C"/>
+                                    <Button Content="Compare Performance"
+                                           Click="OnCompareRecycling"/>
+                                </StackPanel>
+
+                                <TextBox x:Name="RecyclingResults"
+                                        Height="120"
+                                        Margin="5,10"
+                                        TextWrapping="Wrap"
+                                        VerticalScrollBarVisibility="Auto"
+                                        IsReadOnly="True"
+                                        FontFamily="Consolas"
+                                        FontSize="12"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Item Template Optimization">
+                            <StackPanel>
+                                <TextBlock Text="Optimize item templates for better performance:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Complex Template (Slow)"
+                                           Click="OnComplexTemplate"
+                                           Background="#D32F2F"/>
+                                    <Button Content="Simple Template (Fast)"
+                                           Click="OnSimpleTemplate"
+                                           Background="#388E3C"/>
+                                </StackPanel>
+
+                                <ListBox x:Name="TemplateComparisonListBox"
+                                        Height="200"
+                                        Margin="5,10"
+                                        VirtualizingPanel.IsVirtualizing="True"
+                                        VirtualizingPanel.VirtualizationMode="Recycling"/>
+
+                                <TextBlock x:Name="TemplatePerformance"
+                                          FontFamily="Consolas"
+                                          FontSize="12"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Deferred Scrolling">
+                            <StackPanel>
+                                <TextBlock Text="Enable deferred scrolling for large datasets:"
+                                          TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <CheckBox x:Name="DeferredScrollingCheckBox"
+                                         Content="Enable Deferred Scrolling"
+                                         IsChecked="False"
+                                         Margin="5"
+                                         Checked="OnDeferredScrollingChanged"
+                                         Unchecked="OnDeferredScrollingChanged"/>
+
+                                <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#666" Margin="5">
+                                    When enabled, content only updates after scrolling stops
+                                </TextBlock>
+
+                                <Button Content="Load 50,000 Items"
+                                       Click="OnLoadDeferredScrollTest"/>
+
+                                <ListBox x:Name="DeferredScrollListBox"
+                                        Height="200"
+                                        Margin="5,10"
+                                        ItemTemplate="{StaticResource ItemTemplate}"
+                                        VirtualizingPanel.IsVirtualizing="True"
+                                        VirtualizingPanel.VirtualizationMode="Recycling"/>
+
+                                <TextBlock x:Name="DeferredScrollStatus"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Performance Metrics">
+                            <StackPanel>
+                                <Button Content="Run Full Performance Test"
+                                       Click="OnFullPerformanceTest"
+                                       Background="#FF6F00"/>
+
+                                <DataGrid x:Name="PerformanceMetricsGrid"
+                                         Height="200"
+                                         Margin="5,10"
+                                         AutoGenerateColumns="True"
+                                         IsReadOnly="True"
+                                         HeadersVisibility="Column"/>
+
+                                <TextBlock x:Name="PerformanceConclusion"
+                                          FontWeight="Bold"
+                                          Foreground="#9C27B0"
+                                          Margin="5"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</Window>

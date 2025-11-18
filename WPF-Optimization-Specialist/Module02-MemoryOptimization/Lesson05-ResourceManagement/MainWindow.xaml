@@ -1,0 +1,351 @@
+<Window x:Class="ResourceManagement.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Resource Management Best Practices" Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="MinWidth" Value="120"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#009688" Padding="15">
+            <StackPanel>
+                <TextBlock Text="Resource Management Best Practices"
+                          FontSize="24" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="Master IDisposable pattern, Freezable objects, and WPF resource optimization"
+                          FontSize="14" Foreground="#B2DFDB" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <TabControl Grid.Row="1" Margin="10">
+            <TabItem Header="IDisposable Pattern">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="IDisposable Pattern" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            Proper implementation of IDisposable is crucial for managing unmanaged resources
+                            and ensuring deterministic cleanup in .NET applications.
+                        </TextBlock>
+
+                        <GroupBox Header="Basic IDisposable">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Button Content="Create Disposable Objects" Click="CreateDisposableObjects_Click"/>
+                                    <Button Content="Dispose All" Click="DisposeAll_Click"/>
+                                    <Button Content="Check Status" Click="CheckDisposableStatus_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock x:Name="DisposableStatus" Text="No objects created" Margin="0,10,0,0" TextWrapping="Wrap"/>
+
+                                <Border Background="#E8F5E9" Padding="10" Margin="0,10,0,0" BorderBrush="#4CAF50" BorderThickness="1">
+                                    <StackPanel>
+                                        <TextBlock Text="Proper IDisposable Pattern:" FontWeight="Bold"/>
+                                        <TextBlock Text="public void Dispose() { Dispose(true); GC.SuppressFinalize(this); }" FontFamily="Consolas" Margin="0,5,0,0"/>
+                                        <TextBlock Text="protected virtual void Dispose(bool disposing)" FontFamily="Consolas" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Using Statement">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Button Content="Without Using (Manual)" Click="WithoutUsing_Click"/>
+                                    <Button Content="With Using (Automatic)" Click="WithUsing_Click"/>
+                                    <Button Content="Using Declaration (C# 8+)" Click="UsingDeclaration_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock x:Name="UsingResult" Text="" Margin="0,10,0,0" TextWrapping="Wrap"/>
+
+                                <Border Background="#E1F5FE" Padding="10" Margin="0,10,0,0" BorderBrush="#0277BD" BorderThickness="1">
+                                    <StackPanel>
+                                        <TextBlock Text="Using Statement Benefits:" FontWeight="Bold"/>
+                                        <TextBlock TextWrapping="Wrap" Margin="0,5,0,0">
+                                            • Automatic Dispose() call even if exception occurs
+                                            <LineBreak/>
+                                            • Clear scope for resource lifetime
+                                            <LineBreak/>
+                                            • Compile-time guarantee of cleanup
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Freezable Objects">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Freezable Objects" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            Freezable objects in WPF can be made immutable (frozen) for better performance
+                            and thread-safe sharing across multiple elements.
+                        </TextBlock>
+
+                        <GroupBox Header="Freezable Benefits">
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" Background="#FFEBEE" Padding="10" Margin="5" BorderBrush="#F44336" BorderThickness="2">
+                                        <StackPanel>
+                                            <TextBlock Text="Unfrozen Brushes" FontWeight="Bold" Foreground="#C62828"/>
+                                            <Button Content="Create 1000 Unfrozen" Click="CreateUnfrozenBrushes_Click" Margin="0,10,0,0"/>
+                                            <TextBlock x:Name="UnfrozenStats" Text="Count: 0" Margin="0,10,0,0"/>
+                                            <TextBlock Text="Each element has own copy" FontStyle="Italic" Foreground="#666"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Grid.Column="1" Background="#E8F5E9" Padding="10" Margin="5" BorderBrush="#4CAF50" BorderThickness="2">
+                                        <StackPanel>
+                                            <TextBlock Text="Frozen Brushes" FontWeight="Bold" Foreground="#2E7D32"/>
+                                            <Button Content="Create 1000 Frozen" Click="CreateFrozenBrushes_Click" Margin="0,10,0,0"/>
+                                            <TextBlock x:Name="FrozenStats" Text="Count: 0" Margin="0,10,0,0"/>
+                                            <TextBlock Text="Shared across all elements" FontStyle="Italic" Foreground="#666"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <TextBlock Text="Memory Comparison:" FontWeight="Bold" Margin="0,10,0,0"/>
+                                <TextBlock x:Name="FreezableMemoryComparison" Text="" TextWrapping="Wrap"/>
+
+                                <Border Background="#FFF3E0" Padding="10" Margin="0,10,0,0" BorderBrush="#FF6F00" BorderThickness="1">
+                                    <StackPanel>
+                                        <TextBlock Text="When to Freeze:" FontWeight="Bold"/>
+                                        <TextBlock TextWrapping="Wrap" Margin="0,5,0,0">
+                                            • Brushes, Pens, Geometries shared across controls
+                                            <LineBreak/>
+                                            • Transforms that won't change
+                                            <LineBreak/>
+                                            • Resources used by multiple elements
+                                            <LineBreak/>
+                                            • Thread-safe access needed
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Freezing Examples">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Button Content="Freeze Brush" Click="FreezeBrush_Click"/>
+                                    <Button Content="Freeze Geometry" Click="FreezeGeometry_Click"/>
+                                    <Button Content="Freeze Transform" Click="FreezeTransform_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock x:Name="FreezeExampleResult" Text="" Margin="0,10,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Resource Dictionaries">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Resource Dictionary Management" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            Proper management of resource dictionaries prevents memory leaks and optimizes
+                            resource sharing across your application.
+                        </TextBlock>
+
+                        <GroupBox Header="Dynamic Resources">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Button Content="Load Heavy Resources" Click="LoadHeavyResources_Click"/>
+                                    <Button Content="Unload Resources" Click="UnloadResources_Click"/>
+                                    <Button Content="Check Resource Count" Click="CheckResourceCount_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock x:Name="ResourceDictStatus" Text="No extra resources loaded" Margin="0,10,0,0"/>
+
+                                <Border Background="#E1F5FE" Padding="10" Margin="0,10,0,0" BorderBrush="#0277BD" BorderThickness="1">
+                                    <StackPanel>
+                                        <TextBlock Text="Static vs Dynamic Resources:" FontWeight="Bold"/>
+                                        <TextBlock TextWrapping="Wrap" Margin="0,5,0,0">
+                                            <Run FontWeight="Bold">StaticResource:</Run> Resolved once at load time, better performance
+                                            <LineBreak/>
+                                            <Run FontWeight="Bold">DynamicResource:</Run> Can change at runtime, slight overhead
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Merged Dictionaries">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Button Content="Merge Dictionary" Click="MergeDictionary_Click"/>
+                                    <Button Content="Clear Merged" Click="ClearMergedDictionaries_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock x:Name="MergedDictStatus" Text="Merged dictionaries: 0" Margin="0,10,0,0"/>
+
+                                <Border Background="#FFEBEE" Padding="10" Margin="0,10,0,0" BorderBrush="#F44336" BorderThickness="1">
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Run FontWeight="Bold">Warning:</Run> Merged dictionaries stay in memory!
+                                        Clear Resources.MergedDictionaries when unloading views or modules.
+                                    </TextBlock>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Stream Management">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Stream and File Handle Management" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            Streams must be properly disposed to release file handles and system resources.
+                        </TextBlock>
+
+                        <GroupBox Header="Stream Patterns">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Button Content="Open Streams (Leaky)" Click="OpenStreamsLeaky_Click"/>
+                                    <Button Content="Open Streams (Proper)" Click="OpenStreamsProper_Click"/>
+                                    <Button Content="Check Open Handles" Click="CheckOpenHandles_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock x:Name="StreamHandleStatus" Text="No streams opened" Margin="0,10,0,0" TextWrapping="Wrap"/>
+
+                                <Border Background="#E8F5E9" Padding="10" Margin="0,10,0,0" BorderBrush="#4CAF50" BorderThickness="1">
+                                    <StackPanel>
+                                        <TextBlock Text="Best Practice - Using Statement:" FontWeight="Bold"/>
+                                        <TextBlock Text="using (var stream = File.OpenRead(path))" FontFamily="Consolas" Margin="0,5,0,0"/>
+                                        <TextBlock Text="{" FontFamily="Consolas" Margin="0,2,0,0"/>
+                                        <TextBlock Text="    // Use stream" FontFamily="Consolas" Margin="0,2,0,0"/>
+                                        <TextBlock Text="} // Automatically disposed" FontFamily="Consolas" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Async Disposal">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Asynchronous Disposal (IAsyncDisposable)" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock TextWrapping="Wrap" Margin="0,5">
+                            .NET Core 3.0+ supports async disposal for resources that require async cleanup,
+                            such as network streams or database connections.
+                        </TextBlock>
+
+                        <GroupBox Header="Async Disposal Pattern">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Button Content="Create Async Resources" Click="CreateAsyncResources_Click"/>
+                                    <Button Content="Dispose Async" Click="DisposeAsync_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock x:Name="AsyncDisposalStatus" Text="No async resources" Margin="0,10,0,0" TextWrapping="Wrap"/>
+
+                                <Border Background="#E1F5FE" Padding="10" Margin="0,10,0,0" BorderBrush="#0277BD" BorderThickness="1">
+                                    <StackPanel>
+                                        <TextBlock Text="IAsyncDisposable Pattern:" FontWeight="Bold"/>
+                                        <TextBlock Text="await using var resource = new AsyncResource();" FontFamily="Consolas" Margin="0,5,0,0"/>
+                                        <TextBlock Text="// DisposeAsync() called automatically" FontFamily="Consolas" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Best Practices">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Resource Management Best Practices" FontSize="18" FontWeight="Bold"/>
+
+                        <GroupBox Header="Checklist">
+                            <StackPanel>
+                                <Border Background="#E8F5E9" Padding="10" Margin="0,5,0,0" BorderBrush="#4CAF50" BorderThickness="1">
+                                    <StackPanel>
+                                        <TextBlock Text="✓ Always implement IDisposable for unmanaged resources" TextWrapping="Wrap"/>
+                                        <TextBlock Text="✓ Use using statements for deterministic cleanup" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                        <TextBlock Text="✓ Freeze Freezable objects when possible" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                        <TextBlock Text="✓ Clear merged resource dictionaries when done" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                        <TextBlock Text="✓ Dispose streams and file handles" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                        <TextBlock Text="✓ Implement both Dispose() and finalizer for safety" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                        <TextBlock Text="✓ Use IAsyncDisposable for async cleanup" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Background="#FFEBEE" Padding="10" Margin="0,10,0,0" BorderBrush="#F44336" BorderThickness="1">
+                                    <StackPanel>
+                                        <TextBlock Text="✗ Don't forget to unsubscribe from events" TextWrapping="Wrap"/>
+                                        <TextBlock Text="✗ Don't rely on finalizers for timely cleanup" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                        <TextBlock Text="✗ Don't leave streams or connections open" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                        <TextBlock Text="✗ Don't create many unfrozen Freezable objects" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                        <TextBlock Text="✗ Don't ignore Dispose() in unit tests" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Performance Impact">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Button Content="Run Benchmark" Click="RunBenchmark_Click"/>
+                                </WrapPanel>
+
+                                <TextBlock x:Name="BenchmarkResults" Text="" Margin="0,10,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+
+        <Border Grid.Row="2" Background="#00695C" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <TextBlock Text="Memory: " Foreground="White" FontWeight="Bold"/>
+                    <TextBlock x:Name="MemoryUsage" Text="0 MB" Foreground="#80CBC4" FontWeight="Bold" Margin="5,0"/>
+                    <TextBlock Text="| Active Disposables: " Foreground="White" Margin="10,0,0,0"/>
+                    <TextBlock x:Name="ActiveDisposables" Text="0" Foreground="#A5D6A7"/>
+                    <TextBlock Text="| Frozen Objects: " Foreground="White" Margin="10,0,0,0"/>
+                    <TextBlock x:Name="FrozenObjectCount" Text="0" Foreground="#90CAF9"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Content="Force GC" Click="ForceGC_Click" Background="#00897B" Foreground="White"/>
+                    <Button Content="Update Stats" Click="UpdateStats_Click" Background="#00796B" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
