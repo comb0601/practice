@@ -1,0 +1,36 @@
+<Window x:Class="Project02_PointCloudAnalysis.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Project 8.2 - Point Cloud Analysis Tool" Height="700" Width="1200"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2C3E50" Padding="15">
+            <StackPanel>
+                <TextBlock Text="Project 8.2: Point Cloud Analysis Tool" FontSize="24" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="Load, filter, and analyze point cloud data with ROI-based operations" FontSize="14" Foreground="#ECF0F1" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <!-- TODO: Implement Point Cloud Analysis UI -->
+            <TextBlock Text="Empty Project - To be implemented"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="18"
+                       Foreground="Gray"/>
+        </Grid>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" Background="#34495E" Padding="10">
+            <TextBlock x:Name="StatusText" Text="Ready" Foreground="White"/>
+        </Border>
+    </Grid>
+</Window>

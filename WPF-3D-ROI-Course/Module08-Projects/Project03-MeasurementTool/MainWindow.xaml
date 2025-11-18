@@ -1,0 +1,36 @@
+<Window x:Class="Project03_MeasurementTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Project 8.3 - 3D Measurement Tool" Height="700" Width="1200"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2C3E50" Padding="15">
+            <StackPanel>
+                <TextBlock Text="Project 8.3: 3D Measurement Tool" FontSize="24" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="Comprehensive 3D measurement tool with distance, angle, and volume calculations" FontSize="14" Foreground="#ECF0F1" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <!-- TODO: Implement 3D Measurement Tool UI -->
+            <TextBlock Text="Empty Project - To be implemented"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="18"
+                       Foreground="Gray"/>
+        </Grid>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" Background="#34495E" Padding="10">
+            <TextBlock x:Name="StatusText" Text="Ready" Foreground="White"/>
+        </Border>
+    </Grid>
+</Window>
