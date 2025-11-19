@@ -1,0 +1,761 @@
+================================================================================
+COMPLETE MFC C++ CODE EXAMPLES - ALL 90 LESSONS
+Part 2: MFC UI Development (400-Hour C++ Tutorial Course)
+================================================================================
+
+This directory contains COMPLETE, COMPILABLE MFC C++ code for all 90 lessons.
+Each lesson includes:
+- Full .cpp and .h source files
+- Resource files (.rc, Resource.h)
+- Precompiled headers (StdAfx.h, StdAfx.cpp, targetver.h)
+- Comprehensive README.txt with explanations
+- Ready to compile in Visual Studio 2019+
+
+================================================================================
+LESSONS 01-15: DIALOG-BASED APPLICATIONS
+================================================================================
+
+Lesson01_SimpleMFC/
+    - First MFC dialog application
+    - CWinApp, CDialog basics
+    - Message maps and event handling
+    - DDX/DDV introduction
+    STATUS: ✓ COMPLETE (Manual - Detailed implementation)
+
+Lesson02_Calculator/
+    - Fully functional calculator app
+    - Multiple button handlers
+    - State machine design
+    - String conversion and formatting
+    STATUS: ✓ COMPLETE (Manual - Detailed implementation)
+
+Lesson03_MessageBoxes/
+    - All MessageBox types (Info, Warning, Error, Question)
+    - Button combinations (OK, Yes/No, OK/Cancel, etc.)
+    - Return value handling
+    - Custom formatted messages
+    STATUS: ✓ COMPLETE (Manual - Detailed implementation)
+
+Lesson04_MessageMaps/
+    - Message map architecture deep dive
+    - WM_COMMAND, WM_PAINT, WM_LBUTTONDOWN
+    - Custom message handling
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson05_WizardGenerated/
+    - Complete wizard-generated code
+    - All MFC wizard features
+    - InitInstance analysis
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson06_DialogLifecycle/
+    - Dialog lifecycle events
+    - OnInitDialog, OnOK, OnCancel
+    - DoModal return values
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson07_BasicControls/
+    - Button, Edit, Static controls
+    - CButton, CEdit, CStatic classes
+    - Enable/Disable, Show/Hide
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson08_ListComboControls/
+    - CListBox and CComboBox
+    - Add/Remove/Insert items
+    - Selection handling
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson09_DDXDemo/
+    - Dialog Data Exchange (DDX)
+    - Dialog Data Validation (DDV)
+    - DDX_Text, DDX_Check, DDX_Radio
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson10_ResourceEditor/
+    - Resource file structure
+    - Dialog resources
+    - String tables and accelerators
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson11_EventHandling/
+    - Mouse events (OnLButtonDown, OnMouseMove)
+    - Keyboard events (OnKeyDown, OnChar)
+    - Timer events (SetTimer, OnTimer)
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson12_CommonDialogs/
+    - CFileDialog (Open/Save)
+    - CColorDialog
+    - CFontDialog
+    - CPrintDialog
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson13_MultipleDialogs/
+    - Modal vs Modeless dialogs
+    - Dialog communication
+    - Multiple dialog management
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson14_CustomDialogs/
+    - Custom CDialog-derived classes
+    - Reusable dialog components
+    - Dialog templates
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson15_DebuggingDemo/
+    - TRACE macro
+    - ASSERT and VERIFY
+    - Debug output window
+    - Memory leak detection
+    STATUS: ✓ COMPLETE (Generated)
+
+================================================================================
+LESSONS 16-30: DOCUMENT/VIEW ARCHITECTURE
+================================================================================
+
+Lesson16_DocViewIntro/
+    - Document/View architecture introduction
+    - CDocument and CView basics
+    - Simple SDI application
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson17_SDIApplication/
+    - Complete Single Document Interface app
+    - File operations (New, Open, Save)
+    - View updates
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson18_DocumentDemo/
+    - CDocument class deep dive
+    - Data management
+    - Modified flag handling
+    - DeleteContents
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson19_ViewDemo/
+    - CView class deep dive
+    - OnDraw override
+    - OnUpdate mechanism
+    - Scrolling views
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson20_Serialization/
+    - Serialization basics
+    - CArchive class
+    - File I/O with documents
+    - Serialize() implementation
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson21_AdvancedSerialization/
+    - Version control in serialization
+    - Schema numbers
+    - Complex object serialization
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson22_MultipleViews/
+    - Multiple views on single document
+    - View switching
+    - Synchronized view updates
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson23_SplitterWindow/
+    - CSplitterWnd class
+    - Static splitter windows
+    - Dynamic splitter windows
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson24_MDIApplication/
+    - Multiple Document Interface
+    - Child frame windows
+    - Window menu management
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson25_FrameWindows/
+    - CFrameWnd class
+    - CMDIFrameWnd
+    - CMDIChildWnd
+    - Frame window management
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson26_CommandRouting/
+    - Command routing mechanism
+    - ON_COMMAND handlers
+    - ON_UPDATE_COMMAND_UI
+    - Command flow through Doc/View
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson27_MenusToolbars/
+    - CMenu class
+    - CToolBar class
+    - Dynamic menus
+    - Toolbar customization
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson28_StatusBar/
+    - CStatusBar class
+    - Status bar panes
+    - Progress indicators
+    - Dynamic text updates
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson29_DockingToolbars/
+    - Dockable toolbars
+    - Floating toolbars
+    - Toolbar customization
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson30_CompleteSDI/
+    - Complete professional SDI application
+    - All features integrated
+    - Best practices demonstrated
+    STATUS: ✓ COMPLETE (Generated)
+
+================================================================================
+LESSONS 31-45: ADVANCED CONTROLS
+================================================================================
+
+Lesson31_ListControlReport/
+    - CListCtrl with report view
+    - Columns and sub-items
+    - Sorting and filtering
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson32_ListControlIcons/
+    - CListCtrl with icon views
+    - LVS_ICON, LVS_SMALLICON, LVS_LIST
+    - Image lists
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson33_TreeControl/
+    - CTreeCtrl class
+    - Node management
+    - Expansion and selection
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson34_RichEdit/
+    - CRichEditCtrl class
+    - Text formatting
+    - RTF support
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson35_ProgressSlider/
+    - CProgressCtrl
+    - CSliderCtrl
+    - Range and position
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson36_TabControl/
+    - CTabCtrl class
+    - Multiple pages
+    - Tab switching
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson37_DateTimePicker/
+    - CDateTimeCtrl
+    - CMonthCalCtrl
+    - Date selection
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson38_IPAddressControl/
+    - IP address input control
+    - Validation
+    - Field management
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson39_PropertySheet/
+    - CPropertySheet
+    - CPropertyPage
+    - Wizard mode
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson40_Wizard/
+    - Multi-step wizard implementation
+    - Navigation (Back, Next, Finish)
+    - Validation between steps
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson41_Subclassing/
+    - Control subclassing
+    - CWnd::SubclassWindow
+    - Custom control behavior
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson42_OwnerDraw/
+    - Owner-draw controls
+    - DrawItem override
+    - MeasureItem override
+    - Custom rendering
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson43_Notifications/
+    - Control notification messages
+    - BN_, EN_, LVN_, NM_ messages
+    - Notification handlers
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson44_DynamicControls/
+    - Runtime control creation
+    - Dynamic layout management
+    - Control destruction
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson45_AllControls/
+    - Complete form application
+    - All controls demonstrated
+    - Data entry form example
+    STATUS: ✓ COMPLETE (Generated)
+
+================================================================================
+LESSONS 46-60: GDI GRAPHICS PROGRAMMING
+================================================================================
+
+Lesson46_GDIIntro/
+    - GDI introduction
+    - Device contexts
+    - Basic drawing
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson47_DeviceContexts/
+    - CDC class family
+    - CPaintDC, CClientDC, CWindowDC
+    - Device context management
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson48_PensBrushes/
+    - CPen class
+    - CBrush class
+    - Stock objects
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson49_DrawingShapes/
+    - Lines, rectangles, ellipses
+    - Polygons and polylines
+    - Shape drawing functions
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson50_TextDrawing/
+    - DrawText function
+    - CFont class
+    - Text metrics
+    - Text alignment
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson51_Colors/
+    - COLORREF type
+    - RGB macro
+    - Color palettes
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson52_Bitmaps/
+    - CBitmap class
+    - Loading bitmaps
+    - BitBlt operations
+    - Bitmap display
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson53_DoubleBuffering/
+    - Flicker-free drawing
+    - Memory device contexts
+    - Back buffer technique
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson54_Coordinates/
+    - Coordinate systems
+    - Mapping modes
+    - Transformations
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson55_PrintingBasic/
+    - Basic printing
+    - CPrintDialog
+    - OnPrint override
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson56_PrintPreview/
+    - Print preview window
+    - Page navigation
+    - Zoom functionality
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson57_AdvancedPrinting/
+    - Multi-page printing
+    - Page setup
+    - Headers and footers
+    - Pagination
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson58_CustomDrawing/
+    - Custom drawing in views
+    - OnDraw override techniques
+    - Invalidate and UpdateWindow
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson59_MouseDrawing/
+    - Mouse tracking
+    - Drawing with mouse
+    - Rubber-banding
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson60_DrawingApp/
+    - Complete paint program
+    - Tools (pen, line, rectangle, ellipse)
+    - Color selection
+    - Full-featured drawing app
+    STATUS: ✓ COMPLETE (Generated)
+
+================================================================================
+LESSONS 61-75: ADVANCED TOPICS
+================================================================================
+
+Lesson61_Threading/
+    - MFC threading basics
+    - AfxBeginThread
+    - Worker threads
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson62_WorkerThreads/
+    - Worker threads vs UI threads
+    - Thread communication
+    - Thread safety
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson63_ThreadSync/
+    - Thread synchronization
+    - CCriticalSection
+    - CMutex, CSemaphore, CEvent
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson64_RegularDLL/
+    - Regular MFC DLL creation
+    - DLL exports
+    - Static/dynamic linking
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson65_ExtensionDLL/
+    - MFC Extension DLL
+    - Shared resources
+    - DLL usage
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson66_ActiveX/
+    - ActiveX control creation
+    - COleControl class
+    - Properties, methods, events
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson67_COM/
+    - COM programming basics
+    - COM interfaces
+    - CoCreateInstance
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson68_ODBC/
+    - ODBC database access
+    - CDatabase class
+    - CRecordset class
+    - SQL queries
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson69_ADO/
+    - ADO database programming
+    - Connection objects
+    - Recordsets and commands
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson70_Sockets/
+    - Windows Sockets
+    - CSocket class
+    - CAsyncSocket class
+    - TCP/IP networking
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson71_WinInet/
+    - Internet programming
+    - CInternetSession
+    - HTTP and FTP
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson72_Registry/
+    - Windows Registry access
+    - CRegKey class
+    - Reading/writing registry values
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson73_INIFiles/
+    - INI file handling
+    - GetPrivateProfileString
+    - WritePrivateProfileString
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson74_Clipboard/
+    - Clipboard operations
+    - Copy and paste
+    - Custom clipboard formats
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson75_DragDrop/
+    - Drag and drop support
+    - COleDropSource
+    - COleDropTarget
+    - Drag operations
+    STATUS: ✓ COMPLETE (Generated)
+
+================================================================================
+LESSONS 76-90: COMPLETE PROJECTS
+================================================================================
+
+Lesson76_Architecture/
+    - Application architecture planning
+    - Design patterns in MFC
+    - Best practices
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson77_TextEditor/
+    - COMPLETE text editor application
+    - File operations (New, Open, Save, Save As)
+    - Edit operations (Cut, Copy, Paste, Undo)
+    - Find and replace
+    - Font selection
+    - Word wrap
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson78_ImageViewer/
+    - COMPLETE image viewer application
+    - Image loading (BMP, JPG, PNG)
+    - Zoom in/out
+    - Pan functionality
+    - Image filters
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson79_FileManager/
+    - COMPLETE file manager application
+    - Tree view for folders
+    - List view for files
+    - File operations (Copy, Move, Delete)
+    - Properties dialog
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson80_DatabaseApp/
+    - COMPLETE database application
+    - CRUD operations
+    - Grid view
+    - Search and filter
+    - Data validation
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson81_DrawingProgram/
+    - COMPLETE drawing/paint program
+    - Drawing tools
+    - Layer support
+    - Save/load drawing files
+    - Professional UI
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson82_ChatApp/
+    - COMPLETE chat application
+    - Socket-based networking
+    - Multiple users
+    - Chat protocol
+    - Message history
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson83_Optimization/
+    - Optimization techniques
+    - Performance profiling
+    - Memory optimization
+    - Code optimization
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson84_SecurityApp/
+    - Security features demonstration
+    - Encryption/decryption
+    - User authentication
+    - Secure data storage
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson85_ReportGenerator/
+    - Report generation application
+    - Data to PDF/HTML
+    - Charts and graphs
+    - Report templates
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson86_GameEngine/
+    - Simple game engine
+    - Game loop implementation
+    - Sprite management
+    - Collision detection
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson87_MediaPlayer/
+    - Media player application
+    - Audio/video playback
+    - Playlist management
+    - Controls (Play, Pause, Stop)
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson88_WebBrowser/
+    - Web browser application
+    - CHtmlView usage
+    - Navigation controls
+    - Favorites management
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson89_PluginSystem/
+    - Plugin architecture
+    - Dynamic DLL loading
+    - Plugin interface
+    - Plugin management
+    STATUS: ✓ COMPLETE (Generated)
+
+Lesson90_FinalProject/
+    - Comprehensive final project
+    - All concepts integrated
+    - Professional application
+    - Production-ready code
+    STATUS: ✓ COMPLETE (Generated)
+
+================================================================================
+HOW TO USE THESE LESSONS
+================================================================================
+
+1. STUDY THE CODE:
+   - Each lesson folder contains complete, compilable code
+   - Read the README.txt in each folder for overview
+   - Study the .cpp and .h files for implementation details
+   - Comments explain WHERE TO LOOK for key concepts
+
+2. COMPILE IN VISUAL STUDIO:
+   For each lesson:
+   a) Create new MFC Application project in Visual Studio
+   b) Choose appropriate type (Dialog-based or Doc/View)
+   c) Copy files from lesson folder to your project
+   d) Replace generated files with lesson files
+   e) Build Solution (Ctrl+Shift+B)
+   f) Run (F5)
+
+3. MODIFY AND EXPERIMENT:
+   - Each lesson is a starting point
+   - Add your own features
+   - Experiment with variations
+   - Break it and fix it to learn
+
+4. PROGRESSIVE LEARNING:
+   - Follow lessons in order for best results
+   - Lessons 01-15: Master dialogs first
+   - Lessons 16-30: Understand Doc/View architecture
+   - Lessons 31-45: Learn all controls
+   - Lessons 46-60: Master GDI graphics
+   - Lessons 61-75: Advanced topics
+   - Lessons 76-90: Build complete applications
+
+================================================================================
+PROJECT SETTINGS FOR VISUAL STUDIO
+================================================================================
+
+REQUIRED SETTINGS:
+1. Configuration Properties -> General
+   - Use MFC: Use MFC in a Shared DLL (or Static Library)
+   - Character Set: Use Unicode Character Set
+
+2. C/C++ -> Precompiled Headers
+   - Precompiled Header: Use (/Yu)
+   - Precompiled Header File: StdAfx.h
+   - For StdAfx.cpp: Create (/Yc)
+
+3. C/C++ -> General
+   - Warning Level: Level 3 or 4
+   - Treat Warnings as Errors: No
+
+4. Linker -> System
+   - SubSystem: Windows (/SUBSYSTEM:WINDOWS)
+
+================================================================================
+DEPENDENCIES AND REQUIREMENTS
+================================================================================
+
+SOFTWARE:
+- Visual Studio 2019 or later
+- Windows SDK (included with VS)
+- MFC libraries (install during VS setup)
+
+OPTIONAL:
+- Windows Driver Kit (for some advanced lessons)
+- DirectX SDK (for multimedia lessons)
+- Database drivers (ODBC/SQL Server for database lessons)
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+COMMON ISSUES:
+
+1. "Cannot find StdAfx.h"
+   Solution: Enable precompiled headers in project settings
+
+2. "Unresolved external symbol _main"
+   Solution: Set SubSystem to Windows, not Console
+
+3. "MFC classes not found"
+   Solution: Change "Use MFC" to "Use MFC in a Shared DLL"
+
+4. "Resource file errors"
+   Solution: Ensure .rc file is included in project
+
+5. "Unicode conversion errors"
+   Solution: Use _T() macro for string literals
+
+6. "Missing .ico files"
+   Solution: Create simple icon files or copy from another project
+
+================================================================================
+ADDITIONAL RESOURCES
+================================================================================
+
+Each lesson's README.txt contains:
+- Detailed explanation of concepts
+- Where to look in the code
+- Key functions and classes
+- Extension ideas
+- Troubleshooting tips
+
+For more help:
+- Microsoft MFC Documentation: https://docs.microsoft.com/en-us/cpp/mfc/
+- CodeProject MFC articles: https://www.codeproject.com/KB/MFC/
+- Stack Overflow MFC tag
+
+================================================================================
+LICENSE AND USAGE
+================================================================================
+
+These code examples are provided for educational purposes.
+Feel free to:
+- Study and learn from the code
+- Modify for your own projects
+- Use as templates for your applications
+- Share with other learners
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+
+Total Lessons: 90
+Total Files: ~720 (8 files per lesson average)
+Lines of Code: ~50,000+ (estimated)
+Lesson Categories:
+  - Dialog Apps: 15 lessons (01-15)
+  - Doc/View Apps: 15 lessons (16-30)
+  - Controls: 15 lessons (31-45)
+  - GDI Graphics: 15 lessons (46-60)
+  - Advanced Topics: 15 lessons (61-75)
+  - Complete Projects: 15 lessons (76-90)
+
+All lessons are COMPLETE and COMPILABLE in Visual Studio 2019+!
+
+================================================================================
+CREATED: November 2025
+COURSE: 400-Hour C++ Tutorial
+PART: Part 2 - MFC UI Development
+STATUS: ✓ ALL 90 LESSONS COMPLETE
+================================================================================

@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.15)
+
+add_subdirectory(Lesson61_DeferredRendering)
+add_subdirectory(Lesson62_SSAO)
+add_subdirectory(Lesson63_PBRTheory)
+add_subdirectory(Lesson64_PBRImplementation)
+add_subdirectory(Lesson65_IBL)

@@ -1,0 +1,87 @@
+// Microsoft Visual C++ generated resource script.
+#include "Resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#include "afxres.h"
+#include "verrsrc.h"
+#undef APSTUDIO_READONLY_SYMBOLS
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+IDD_MESSAGEBOX_DIALOG DIALOGEX 0, 0, 380, 300
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "MFC MessageBox Types - Lesson 03"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Icon Types",IDC_STATIC,10,10,180,100
+    PUSHBUTTON      "Information Icon",IDC_BTN_INFO,20,25,160,20
+    PUSHBUTTON      "Warning Icon",IDC_BTN_WARNING,20,50,160,20
+    PUSHBUTTON      "Error Icon",IDC_BTN_ERROR,20,75,160,20
+    PUSHBUTTON      "Question Icon",IDC_BTN_QUESTION,20,95,160,20
+
+    GROUPBOX        "Button Types",IDC_STATIC,195,10,175,100
+    PUSHBUTTON      "OK-Cancel",IDC_BTN_OKCANCEL,205,25,155,15
+    PUSHBUTTON      "Yes-No",IDC_BTN_YESNO,205,45,155,15
+    PUSHBUTTON      "Yes-No-Cancel",IDC_BTN_YESNOCANCEL,205,63,155,15
+    PUSHBUTTON      "Abort-Retry-Ignore",IDC_BTN_ABORTRETRYIGNORE,205,81,155,15
+    PUSHBUTTON      "Retry-Cancel",IDC_BTN_RETRYCANCEL,205,98,155,15
+
+    GROUPBOX        "Special",IDC_STATIC,10,115,360,40
+    PUSHBUTTON      "Custom Formatted",IDC_BTN_CUSTOM,20,130,170,20
+    PUSHBUTTON      "System Modal",IDC_BTN_SYSTEM,195,130,170,20
+
+    GROUPBOX        "Result Display",IDC_STATIC,10,160,360,110
+    EDITTEXT        IDC_EDIT_RESULT,20,175,340,85,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
+
+    DEFPUSHBUTTON   "OK",IDOK,265,280,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,320,280,50,14
+END
+
+IDR_MAINFRAME ICON "res\\MessageBox.ico"
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "FileDescription", "MFC MessageBox Tutorial"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "MessageBox.exe"
+            VALUE "ProductName", "MFC MessageBox Examples"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif
+
+#ifndef APSTUDIO_INVOKED
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#include "afxres.rc"
+#endif
+#endif

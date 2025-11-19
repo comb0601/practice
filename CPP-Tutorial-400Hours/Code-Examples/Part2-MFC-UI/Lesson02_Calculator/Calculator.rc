@@ -1,0 +1,118 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "Resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#include "afxres.h"
+#include "verrsrc.h"
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_CALCULATOR_DIALOG DIALOGEX 0, 0, 200, 240
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "MFC Calculator - Lesson 02"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_EDIT_DISPLAY,10,10,180,30,ES_RIGHT | ES_READONLY
+
+    PUSHBUTTON      "7",IDC_BUTTON_7,10,50,40,30
+    PUSHBUTTON      "8",IDC_BUTTON_8,55,50,40,30
+    PUSHBUTTON      "9",IDC_BUTTON_9,100,50,40,30
+    PUSHBUTTON      "/",IDC_BUTTON_DIV,145,50,45,30
+
+    PUSHBUTTON      "4",IDC_BUTTON_4,10,85,40,30
+    PUSHBUTTON      "5",IDC_BUTTON_5,55,85,40,30
+    PUSHBUTTON      "6",IDC_BUTTON_6,100,85,40,30
+    PUSHBUTTON      "*",IDC_BUTTON_MUL,145,85,45,30
+
+    PUSHBUTTON      "1",IDC_BUTTON_1,10,120,40,30
+    PUSHBUTTON      "2",IDC_BUTTON_2,55,120,40,30
+    PUSHBUTTON      "3",IDC_BUTTON_3,100,120,40,30
+    PUSHBUTTON      "-",IDC_BUTTON_SUB,145,120,45,30
+
+    PUSHBUTTON      "0",IDC_BUTTON_0,10,155,40,30
+    PUSHBUTTON      ".",IDC_BUTTON_DECIMAL,55,155,40,30
+    PUSHBUTTON      "+/-",IDC_BUTTON_PLUSMINUS,100,155,40,30
+    PUSHBUTTON      "+",IDC_BUTTON_ADD,145,155,45,30
+
+    PUSHBUTTON      "C",IDC_BUTTON_CLEAR,10,190,85,30
+    PUSHBUTTON      "=",IDC_BUTTON_EQUALS,100,190,90,30
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+IDR_MAINFRAME           ICON                    "res\\Calculator.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "MFC Tutorial"
+            VALUE "FileDescription", "MFC Calculator Application"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "Calculator.exe"
+            VALUE "LegalCopyright", "(c) MFC Tutorial"
+            VALUE "OriginalFilename", "Calculator.exe"
+            VALUE "ProductName", "MFC Calculator"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#include "afxres.rc"
+#endif
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
