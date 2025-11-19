@@ -1,0 +1,241 @@
+================================================================================
+  C++ TUTORIAL 400 HOURS - QUICK BUILD GUIDE
+================================================================================
+
+  Fast 5-step guide to build and run all 370+ code examples
+
+================================================================================
+  STEP 1: CHECK YOUR ENVIRONMENT
+================================================================================
+
+  Windows:
+    > setup_environment.bat
+
+  Linux/macOS:
+    $ ./setup_environment.sh
+
+  This checks for:
+    - CMake 3.15+
+    - C++ compiler (Visual Studio / g++ / clang++)
+    - Python 3.6+ (optional)
+    - Required libraries
+
+================================================================================
+  STEP 2: BUILD EVERYTHING
+================================================================================
+
+  Windows:
+    > build_all_windows.bat
+
+  Linux/macOS:
+    $ ./build_all_linux.sh
+
+  Options:
+    Windows:  build_all_windows.bat Debug      (Debug build)
+              build_all_windows.bat Release MFC (Include MFC examples)
+
+    Linux:    ./build_all_linux.sh debug       (Debug build)
+              ./build_all_linux.sh -j 16       (Use 16 parallel jobs)
+
+  Build time: 10-30 minutes depending on your system
+
+================================================================================
+  STEP 3: RUN EXAMPLES
+================================================================================
+
+  Interactive Runner (Recommended):
+    > python run_examples.py          (Windows)
+    $ python3 run_examples.py         (Linux/macOS)
+
+  Direct Execution:
+    Windows:
+      > cd output-windows-Release\bin\Part1-Fundamentals
+      > Lesson01_HelloWorld.exe
+
+    Linux/macOS:
+      $ cd output-linux-Release/bin/Part1-Fundamentals
+      $ ./Lesson01_HelloWorld
+
+================================================================================
+  STEP 4: VERIFY ALL CODE (Optional)
+================================================================================
+
+  Windows:
+    > verify_all.bat
+
+  Linux/macOS:
+    $ ./verify_all.sh
+
+  This builds everything and reports any compilation errors.
+
+================================================================================
+  STEP 5: EXPLORE THE COURSE
+================================================================================
+
+  Part 1: C++ Fundamentals (85 lessons)
+    Location: output-*/bin/Part1-Fundamentals/
+    Topics:   Basics, OOP, Templates, STL, Threading
+
+  Part 2: MFC UI Development (90 lessons) - Windows only
+    Location: output-*/bin/Part2-MFC-UI/
+    Topics:   Windows GUI, Controls, Graphics, Database
+
+  Part 3: 3D Rendering (100 lessons)
+    Location: output-*/bin/Part3-3D-Rendering/
+    Topics:   Math, OpenGL, DirectX, Advanced Rendering
+
+  Part 4: Optimization & Advanced (100 lessons)
+    Location: output-*/bin/Part4-Optimization-Advanced/
+    Topics:   Performance, Concurrency, Patterns, Projects
+
+================================================================================
+  TROUBLESHOOTING
+================================================================================
+
+  Problem: CMake not found
+  Solution (Windows):  winget install Kitware.CMake
+  Solution (Linux):    sudo apt install cmake
+
+  Problem: Compiler not found
+  Solution (Windows):  Install Visual Studio 2019+
+  Solution (Linux):    sudo apt install build-essential
+
+  Problem: Build fails
+  Solution:            Run setup_environment script
+                       Check BUILD_INSTRUCTIONS.md for detailed help
+
+  Problem: Missing OpenGL libraries (Part 3)
+  Solution (Linux):    sudo apt install libgl1-mesa-dev libglu1-mesa-dev
+
+================================================================================
+  QUICK COMMANDS REFERENCE
+================================================================================
+
+  Check environment:
+    Windows:  setup_environment.bat
+    Linux:    ./setup_environment.sh
+
+  Build everything:
+    Windows:  build_all_windows.bat
+    Linux:    ./build_all_linux.sh
+
+  Verify build:
+    Windows:  verify_all.bat
+    Linux:    ./verify_all.sh
+
+  Run examples:
+    All:      python3 run_examples.py
+
+  Build specific part only:
+    cmake -S . -B build -DBUILD_ALL_PARTS=OFF -DBUILD_PART1_FUNDAMENTALS=ON
+    cmake --build build -j
+
+  Clean build:
+    Windows:  rmdir /s /q build-windows output-windows-*
+    Linux:    rm -rf build-linux output-linux-*
+
+  Manual CMake:
+    Configure:  cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+    Build:      cmake --build build -j
+    Install:    cmake --build build --target install
+
+================================================================================
+  SYSTEM REQUIREMENTS
+================================================================================
+
+  Minimum:
+    - CMake 3.15+
+    - C++17 compiler
+    - 5GB disk space
+    - 8GB RAM
+
+  Recommended:
+    - CMake 3.20+
+    - Latest compiler (Visual Studio 2022 / GCC 11 / Clang 13)
+    - 10GB disk space
+    - 16GB RAM
+    - SSD for faster builds
+
+================================================================================
+  BUILD OPTIONS
+================================================================================
+
+  CMAKE_BUILD_TYPE:
+    - Debug               (With debug symbols, slower)
+    - Release             (Optimized, faster) [DEFAULT]
+    - RelWithDebInfo      (Optimized with debug info)
+    - MinSizeRel          (Optimized for size)
+
+  Part Selection:
+    - BUILD_PART1_FUNDAMENTALS      [ON]
+    - BUILD_PART2_MFC               [OFF] (Windows only)
+    - BUILD_PART3_3D_RENDERING      [ON]
+    - BUILD_PART4_OPTIMIZATION      [ON]
+    - BUILD_ALL_PARTS               [ON] (Override all)
+
+  Example:
+    cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_PART2_MFC=ON
+
+================================================================================
+  OUTPUT STRUCTURE
+================================================================================
+
+  output-{platform}-{buildtype}/
+    bin/
+      Part1-Fundamentals/
+        Lesson01_HelloWorld.exe
+        Lesson02_Variables.exe
+        ...
+      Part3-3D-Rendering/
+        Lessons01-20_3DMath/
+        Lessons21-40_OpenGL/
+        ...
+      Part4-Optimization-Advanced/
+        Lesson01_PerfIntro.exe
+        ...
+    lib/
+      (Static/shared libraries)
+
+================================================================================
+  PLATFORM NOTES
+================================================================================
+
+  Windows:
+    - Requires Visual Studio 2019 or later
+    - MFC examples need MFC component installed
+    - DirectX examples included in Part 3
+    - All 370+ examples available
+
+  Linux:
+    - GCC 7+ or Clang 6+ required
+    - OpenGL examples work with Mesa
+    - DirectX and MFC examples skipped
+    - ~280 examples available
+
+  macOS:
+    - Xcode Command Line Tools required
+    - Similar to Linux (OpenGL works)
+    - DirectX and MFC examples skipped
+    - ~280 examples available
+
+================================================================================
+  NEED MORE HELP?
+================================================================================
+
+  See BUILD_INSTRUCTIONS.md for:
+    - Detailed platform-specific instructions
+    - Advanced build configurations
+    - IDE integration guides
+    - Comprehensive troubleshooting
+    - CMake variable reference
+
+================================================================================
+  HAPPY CODING!
+================================================================================
+
+  You now have access to 370+ production-ready C++ code examples
+  covering everything from basics to advanced optimization techniques.
+
+  Start with Part 1 Fundamentals and work your way up!
+
+================================================================================
