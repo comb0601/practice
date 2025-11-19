@@ -1,40 +1,48 @@
 # Lesson 11: Operator Overloading - Code Examples
 
-This directory contains 15 executable C++ programs demonstrating operator overloading.
+This directory contains 15 complete C++ programs demonstrating operator overloading concepts.
+
+## Files
+
+1. **01_basic_operator_overloading.cpp** - Arithmetic operators (+, -, *, /) for Complex numbers
+2. **02_comparison_operators.cpp** - Comparison operators (==, !=, <, >, <=, >=) for Point class
+3. **03_stream_operators.cpp** - Stream operators (<<, >>) for I/O operations
+4. **04_increment_decrement.cpp** - Prefix and postfix increment/decrement operators
+5. **05_subscript_operator.cpp** - Subscript operator [] for array-like access
+6. **06_assignment_operator.cpp** - Assignment operator with deep copy and self-assignment check
+7. **07_function_call_operator.cpp** - Function call operator () for functors
+8. **08_arrow_operator.cpp** - Arrow operator (->) for smart pointers
+9. **09_type_conversion.cpp** - Type conversion operators
+10. **10_compound_assignment.cpp** - Compound assignment operators (+=, -=, *=, /=)
+11. **11_unary_operators.cpp** - Unary operators (+, -, !, ~)
+12. **12_comma_operator.cpp** - Comma operator overloading
+13. **13_new_delete_operators.cpp** - Memory allocation operators (new, delete)
+14. **14_complete_class_example.cpp** - Complete Matrix class with all operators
+15. **15_best_practices.cpp** - Best practices and guidelines for operator overloading
 
 ## Compilation
 
+Each file can be compiled independently using:
+
 ```bash
-g++ -std=c++11 filename.cpp -o filename
-./filename
+g++ -std=c++17 filename.cpp -o output_name
 ```
 
-## Examples
+For example:
+```bash
+g++ -std=c++17 01_basic_operator_overloading.cpp -o basic_op
+./basic_op
+```
 
-- **01_basic_arithmetic_operators.cpp** - Basic arithmetic operator overloading
-- **02_complex_number_class.cpp** - Complex number with operator overloading
-- **03_comparison_operators.cpp** - Comparison operators (==, !=, <, >, etc.)
-- **04_stream_operators.cpp** - Stream insertion and extraction operators
-- **05_increment_decrement_operators.cpp** - Prefix and postfix increment/decrement
-- **06_subscript_operator.cpp** - Array subscript operator []
-- **07_assignment_operators.cpp** - Copy assignment and compound assignment
-- **08_function_call_operator.cpp** - Function call operator () (functors)
-- **09_type_conversion_operators.cpp** - Type conversion operators
-- **10_vector3d_class.cpp** - 3D vector class with operators
-- **11_matrix_class.cpp** - Matrix class with operator overloading
-- **12_fraction_class.cpp** - Fraction class with arithmetic operators
-- **13_time_class.cpp** - Time class with operator overloading
-- **14_string_class.cpp** - Custom string class implementation
-- **15_practical_calculator.cpp** - Calculator using operator overloading
+## Topics Covered
 
-## Learning Path
-
-1. Start with basic arithmetic (01-02)
-2. Learn comparison operators (03)
-3. Master stream operators (04)
-4. Practice increment/decrement (05)
-5. Understand subscript and assignment (06-07)
-6. Explore advanced operators (08-09)
-7. Apply to practical examples (10-15)
-
-All examples are self-contained with main() functions and demonstrate real-world usage patterns.
+- Arithmetic operator overloading
+- Comparison operator overloading
+- Stream I/O operators
+- Increment/Decrement operators
+- Subscript and function call operators
+- Assignment operator (Rule of Three)
+- Conversion operators
+- Unary operators
+- Memory management operators
+- Best practices and pitfalls

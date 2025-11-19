@@ -1,33 +1,60 @@
-# Lesson 20: Const Correctness - Code Examples
+# Const Correctness - Code Examples
 
-This directory contains 12 executable C++ programs demonstrating const correctness and immutability.
+This directory contains 26 complete C++ programs demonstrating Const Correctness concepts.
+
+## Overview
+
+Lesson 20 focuses on const correctness, covering essential C++ programming concepts and best practices.
 
 ## Compilation
 
+All files can be compiled independently using:
+
 ```bash
-g++ -std=c++17 filename.cpp -o filename
-./filename
+g++ -std=c++17 filename.cpp -o output_name
 ```
 
-## Examples
+For files using threading:
+```bash
+g++ -std=c++17 filename.cpp -o output_name -pthread
+```
 
-- **01_const_variables.cpp}**
-- **02_const_pointers.cpp}**
-- **03_const_member_functions.cpp}**
-- **04_const_parameters.cpp}**
-- **05_const_return_values.cpp}**
-- **06_mutable_keyword.cpp}**
-- **07_const_overloading.cpp}**
-- **08_const_iterators.cpp}**
-- **09_const_cast.cpp}**
-- **10_const_correctness_example.cpp}**
-- **11_const_best_practices.cpp}**
-- **12_const_comprehensive.cpp}**
+## Execution
 
-## Learning Path
+After compilation, run the executable:
+```bash
+./output_name
+```
 
-1. Start with the basic examples (01-03)
-2. Progress through intermediate concepts (04-08)
-3. Master advanced topics (09-12)
+## Topics Covered
 
-All examples are self-contained with main() functions and demonstrate practical usage patterns.
+This lesson covers:
+- Core concepts of const correctness
+- Practical implementation examples
+- Best practices and common patterns
+- Real-world usage scenarios
+
+## Learning Objectives
+
+After studying these examples, you will:
+- Understand the fundamentals of const correctness
+- Be able to implement these concepts in your own projects
+- Recognize when and how to apply these techniques
+- Write more efficient and maintainable C++ code
+
+## File Organization
+
+Each file is numbered sequentially and focuses on a specific aspect of the lesson topic. Files are designed to be:
+- **Self-contained**: Can be compiled and run independently
+- **Well-commented**: Detailed explanations of key concepts
+- **Practical**: Demonstrates real-world usage patterns
+
+## Additional Resources
+
+For more information, refer to:
+- Lesson materials in the parent directory
+- Official C++ documentation
+- Modern C++ best practices guides
+
+---
+**Note**: All examples use C++17 standard. Ensure your compiler supports this standard.

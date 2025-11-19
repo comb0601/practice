@@ -1,33 +1,60 @@
-# Lesson 15: Exception Handling - Code Examples
+# Exception Handling - Code Examples
 
-This directory contains 12 executable C++ programs demonstrating exception handling and error management.
+This directory contains 26 complete C++ programs demonstrating Exception Handling concepts.
+
+## Overview
+
+Lesson 15 focuses on exception handling, covering essential C++ programming concepts and best practices.
 
 ## Compilation
 
+All files can be compiled independently using:
+
 ```bash
-g++ -std=c++17 filename.cpp -o filename
-./filename
+g++ -std=c++17 filename.cpp -o output_name
 ```
 
-## Examples
+For files using threading:
+```bash
+g++ -std=c++17 filename.cpp -o output_name -pthread
+```
 
-- **01_basic_try_catch.cpp}**
-- **02_multiple_catch.cpp}**
-- **03_custom_exception.cpp}**
-- **04_exception_types.cpp}**
-- **05_rethrow.cpp}**
-- **06_noexcept.cpp}**
-- **07_raii_pattern.cpp}**
-- **08_function_try_block.cpp}**
-- **09_exception_safety.cpp}**
-- **10_nested_exceptions.cpp}**
-- **11_exception_specifications.cpp}**
-- **12_practical_error_handling.cpp}**
+## Execution
 
-## Learning Path
+After compilation, run the executable:
+```bash
+./output_name
+```
 
-1. Start with the basic examples (01-03)
-2. Progress through intermediate concepts (04-08)
-3. Master advanced topics (09-12)
+## Topics Covered
 
-All examples are self-contained with main() functions and demonstrate practical usage patterns.
+This lesson covers:
+- Core concepts of exception handling
+- Practical implementation examples
+- Best practices and common patterns
+- Real-world usage scenarios
+
+## Learning Objectives
+
+After studying these examples, you will:
+- Understand the fundamentals of exception handling
+- Be able to implement these concepts in your own projects
+- Recognize when and how to apply these techniques
+- Write more efficient and maintainable C++ code
+
+## File Organization
+
+Each file is numbered sequentially and focuses on a specific aspect of the lesson topic. Files are designed to be:
+- **Self-contained**: Can be compiled and run independently
+- **Well-commented**: Detailed explanations of key concepts
+- **Practical**: Demonstrates real-world usage patterns
+
+## Additional Resources
+
+For more information, refer to:
+- Lesson materials in the parent directory
+- Official C++ documentation
+- Modern C++ best practices guides
+
+---
+**Note**: All examples use C++17 standard. Ensure your compiler supports this standard.

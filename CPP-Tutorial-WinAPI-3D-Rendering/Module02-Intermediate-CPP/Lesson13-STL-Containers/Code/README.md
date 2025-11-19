@@ -1,55 +1,60 @@
-# Lesson 13: STL Containers - Code Examples
+# STL Containers - Code Examples
 
-This directory contains 15 executable C++ programs demonstrating STL containers.
+This directory contains 29 complete C++ programs demonstrating STL Containers concepts.
+
+## Overview
+
+Lesson 13 focuses on stl containers, covering essential C++ programming concepts and best practices.
 
 ## Compilation
 
+All files can be compiled independently using:
+
 ```bash
-g++ -std=c++17 filename.cpp -o filename
-./filename
+g++ -std=c++17 filename.cpp -o output_name
 ```
 
-## Examples Overview
+For files using threading:
+```bash
+g++ -std=c++17 filename.cpp -o output_name -pthread
+```
 
-### Sequence Containers
-- **01_vector_basics.cpp** - Comprehensive vector operations
-- **02_deque_demo.cpp** - Double-ended queue operations
-- **03_list_operations.cpp** - List manipulations and algorithms
-- **13_array_container.cpp** - Fixed-size array container
+## Execution
 
-### Associative Containers
-- **04_set_operations.cpp** - Set operations and unique elements
-- **05_map_dictionary.cpp** - Map as key-value store
-- **11_multiset_demo.cpp** - Multiset with duplicates
-- **12_multimap_demo.cpp** - Multimap with duplicate keys
+After compilation, run the executable:
+```bash
+./output_name
+```
 
-### Unordered Containers
-- **06_unordered_set.cpp** - Hash-based set
-- **07_unordered_map.cpp** - Hash-based map
+## Topics Covered
 
-### Container Adapters
-- **08_stack_demo.cpp** - LIFO stack operations
-- **09_queue_demo.cpp** - FIFO queue operations
-- **10_priority_queue.cpp** - Priority-based queue
+This lesson covers:
+- Core concepts of stl containers
+- Practical implementation examples
+- Best practices and common patterns
+- Real-world usage scenarios
 
-### Practical Applications
-- **14_word_frequency.cpp** - Word frequency counter
-- **15_container_comparison.cpp** - Performance comparison
+## Learning Objectives
 
-## Key Concepts
+After studying these examples, you will:
+- Understand the fundamentals of stl containers
+- Be able to implement these concepts in your own projects
+- Recognize when and how to apply these techniques
+- Write more efficient and maintainable C++ code
 
-- **Vector**: Dynamic array, random access
-- **Deque**: Double-ended queue
-- **List**: Doubly-linked list
-- **Set/Map**: Sorted, O(log n) operations
-- **Unordered Set/Map**: Hashed, O(1) average operations
-- **Stack/Queue**: LIFO/FIFO adapters
+## File Organization
 
-## Learning Path
+Each file is numbered sequentially and focuses on a specific aspect of the lesson topic. Files are designed to be:
+- **Self-contained**: Can be compiled and run independently
+- **Well-commented**: Detailed explanations of key concepts
+- **Practical**: Demonstrates real-world usage patterns
 
-1. Start with vector (01) - most common container
-2. Learn other sequence containers (02-03, 13)
-3. Master associative containers (04-05, 11-12)
-4. Understand unordered containers (06-07)
-5. Practice with adapters (08-10)
-6. Apply in real scenarios (14-15)
+## Additional Resources
+
+For more information, refer to:
+- Lesson materials in the parent directory
+- Official C++ documentation
+- Modern C++ best practices guides
+
+---
+**Note**: All examples use C++17 standard. Ensure your compiler supports this standard.
