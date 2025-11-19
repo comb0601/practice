@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/example05_ternary.dir/example05_ternary.cpp.o -o example05_ternary 

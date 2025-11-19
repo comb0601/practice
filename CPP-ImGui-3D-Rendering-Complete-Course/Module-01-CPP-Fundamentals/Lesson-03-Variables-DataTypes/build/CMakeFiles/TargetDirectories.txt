@@ -1,0 +1,8 @@
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-03-Variables-DataTypes/build/CMakeFiles/main.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-03-Variables-DataTypes/build/CMakeFiles/example01_integer_types.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-03-Variables-DataTypes/build/CMakeFiles/example02_floating_point.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-03-Variables-DataTypes/build/CMakeFiles/example03_char_bool.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-03-Variables-DataTypes/build/CMakeFiles/exercise01.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-03-Variables-DataTypes/build/CMakeFiles/solution01.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-03-Variables-DataTypes/build/CMakeFiles/edit_cache.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-03-Variables-DataTypes/build/CMakeFiles/rebuild_cache.dir

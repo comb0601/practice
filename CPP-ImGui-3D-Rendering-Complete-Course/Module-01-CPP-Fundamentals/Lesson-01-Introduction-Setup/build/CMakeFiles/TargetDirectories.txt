@@ -1,0 +1,15 @@
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-01-Introduction-Setup/build/CMakeFiles/main.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-01-Introduction-Setup/build/CMakeFiles/example01_hello_world.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-01-Introduction-Setup/build/CMakeFiles/example02_basic_output.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-01-Introduction-Setup/build/CMakeFiles/example03_program_structure.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-01-Introduction-Setup/build/CMakeFiles/example04_namespace.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-01-Introduction-Setup/build/CMakeFiles/example05_compilation_demo.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-01-Introduction-Setup/build/CMakeFiles/test_setup.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-01-Introduction-Setup/build/CMakeFiles/exercise01.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-01-Introduction-Setup/build/CMakeFiles/exercise02.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-01-Introduction-Setup/build/CMakeFiles/exercise03.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-01-Introduction-Setup/build/CMakeFiles/solution01.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-01-Introduction-Setup/build/CMakeFiles/solution02.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-01-Introduction-Setup/build/CMakeFiles/solution03.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-01-Introduction-Setup/build/CMakeFiles/edit_cache.dir
+/home/user/practice/CPP-ImGui-3D-Rendering-Complete-Course/Module-01-CPP-Fundamentals/Lesson-01-Introduction-Setup/build/CMakeFiles/rebuild_cache.dir
