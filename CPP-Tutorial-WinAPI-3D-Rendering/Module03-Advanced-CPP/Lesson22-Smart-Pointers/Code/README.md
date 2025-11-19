@@ -1,30 +1,60 @@
-# Lesson 22: Smart Pointers - Code Examples
+# Smart Pointers - Code Examples
 
-## Files Overview
+This directory contains 20 complete C++ programs demonstrating Smart Pointers concepts.
 
-1. **01_unique_ptr_basics.cpp** - unique_ptr fundamentals
-2. **02_shared_ptr_basics.cpp** - shared_ptr and reference counting
-3. **03_weak_ptr_basics.cpp** - weak_ptr for observation
-4. **04_circular_reference.cpp** - Breaking cycles with weak_ptr
-5. **05_custom_deleters.cpp** - Custom deletion for resources
+## Overview
+
+Lesson 22 focuses on smart pointers, covering essential C++ programming concepts and best practices.
 
 ## Compilation
 
+All files can be compiled independently using:
+
 ```bash
-g++ -std=c++17 -Wall filename.cpp -o filename
+g++ -std=c++17 filename.cpp -o output_name
 ```
 
-## Key Concepts
+For files using threading:
+```bash
+g++ -std=c++17 filename.cpp -o output_name -pthread
+```
 
-- **unique_ptr**: Exclusive ownership, move-only
-- **shared_ptr**: Shared ownership, reference counted
-- **weak_ptr**: Non-owning observer, breaks cycles
-- **Custom deleters**: For non-memory resources
+## Execution
 
-## Best Practices
+After compilation, run the executable:
+```bash
+./output_name
+```
 
-1. Prefer `make_unique` and `make_shared`
-2. Use `unique_ptr` by default
-3. Use `weak_ptr` to break circular references
-4. Pass smart pointers appropriately
-5. Avoid raw `new`/`delete`
+## Topics Covered
+
+This lesson covers:
+- Core concepts of smart pointers
+- Practical implementation examples
+- Best practices and common patterns
+- Real-world usage scenarios
+
+## Learning Objectives
+
+After studying these examples, you will:
+- Understand the fundamentals of smart pointers
+- Be able to implement these concepts in your own projects
+- Recognize when and how to apply these techniques
+- Write more efficient and maintainable C++ code
+
+## File Organization
+
+Each file is numbered sequentially and focuses on a specific aspect of the lesson topic. Files are designed to be:
+- **Self-contained**: Can be compiled and run independently
+- **Well-commented**: Detailed explanations of key concepts
+- **Practical**: Demonstrates real-world usage patterns
+
+## Additional Resources
+
+For more information, refer to:
+- Lesson materials in the parent directory
+- Official C++ documentation
+- Modern C++ best practices guides
+
+---
+**Note**: All examples use C++17 standard. Ensure your compiler supports this standard.
