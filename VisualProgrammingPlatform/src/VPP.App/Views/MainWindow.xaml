@@ -160,7 +160,7 @@
                                             Point2="{Binding DetectedCenter}"
                                             Diameter="{Binding DetectedRadius}"
                                             InnerDiameter="0"
-                                            Fill="Yellow" Opacity="0.5"/>
+                                            Fill="#80FFFF00"/>
 
                         <!-- Ground Grid -->
                         <helix:GridLinesVisual3D Width="200" Length="200"
