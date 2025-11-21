@@ -5,11 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:helix="http://helix-toolkit.org/wpf"
         xmlns:vm="clr-namespace:VPP.App.ViewModels"
+        xmlns:conv="clr-namespace:VPP.App.Converters"
         mc:Ignorable="d"
         Title="Visual Programming Platform - Point Cloud Inspection"
         Height="800" Width="1400"
-        Background="{StaticResource BackgroundBrush}"
+        Background="#1E1E1E"
         WindowState="Maximized">
+
+    <Window.Resources>
+        <conv:BoolToBorderConverter x:Key="BoolToBorderConverter"/>
+        <conv:PassFailConverter x:Key="PassFailConverter"/>
+
+        <!-- Node Style -->
+        <Style x:Key="NodeStyle" TargetType="Border">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#555"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="MinWidth" Value="150"/>
+        </Style>
+    </Window.Resources>
 
     <Window.DataContext>
         <vm:MainViewModel/>
@@ -23,19 +39,20 @@
         </Grid.RowDefinitions>
 
         <!-- Toolbar -->
-        <Border Grid.Row="0" Background="{StaticResource SurfaceBrush}" Padding="10">
+        <Border Grid.Row="0" Background="#2D2D2D" Padding="10">
             <StackPanel Orientation="Horizontal">
-                <Button Content="Create Workflow" Command="{Binding CreateDefaultWorkflowCommand}" Margin="0,0,10,0"/>
-                <Button Content="Load Point Cloud" Command="{Binding LoadPointCloudCommand}" Margin="0,0,10,0"/>
+                <Button Content="Create Workflow" Command="{Binding CreateDefaultWorkflowCommand}"
+                        Background="#2196F3" Foreground="White" Padding="12,8" Margin="0,0,10,0"/>
+                <Button Content="Load Point Cloud" Command="{Binding LoadPointCloudCommand}"
+                        Background="#2196F3" Foreground="White" Padding="12,8" Margin="0,0,10,0"/>
                 <Button Content="Execute" Command="{Binding ExecuteGraphCommand}"
-                        Background="{StaticResource SecondaryBrush}" Margin="0,0,20,0"/>
+                        Background="#FF9800" Foreground="White" Padding="12,8" Margin="0,0,20,0"/>
 
                 <ComboBox ItemsSource="{Binding AvailableNodes}"
                           SelectedItem="{Binding SelectedNodeType}"
-                          Width="200" Margin="0,0,10,0"
-                          Background="{StaticResource SurfaceBrush}"
-                          Foreground="{StaticResource TextBrush}"/>
-                <Button Content="Add Node" Command="{Binding AddNodeCommand}"/>
+                          Width="200" Margin="0,0,10,0"/>
+                <Button Content="Add Node" Command="{Binding AddNodeCommand}"
+                        Background="#2196F3" Foreground="White" Padding="12,8"/>
             </StackPanel>
         </Border>
 
@@ -56,7 +73,7 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="Node Graph Editor" FontSize="14" FontWeight="Bold"
-                               Foreground="{StaticResource TextBrush}" Padding="10"/>
+                               Foreground="White" Padding="10"/>
 
                     <!-- Node Canvas -->
                     <Canvas Grid.Row="1" x:Name="NodeCanvas" Background="#252525" ClipToBounds="True">
@@ -78,7 +95,7 @@
                                             BorderBrush="{Binding IsSelected, Converter={StaticResource BoolToBorderConverter}}">
                                         <StackPanel>
                                             <!-- Node Header -->
-                                            <Border Background="{StaticResource PrimaryBrush}"
+                                            <Border Background="#2196F3"
                                                     CornerRadius="6,6,0,0" Padding="10,6">
                                                 <TextBlock Text="{Binding Name}" FontWeight="SemiBold"
                                                            Foreground="White"/>
@@ -98,7 +115,7 @@
                                                             <StackPanel Orientation="Horizontal" Margin="0,2">
                                                                 <Ellipse Width="10" Height="10" Fill="#888"/>
                                                                 <TextBlock Text="{Binding Name}"
-                                                                           Foreground="{StaticResource TextBrush}"
+                                                                           Foreground="White"
                                                                            FontSize="10" Margin="4,0,0,0"/>
                                                             </StackPanel>
                                                         </DataTemplate>
@@ -113,7 +130,7 @@
                                                             <StackPanel Orientation="Horizontal" Margin="0,2"
                                                                         HorizontalAlignment="Right">
                                                                 <TextBlock Text="{Binding Name}"
-                                                                           Foreground="{StaticResource TextBrush}"
+                                                                           Foreground="White"
                                                                            FontSize="10" Margin="0,0,4,0"/>
                                                                 <Ellipse Width="10" Height="10" Fill="#888"/>
                                                             </StackPanel>
@@ -142,7 +159,7 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="3D Point Cloud Visualization" FontSize="14" FontWeight="Bold"
-                               Foreground="{StaticResource TextBrush}" Padding="10"/>
+                               Foreground="White" Padding="10"/>
 
                     <!-- HelixToolkit Viewport -->
                     <helix:HelixViewport3D Grid.Row="1" x:Name="Viewport3D"
@@ -154,13 +171,6 @@
                         <!-- Point Cloud Visualization -->
                         <helix:PointsVisual3D Points="{Binding PointCloudPoints}"
                                                Color="LightBlue" Size="2"/>
-
-                        <!-- Detected Circle Visualization -->
-                        <helix:PipeVisual3D Point1="{Binding DetectedCenter}"
-                                            Point2="{Binding DetectedCenter}"
-                                            Diameter="{Binding DetectedRadius}"
-                                            InnerDiameter="0"
-                                            Fill="#80FFFF00"/>
 
                         <!-- Ground Grid -->
                         <helix:GridLinesVisual3D Width="200" Length="200"
@@ -187,8 +197,8 @@
         </Grid>
 
         <!-- Status Bar -->
-        <Border Grid.Row="2" Background="{StaticResource SurfaceBrush}" Padding="10,5">
-            <TextBlock Text="{Binding StatusMessage}" Foreground="{StaticResource TextBrush}"/>
+        <Border Grid.Row="2" Background="#2D2D2D" Padding="10,5">
+            <TextBlock Text="{Binding StatusMessage}" Foreground="White"/>
         </Border>
     </Grid>
 </Window>
